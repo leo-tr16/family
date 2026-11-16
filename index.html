@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Leo-Family Archive</title>
   <style>
 /* ==========================================================================
@@ -1274,10 +1275,80 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
 /* v2.2 — sửa nhỏ */
 .search-clear svg { width: 14px; height: 14px; }
 
+    /* Password Protection Modal */
+    body:not(.authenticated) .app-container { display: none !important; }
+    body:not(.authenticated) { overflow: hidden !important; }
+    #pwd-gate {
+      position: fixed; inset: 0; background: #fdfbf7; z-index: 99999;
+      display: flex; align-items: center; justify-content: center; font-family: 'Be Vietnam Pro', -apple-system, sans-serif;
+      padding: 20px; box-sizing: border-box;
+    }
+    .pwd-card {
+      background: #ffffff; border: 1px solid #e2ddd3; border-radius: 20px;
+      padding: 36px 28px; max-width: 400px; width: 100%; text-align: center;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.08); box-sizing: border-box;
+    }
+    .pwd-icon { font-size: 2.2rem; margin-bottom: 12px; }
+    .pwd-card h2 { margin: 0 0 8px; color: #1e293b; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; }
+    .pwd-card p { margin: 0 0 24px; color: #64748b; font-size: 0.92rem; line-height: 1.5; }
+    .pwd-input-wrap { position: relative; margin-bottom: 14px; width: 100%; }
+    .pwd-input {
+      width: 100%; box-sizing: border-box; padding: 13px 44px 13px 16px; border: 1.5px solid #cbd5e1;
+      border-radius: 10px; font-size: 1rem; text-align: center; outline: none; transition: all 0.2s;
+      background: #fafaf9;
+    }
+    .pwd-input:focus { border-color: #0f766e; background: #fff; box-shadow: 0 0 0 3px rgba(15,118,110,0.12); }
+    .pwd-eye {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #94a3b8;
+      padding: 4px; display: flex; align-items: center; justify-content: center;
+    }
+    .pwd-eye:hover { color: #475569; }
+    .pwd-options {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 20px; font-size: 0.88rem; color: #64748b; cursor: pointer; user-select: none;
+    }
+    .pwd-options input { accent-color: #0f766e; cursor: pointer; width: 16px; height: 16px; }
+    .pwd-btn {
+      width: 100%; padding: 13px; background: #0f766e; color: #fff; border: none;
+      border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .pwd-btn:hover { background: #115e59; }
+    .pwd-btn:active { transform: scale(0.99); }
+    .pwd-error {
+      color: #dc2626; font-size: 0.88rem; margin-top: 12px; display: none;
+      background: #fef2f2; border: 1px solid #fecaca; padding: 8px 12px; border-radius: 8px;
+    }
+    @keyframes pwdShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .pwd-shake { animation: pwdShake 0.35s ease-in-out; }
+    
   </style>
 </head>
 <body>
   
+    <div id="pwd-gate">
+      <div class="pwd-card" id="pwd-card">
+        <div class="pwd-icon">🔒</div>
+        <h2>Leo-Family Archive</h2>
+        <p>Kho kỷ niệm gia đình. Vui lòng nhập mật mã để mở:</p>
+        <div class="pwd-input-wrap">
+          <input type="password" id="pwd-input" class="pwd-input" placeholder="Mật mã gia đình..." autofocus autocomplete="current-password">
+          <button type="button" id="pwd-eye" class="pwd-eye" aria-label="Hiện/ẩn mật khẩu">👁️</button>
+        </div>
+        <label class="pwd-options" for="pwd-remember">
+          <input type="checkbox" id="pwd-remember" checked>
+          <span>Ghi nhớ trên thiết bị này</span>
+        </label>
+        <button id="pwd-submit" class="pwd-btn">Mở xem Album</button>
+        <div id="pwd-error" class="pwd-error">Mật mã chưa chính xác. Vui lòng thử lại!</div>
+      </div>
+    </div>
+    
   <div class="app-container">
     <header class="site-header">
       <div class="header-brand">
@@ -1285,7 +1356,10 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
           <h1 class="brand-title" id="brand-title">Leo-Family Archive</h1>
           <p class="brand-subtitle" id="brand-subtitle"></p>
         </div>
-        <div class="header-stats" id="header-stats"></div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="header-stats" id="header-stats"></div>
+          <button id="btn-lock-album" title="Khóa album" style="background: rgba(15,118,110,0.06); border: 1px solid #cbd5e1; border-radius: 8px; padding: 6px 12px; font-size: 0.82rem; color: #475569; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 500;">🔒 Khóa lại</button>
+        </div>
       </div>
     </header>
 
@@ -2708,6 +2782,82 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
 })();
 
   </script>
-  
+  <script>
+    (function() {
+      const HASH = "25cb62ef00587101ef0a028f2306b07efe5449962442b7eaf9a5692a02b0f3ce";
+      const gate = document.getElementById('pwd-gate');
+      const card = document.getElementById('pwd-card');
+      const input = document.getElementById('pwd-input');
+      const eye = document.getElementById('pwd-eye');
+      const remember = document.getElementById('pwd-remember');
+      const btn = document.getElementById('pwd-submit');
+      const err = document.getElementById('pwd-error');
+
+      function unlock() {
+        document.body.classList.add('authenticated');
+        if (gate) gate.remove();
+      }
+
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function verify() {
+        const v = (input.value || '').trim();
+        if (!v) {
+          input.focus();
+          return;
+        }
+        const h = await sha256(v);
+        if (h === HASH) {
+          if (remember && remember.checked) {
+            try { localStorage.setItem('leo_family_auth', HASH); } catch(e) {}
+          } else {
+            try { sessionStorage.setItem('leo_family_auth', HASH); } catch(e) {}
+          }
+          unlock();
+        } else {
+          err.style.display = 'block';
+          if (card) {
+            card.classList.remove('pwd-shake');
+            void card.offsetWidth;
+            card.classList.add('pwd-shake');
+          }
+          input.select();
+        }
+      }
+
+      // Tự động mở nếu đã ghi nhớ trước đó
+      try {
+        if (localStorage.getItem('leo_family_auth') === HASH || sessionStorage.getItem('leo_family_auth') === HASH) {
+          unlock();
+          return;
+        }
+      } catch(e) {}
+
+      if (eye) {
+        eye.addEventListener('click', () => {
+          const isPwd = input.type === 'password';
+          input.type = isPwd ? 'text' : 'password';
+          eye.textContent = isPwd ? '🙈' : '👁️';
+        });
+      }
+
+      if (btn) btn.addEventListener('click', verify);
+      if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
+
+      const lockBtn = document.getElementById('btn-lock-album');
+      if (lockBtn) {
+        lockBtn.addEventListener('click', () => {
+          try {
+            localStorage.removeItem('leo_family_auth');
+            sessionStorage.removeItem('leo_family_auth');
+          } catch(e) {}
+          location.reload();
+        });
+      }
+    })();
+    </script>
 </body>
 </html>
