@@ -1402,25 +1402,12 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       letter-spacing: -0.01em;
     }
     .logo-modal-desc {
-      margin: 0 0 24px;
+      margin: 0;
       color: #475569;
       font-size: 0.95rem;
       line-height: 1.65;
       text-align: center;
     }
-    .logo-modal-btn {
-      width: 100%;
-      padding: 11px;
-      background: #0f766e;
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .logo-modal-btn:hover { background: #115e59; }
     @keyframes logoFadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes logoPop { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @media (max-width: 640px) {
@@ -1576,7 +1563,6 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       <p class="logo-modal-desc">
         4 hình tròn tượng trưng cho 4 cậu con trai. Mái nhà và chiếc ống khói là bố mẹ che chở nuôi nấng các con và bao bọc cả gia đình.
       </p>
-      <button type="button" class="logo-modal-btn" id="logo-modal-btn-ok">Đã hiểu</button>
     </div>
   </div>
 
@@ -2997,7 +2983,6 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       const btnInfo = document.getElementById('btn-logo-info');
       const logoImg = document.getElementById('brand-logo');
       const closeBtn = document.getElementById('logo-modal-close');
-      const okBtn = document.getElementById('logo-modal-btn-ok');
       const backdrop = document.getElementById('logo-modal-backdrop');
 
       function openModal(e) {
@@ -3011,7 +2996,6 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       if (btnInfo) btnInfo.addEventListener('click', openModal);
       if (logoImg) logoImg.addEventListener('click', openModal);
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
-      if (okBtn) okBtn.addEventListener('click', closeModal);
       if (backdrop) backdrop.addEventListener('click', closeModal);
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && modal && modal.style.display === 'flex') closeModal();
