@@ -3064,6 +3064,17 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
         }
       }
 
+      const lockBtn = document.getElementById('btn-lock-album');
+      if (lockBtn) {
+        lockBtn.addEventListener('click', () => {
+          try {
+            localStorage.removeItem('leo_family_auth');
+            sessionStorage.removeItem('leo_family_auth');
+          } catch(e) {}
+          location.reload();
+        });
+      }
+
       // Tự động mở nếu đã ghi nhớ trước đó
       try {
         if (localStorage.getItem('leo_family_auth') === HASH || sessionStorage.getItem('leo_family_auth') === HASH) {
@@ -3082,17 +3093,6 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
 
       if (btn) btn.addEventListener('click', verify);
       if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
-
-      const lockBtn = document.getElementById('btn-lock-album');
-      if (lockBtn) {
-        lockBtn.addEventListener('click', () => {
-          try {
-            localStorage.removeItem('leo_family_auth');
-            sessionStorage.removeItem('leo_family_auth');
-          } catch(e) {}
-          location.reload();
-        });
-      }
     })();
     </script>
   
