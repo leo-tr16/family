@@ -1544,21 +1544,20 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
             <div class="admin-top-bar" id="admin-top-bar">
               <div class="admin-bar-left">
                 <span class="admin-badge">🛠️ BẢN QUẢN TRỊ &amp; BIÊN TẬP</span>
-                <span class="admin-bar-desc">Dành riêng cho Bố để viết lời kể, chú thích &amp; chọn lọc ảnh trước khi xuất bản ra <code>index.html</code>.</span>
+                <span class="admin-bar-desc">Duyệt bài từ Vợ và biên tập lời kể trực tiếp trên trình duyệt.</span>
               </div>
               <div class="admin-bar-right">
                 <button type="button" class="admin-bar-btn" id="btn-admin-wife-inbox" style="border-color:#f59e0b;color:#fde68a;">📥 Hộp thư Vợ (Đang kiểm tra...)</button>
                 <button type="button" class="admin-bar-btn admin-bar-btn-primary" id="btn-admin-open-notes">📋 Mở danh sách nháp</button>
-                <button type="button" class="admin-bar-btn" id="btn-admin-flow-guide">📖 Quy trình xuất bản</button>
               </div>
             </div>
-            <div id="wife-inbox-modal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.65);z-index:100000;align-items:center;justify-content:center;padding:16px;font-family:'Be Vietnam Pro',-apple-system,sans-serif;">
-              <div style="background:#fff;border-radius:16px;max-width:620px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;box-shadow:0 20px 40px rgba(0,0,0,0.3);color:#1e293b;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                  <h3 style="margin:0;font-size:1.15rem;color:#0f172a;" id="wife-inbox-title">📥 Hộp thư 99 Inbox/Vo</h3>
-                  <button type="button" id="wife-inbox-close" style="background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;">&times;</button>
+            <div id="wife-inbox-modal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.68);z-index:100000;align-items:center;justify-content:center;padding:14px;font-family:'Be Vietnam Pro',-apple-system,sans-serif;">
+              <div style="background:#fff;border-radius:18px;max-width:640px;width:100%;max-height:88vh;overflow-y:auto;padding:22px;box-shadow:0 24px 48px rgba(0,0,0,0.35);color:#1e293b;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;">
+                  <h3 style="margin:0;font-size:1.15rem;color:#0f172a;" id="wife-inbox-title">📥 Hộp thư Vợ (99 Inbox/Vo)</h3>
+                  <button type="button" id="wife-inbox-close" style="background:#f1f5f9;border:none;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1;">&times;</button>
                 </div>
-                <div id="wife-inbox-body" style="font-size:0.9rem;line-height:1.55;color:#334155;">Đang tải...</div>
+                <div id="wife-inbox-body" style="font-size:0.92rem;line-height:1.55;color:#334155;">Đang tải dữ liệu...</div>
               </div>
             </div>
             
@@ -2523,7 +2522,15 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       lb.img.alt = photo.caption || L.title || '';
       lb.img.src = thumb || full;
       lb.img.classList.toggle('is-loading', !thumb && !!full);
-      if (full && thumb) {
+      if (photo.drive_id && !photo._fullLoaded && typeof window.LEO_FETCH_DRIVE_PREVIEW === 'function') {
+        window.LEO_FETCH_DRIVE_PREVIEW(photo.drive_id).then(dataUrl => {
+          if (dataUrl) {
+            photo.thumb_base64 = dataUrl;
+            photo._fullLoaded = true;
+            if (token === loadToken) lb.img.src = dataUrl;
+          }
+        }).catch(() => {});
+      } else if (full && thumb) {
         const probe = new Image();
         probe.onload = () => { if (token === loadToken) lb.img.src = full; };
         probe.src = full;
@@ -3021,8 +3028,31 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
   }
 
   /* =====================================================================
-     INIT
+     INIT & LIVE CLOUD SYNC HOOK
      ===================================================================== */
+  window.LEO_UPSERT_LIVE_ITEMS = function(liveItems) {
+    if (!Array.isArray(liveItems) || !liveItems.length) return;
+    liveItems.forEach(newIt => {
+      if (!newIt || !newIt.id) return;
+      const idx = items.findIndex(x => x.id === newIt.id);
+      if (idx >= 0) items[idx] = newIt;
+      else items.push(newIt);
+      typesPresent.add(newIt.type || '');
+      searchIndex.set(newIt, fold([
+        newIt.title, newIt.summary, newIt.content, newIt.open_at,
+        (newIt.tags || []).join(' '), (newIt.children || []).filter(c => c !== 'Chung').join(' '),
+        (newIt.photos || []).map(p => p.caption).join(' '), formatDateVN(newIt.date),
+        TYPE_META[newIt.type] ? TYPE_META[newIt.type].label : ''
+      ].join(' ')));
+    });
+    items.sort((a, b) =>
+      (b.date || '').localeCompare(a.date || '') ||
+      (b.time || '').localeCompare(a.time || '') ||
+      folderRank(a) - folderRank(b));
+    renderHeader();
+    refresh();
+  };
+
   function init() {
     document.documentElement.setAttribute('data-viewer', VERSION);
     enhanceSearch();
@@ -3142,6 +3172,102 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
     })();
     </script>
   <script>
+        (function() {
+          const VO_API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+          window.LEO_VO_THUMB_CACHE = window.LEO_VO_THUMB_CACHE || {};
+
+          window.LEO_FETCH_DRIVE_PREVIEW = async function(driveId) {
+            if (!driveId) return "";
+            try {
+              const res = await fetch(VO_API_URL + "?action=preview&id=" + encodeURIComponent(driveId));
+              const data = await res.json();
+              if (data && data.ok && data.dataUrl) {
+                window.LEO_VO_THUMB_CACHE[driveId] = data.dataUrl;
+                return data.dataUrl;
+              }
+            } catch (e) {}
+            return "";
+          };
+
+          window.LEO_SYNC_APPROVED_FROM_VO = async function(voData) {
+            if (!voData || !Array.isArray(voData.notes) || typeof window.LEO_UPSERT_LIVE_ITEMS !== "function") return;
+            const approved = voData.notes.filter(function(n) {
+              return n && String(n.id || "").indexOf("approved_") === 0;
+            });
+            if (!approved.length) return;
+
+            const allFiles = Array.isArray(voData.files) ? voData.files : [];
+            const needThumbIds = [];
+
+            function buildLiveItems() {
+              return approved.map(function(n) {
+                const fNames = n.files || [];
+                const fIds = n.fileIds || [];
+                const photos = fNames.map(function(fn, idx) {
+                  let fid = fIds[idx] || "";
+                  if (!fid) {
+                    const found = allFiles.find(function(x) { return String(x.name || "").toLowerCase() === String(fn).toLowerCase(); });
+                    if (found) fid = found.id;
+                  }
+                  const cached = fid ? (window.LEO_VO_THUMB_CACHE[fid] || "") : "";
+                  if (fid && !cached && needThumbIds.indexOf(fid) === -1) needThumbIds.push(fid);
+                  const isVid = /\.(mov|mp4|m4v|webm|avi|mkv)$/i.test(fn);
+                  return {
+                    filename: fn,
+                    original_path: "",
+                    preview_path: "",
+                    thumb_base64: cached,
+                    drive_id: fid,
+                    media_type: isVid ? "video" : "image",
+                    caption: ""
+                  };
+                });
+
+                const rawChildren = (Array.isArray(n.children) && n.children.length) ? n.children.slice() : ["Chung"];
+                return {
+                  id: "vo_" + n.id,
+                  date: n.date || new Date().toISOString().split("T")[0],
+                  time: "",
+                  children: rawChildren,
+                  type: "story",
+                  title: n.title || "",
+                  summary: "",
+                  content: n.text || "",
+                  age_text: "",
+                  tags: [],
+                  open_at: "",
+                  photos: photos
+                };
+              });
+            }
+
+            window.LEO_UPSERT_LIVE_ITEMS(buildLiveItems());
+
+            if (needThumbIds.length > 0) {
+              try {
+                const res = await fetch(VO_API_URL + "?action=thumbs&ids=" + encodeURIComponent(needThumbIds.join(",")));
+                const tData = await res.json();
+                if (tData && tData.ok && tData.thumbs) {
+                  Object.keys(tData.thumbs).forEach(function(fid) {
+                    if (tData.thumbs[fid]) window.LEO_VO_THUMB_CACHE[fid] = tData.thumbs[fid];
+                  });
+                  window.LEO_UPSERT_LIVE_ITEMS(buildLiveItems());
+                }
+              } catch (e) {}
+            }
+          };
+
+          if (window.ARCHIVE_READ_ONLY) {
+            fetch(VO_API_URL + "?action=list&_t=" + Date.now())
+              .then(function(r) { return r.json(); })
+              .then(function(d) {
+                if (d && d.ok) window.LEO_SYNC_APPROVED_FROM_VO(d);
+              })
+              .catch(function() {});
+          }
+        })();
+        </script>
+  <script>
             (function() {
               const VO_API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
               const btnWife = document.getElementById('btn-admin-wife-inbox');
@@ -3150,6 +3276,52 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
               const wifeBody = document.getElementById('wife-inbox-body');
               const wifeTitle = document.getElementById('wife-inbox-title');
               let latestVoData = null;
+              let autoPopupShown = false;
+
+              function isApprovedNote(n) {
+                return n && String(n.id || "").indexOf("approved_") === 0;
+              }
+
+              function getPendingNotes() {
+                if (!latestVoData || !Array.isArray(latestVoData.notes)) return [];
+                return latestVoData.notes.filter(function(n) { return !isApprovedNote(n); });
+              }
+
+              function getApprovedNotes() {
+                if (!latestVoData || !Array.isArray(latestVoData.notes)) return [];
+                return latestVoData.notes.filter(isApprovedNote);
+              }
+
+              function getUnapprovedFiles() {
+                if (!latestVoData || !Array.isArray(latestVoData.files)) return [];
+                const approvedFileNames = {};
+                const approvedFileIds = {};
+                getApprovedNotes().forEach(function(n) {
+                  (n.files || []).forEach(function(fn) { approvedFileNames[String(fn).toLowerCase()] = true; });
+                  (n.fileIds || []).forEach(function(fid) { if (fid) approvedFileIds[fid] = true; });
+                });
+                return latestVoData.files.filter(function(f) {
+                  return !approvedFileIds[f.id] && !approvedFileNames[String(f.name || "").toLowerCase()];
+                });
+              }
+
+              function updateAdminTopButton() {
+                if (!btnWife || !latestVoData) return;
+                const pending = getPendingNotes();
+                const approved = getApprovedNotes();
+                const waitingFiles = getUnapprovedFiles();
+                if (pending.length > 0) {
+                  btnWife.textContent = "🔔 Hộp thư Vợ: " + pending.length + " chờ duyệt";
+                  btnWife.style.background = "#d97706";
+                  btnWife.style.color = "#ffffff";
+                  btnWife.style.borderColor = "#fbbf24";
+                } else {
+                  btnWife.textContent = "📥 Hộp thư Vợ: 0 chờ duyệt (" + waitingFiles.length + " ảnh chờ" + (approved.length ? " · " + approved.length + " đã lên Album" : "") + ")";
+                  btnWife.style.background = "rgba(255,255,255,0.08)";
+                  btnWife.style.color = "#e2e8f0";
+                  btnWife.style.borderColor = "rgba(255,255,255,0.2)";
+                }
+              }
 
               async function checkWifeInbox() {
                 if (!btnWife) return;
@@ -3158,18 +3330,14 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
                   const data = await res.json();
                   if (data && data.ok) {
                     latestVoData = data;
-                    const nCount = Array.isArray(data.notes) ? data.notes.length : 0;
-                    const fCount = Array.isArray(data.files) ? data.files.length : 0;
-                    if (nCount > 0) {
-                      btnWife.textContent = "🔔 Hộp thư Vợ: " + nCount + " ghi chú mới (" + fCount + " tệp)";
-                      btnWife.style.background = "#d97706";
-                      btnWife.style.color = "#ffffff";
-                      btnWife.style.borderColor = "#fbbf24";
-                    } else {
-                      btnWife.textContent = "📥 Hộp thư Vợ: 0 ghi chú (" + fCount + " tệp chờ)";
-                      btnWife.style.background = "rgba(255,255,255,0.08)";
-                      btnWife.style.color = "#e2e8f0";
-                      btnWife.style.borderColor = "rgba(255,255,255,0.2)";
+                    updateAdminTopButton();
+                    if (typeof window.LEO_SYNC_APPROVED_FROM_VO === "function") {
+                      window.LEO_SYNC_APPROVED_FROM_VO(data);
+                    }
+                    const pending = getPendingNotes();
+                    if (pending.length > 0 && !autoPopupShown) {
+                      autoPopupShown = true;
+                      renderWifeModal();
                     }
                   }
                 } catch (e) {
@@ -3177,76 +3345,280 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
                 }
               }
 
-              function renderWifeModal() {
+              function esc(s) {
+                return String(s || "").replace(/[&<>"']/g, function(c) {
+                  return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+                });
+              }
+
+              function buildNotesSavePayload(allNotes) {
+                const todayStr = new Date().toISOString().split("T")[0];
+                const lines = ["LEO FAMILY STORY — DANH SÁCH GHI CHÚ (" + allNotes.length + ")", "========================================"];
+                allNotes.forEach(function(n, idx) {
+                  lines.push("");
+                  lines.push("[#" + (idx + 1) + "] " + (n.date || todayStr) + " | " + ((n.children || []).join(", ")));
+                  lines.push("Tệp đính kèm (" + ((n.files || []).length) + "): " + ((n.files || []).join(", ")));
+                  lines.push("Ghi chú: " + (n.text || ""));
+                });
+                const jsonObj = {
+                  version: "4.0",
+                  total_stories: allNotes.length,
+                  stories: allNotes.map(function(n, idx) {
+                    return {
+                      id: n.id,
+                      story_index: idx + 1,
+                      event_title: n.title || String(n.text || "").split(/[\n.!?]/)[0].slice(0, 55),
+                      event_date: n.date || todayStr,
+                      children: (n.children && n.children.length) ? n.children : ["Chung"],
+                      story: n.text || "",
+                      files: n.files || [],
+                      file_ids: n.fileIds || [],
+                      updated_at: n.updatedAt || new Date().toISOString()
+                    };
+                  }),
+                  submitted_at: new Date().toISOString()
+                };
+                return { text: lines.join("\n"), json: jsonObj };
+              }
+
+              async function persistVoNotes(allNotes) {
+                const built = buildNotesSavePayload(allNotes);
+                const res = await fetch(VO_API_URL, {
+                  method: "POST",
+                  headers: { "Content-Type": "text/plain;charset=utf-8" },
+                  body: JSON.stringify({
+                    action: "save_notes",
+                    notify: false,
+                    text: built.text,
+                    json: built.json
+                  })
+                });
+                const data = await res.json();
+                return Boolean(data && data.ok);
+              }
+
+              async function loadModalThumbs(fileIds) {
+                if (!fileIds || !fileIds.length) return;
+                try {
+                  const res = await fetch(VO_API_URL + "?action=thumbs&ids=" + encodeURIComponent(fileIds.join(",")));
+                  const data = await res.json();
+                  if (data && data.ok && data.thumbs) {
+                    Object.keys(data.thumbs).forEach(function(fid) {
+                      const url = data.thumbs[fid];
+                      if (!url) return;
+                      if (window.LEO_VO_THUMB_CACHE) window.LEO_VO_THUMB_CACHE[fid] = url;
+                      document.querySelectorAll("img[data-vo-thumb='" + fid + "']").forEach(function(img) {
+                        img.src = url;
+                        img.style.display = "block";
+                      });
+                    });
+                  }
+                } catch (e) {}
+              }
+
+              function renderWifeModal(bannerMsg) {
                 if (!wifeModal || !wifeBody) return;
                 wifeModal.style.display = "flex";
                 if (!latestVoData) {
-                  wifeBody.innerHTML = "Không kết nối được tới Google Drive 99 Inbox/Vo.";
+                  wifeBody.innerHTML = "Đang kết nối tới Google Drive 99 Inbox/Vo...";
                   return;
                 }
-                const notes = latestVoData.notes || [];
-                const files = latestVoData.files || [];
-                wifeTitle.textContent = "📥 Hộp thư 99 Inbox/Vo (" + notes.length + " ghi chú · " + files.length + " tệp)";
+                const pending = getPendingNotes();
+                const approved = getApprovedNotes();
+                const waitingFiles = getUnapprovedFiles();
+                const allFiles = latestVoData.files || [];
+
+                wifeTitle.textContent = "📥 Hộp thư Vợ (" + pending.length + " chờ duyệt · " + waitingFiles.length + " ảnh trong kho chờ)";
                 let html = "";
-                if (notes.length === 0) {
-                  html += "<div style='padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px;'>Hiện chưa có ghi chú mới nào trong <b>mom_notes.json</b>. Trong thư mục đang có <b>" + files.length + " tệp</b> ảnh/video chờ viết ghi chú (lưu giữ 45 ngày).</div>";
+
+                if (bannerMsg) {
+                  html += "<div style='padding:12px 14px;background:#ecfdf5;border:1px solid #6ee7b7;border-left:4px solid #059669;border-radius:10px;margin-bottom:14px;color:#065f46;font-weight:600;'>" + esc(bannerMsg) + "</div>";
+                }
+
+                if (pending.length === 0) {
+                  html += "<div style='padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px;'>🎉 Không có ghi chú nào đang chờ duyệt." + (approved.length ? " (Đã phê duyệt <b>" + approved.length + " câu chuyện</b> và đang hiển thị trực tiếp trên Album)." : "") + "</div>";
                 } else {
-                  html += "<div style='padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;margin-bottom:12px;color:#065f46;'><b>Đã nhận " + notes.length + " câu chuyện từ Vợ!</b><br>Để tự động đổi tên ảnh, tạo file .md và xuất bản lên Web, mở Terminal chạy:<br><code style='display:block;margin-top:6px;padding:8px;background:#0f172a;color:#38bdf8;border-radius:6px;user-select:all;'>python &quot;00 System/scripts/process_mom_intake.py&quot; --execute --cleanup &amp;&amp; python &quot;00 System/scripts/build_for_web.py&quot;</code></div>";
-                  notes.forEach(function(n, idx) {
-                    html += "<div style='padding:12px;border:1px solid #e2e8f0;border-left:4px solid #0f766e;border-radius:8px;margin-bottom:10px;background:#f8fafc;'>";
-                    html += "<div style='font-weight:700;color:#0f766e;margin-bottom:4px;'>Ghi chú #" + (idx + 1) + " · " + (n.date || "") + " · " + ((n.children || []).join(", ")) + "</div>";
-                    html += "<div style='white-space:pre-wrap;margin-bottom:6px;'>" + (n.text || "") + "</div>";
-                    html += "<div style='font-size:0.8rem;color:#64748b;'>Tệp đính kèm (" + ((n.files || []).length) + "): " + ((n.files || []).join(", ")) + "</div>";
+                  if (pending.length > 1) {
+                    html += "<div style='margin-bottom:14px;'><button type='button' id='btn-approve-all-vo' style='width:100%;padding:12px 16px;background:#059669;color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(5,150,105,0.25);'>✅ Phê duyệt tất cả (" + pending.length + " câu chuyện) &amp; Đưa lên Album ngay</button></div>";
+                  }
+
+                  const thumbIdsToFetch = [];
+                  pending.forEach(function(n, idx) {
+                    const nid = esc(n.id);
+                    const fNames = n.files || [];
+                    const fIds = n.fileIds || [];
+                    let thumbsRow = "<div style='display:flex;gap:8px;overflow-x:auto;margin:8px 0;'>";
+                    fNames.forEach(function(fn, fIdx) {
+                      let fid = fIds[fIdx] || "";
+                      if (!fid) {
+                        const found = allFiles.find(function(x) { return String(x.name || "").toLowerCase() === String(fn).toLowerCase(); });
+                        if (found) fid = found.id;
+                      }
+                      const cached = (window.LEO_VO_THUMB_CACHE && fid) ? window.LEO_VO_THUMB_CACHE[fid] : "";
+                      if (fid && !cached) thumbIdsToFetch.push(fid);
+                      thumbsRow += "<div style='position:relative;width:72px;height:72px;border-radius:8px;overflow:hidden;background:#1e293b;flex-shrink:0;border:1px solid #cbd5e1;'>";
+                      thumbsRow += "<img data-vo-thumb='" + esc(fid) + "' src='" + esc(cached) + "' alt='" + esc(fn) + "' style='width:100%;height:100%;object-fit:cover;" + (cached ? "display:block;" : "display:none;") + "'>";
+                      thumbsRow += "<div style='position:absolute;bottom:0;left:0;right:0;background:rgba(15,23,42,0.75);color:#fff;font-size:9px;padding:2px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + esc(fn) + "</div>";
+                      thumbsRow += "</div>";
+                    });
+                    thumbsRow += "</div>";
+
+                    const childList = Array.isArray(n.children) && n.children.length ? n.children : ["Chung"];
+                    html += "<div style='padding:14px;border:1px solid #cbd5e1;border-left:5px solid #d97706;border-radius:12px;margin-bottom:12px;background:#fffbeb;'>";
+                    html += "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap;'>";
+                    html += "<div style='font-weight:700;color:#b45309;font-size:0.95rem;'>Câu chuyện #" + (idx + 1) + " · Ngày: " + esc(n.date || "") + " · Con: " + esc(childList.join(", ")) + "</div>";
+                    html += "<button type='button' class='vo-btn-toggle-edit' data-id='" + nid + "' style='background:#fff;border:1px solid #cbd5e1;border-radius:6px;padding:4px 10px;font-size:0.8rem;font-weight:600;cursor:pointer;color:#334155;'>✏️ Sửa trước khi duyệt</button>";
+                    html += "</div>";
+                    html += "<div style='white-space:pre-wrap;font-size:0.95rem;color:#0f172a;margin-bottom:6px;background:#fff;padding:10px;border-radius:8px;border:1px solid #fde68a;'>" + esc(n.text || "") + "</div>";
+                    html += thumbsRow;
+
+                    // Khung sửa nhanh (ẩn mặc định)
+                    html += "<div id='vo-edit-box-" + nid + "' style='display:none;margin-top:8px;padding:10px;background:#fff;border:1px solid #cbd5e1;border-radius:8px;'>";
+                    html += "<div style='display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;'>";
+                    html += "<label style='font-size:0.8rem;font-weight:600;'>Ngày: <input type='date' id='vo-edit-date-" + nid + "' value='" + esc(n.date || "") + "' style='padding:4px 8px;border:1px solid #cbd5e1;border-radius:6px;'></label>";
+                    html += "<label style='font-size:0.8rem;font-weight:600;'>Con (cách nhau dấu phẩy): <input type='text' id='vo-edit-child-" + nid + "' value='" + esc(childList.join(", ")) + "' style='padding:4px 8px;border:1px solid #cbd5e1;border-radius:6px;width:160px;'></label>";
+                    html += "</div>";
+                    html += "<textarea id='vo-edit-text-" + nid + "' style='width:100%;min-height:76px;padding:8px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:0.9rem;box-sizing:border-box;'>" + esc(n.text || "") + "</textarea>";
+                    html += "</div>";
+
+                    // Hàng nút Phê duyệt / Xóa ngay tại chỗ
+                    html += "<div style='display:flex;gap:8px;margin-top:10px;'>";
+                    html += "<button type='button' class='vo-btn-approve-one' data-id='" + nid + "' style='flex:1;padding:11px 14px;background:#059669;color:#fff;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;'>✅ Phê duyệt &amp; Đưa lên Album</button>";
+                    html += "<button type='button' class='vo-btn-reject-one' data-id='" + nid + "' style='padding:11px 12px;background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;'>🗑️ Xóa</button>";
+                    html += "</div>";
                     html += "</div>";
                   });
+
+                  setTimeout(function() { loadModalThumbs(thumbIdsToFetch); }, 20);
                 }
-                if (files.length > 0) {
-                  html += "<div style='margin-top:14px;font-weight:700;font-size:0.88rem;color:#334155;margin-bottom:6px;'>Danh sách tệp hiện có trong 99 Inbox/Vo (" + files.length + "):</div>";
-                  html += "<div style='display:flex;flex-direction:column;gap:6px;'>";
-                  files.forEach(function(f) {
+
+                if (waitingFiles.length > 0) {
+                  html += "<div style='margin-top:14px;font-weight:700;font-size:0.86rem;color:#475569;margin-bottom:6px;'>Các ảnh/video chưa gắn câu chuyện đang lưu giữ trong 99 Inbox/Vo (" + waitingFiles.length + " tệp · giữ 45 ngày):</div>";
+                  html += "<div style='display:flex;flex-direction:column;gap:5px;max-height:180px;overflow-y:auto;'>";
+                  waitingFiles.forEach(function(f) {
                     const mb = f.size ? (f.size / (1024 * 1024)).toFixed(2) + " MB" : "";
                     const uploadedDate = f.createdAt ? f.createdAt.slice(0, 10) : (f.date || "");
                     const ageDays = f.createdAt ? Math.max(0, Math.floor((Date.now() - new Date(f.createdAt).getTime()) / 86400000)) : 0;
                     const daysLeft = Math.max(0, 45 - ageDays);
-                    html += "<div style='display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:0.83rem;'>";
-                    html += "<span><b>" + f.name + "</b> <span style='color:#64748b;'>(" + mb + " · tải lên " + uploadedDate + ")</span></span>";
+                    html += "<div style='display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:7px;font-size:0.81rem;'>";
+                    html += "<span><b>" + esc(f.name) + "</b> <span style='color:#64748b;'>(" + mb + " · tải lên " + uploadedDate + ")</span></span>";
                     html += "<span style='color:#0f766e;font-weight:600;'>Còn " + daysLeft + " ngày</span>";
                     html += "</div>";
                   });
                   html += "</div>";
                 }
+
                 wifeBody.innerHTML = html;
+
+                // Gắn sự kiện nút Sửa / Phê duyệt / Xóa
+                wifeBody.querySelectorAll(".vo-btn-toggle-edit").forEach(function(btn) {
+                  btn.onclick = function() {
+                    const id = btn.getAttribute("data-id");
+                    const box = document.getElementById("vo-edit-box-" + id);
+                    if (box) box.style.display = box.style.display === "none" ? "block" : "none";
+                  };
+                });
+
+                wifeBody.querySelectorAll(".vo-btn-approve-one").forEach(function(btn) {
+                  btn.onclick = async function() {
+                    const targetId = btn.getAttribute("data-id");
+                    btn.disabled = true;
+                    btn.textContent = "⏳ Đang phê duyệt & đưa lên Album...";
+                    const allNotes = (latestVoData.notes || []).map(function(n) {
+                      if (n.id !== targetId) return n;
+                      const dateEl = document.getElementById("vo-edit-date-" + targetId);
+                      const childEl = document.getElementById("vo-edit-child-" + targetId);
+                      const textEl = document.getElementById("vo-edit-text-" + targetId);
+                      const newText = textEl ? textEl.value.trim() : (n.text || "");
+                      const newDate = (dateEl && dateEl.value) ? dateEl.value : (n.date || "");
+                      const newChildren = (childEl && childEl.value)
+                        ? childEl.value.split(",").map(function(s) { return s.trim(); }).filter(Boolean)
+                        : (n.children || ["Chung"]);
+                      return {
+                        id: "approved_" + String(n.id).replace(/^approved_/, ""),
+                        text: newText,
+                        title: newText.split(/[\n.!?]/)[0].slice(0, 55),
+                        date: newDate,
+                        children: newChildren,
+                        files: n.files || [],
+                        fileIds: n.fileIds || [],
+                        updatedAt: new Date().toISOString()
+                      };
+                    });
+
+                    const ok = await persistVoNotes(allNotes);
+                    if (ok) {
+                      latestVoData.notes = allNotes;
+                      updateAdminTopButton();
+                      if (typeof window.LEO_SYNC_APPROVED_FROM_VO === "function") {
+                        window.LEO_SYNC_APPROVED_FROM_VO(latestVoData);
+                      }
+                      renderWifeModal("✅ Đã phê duyệt và đưa câu chuyện lên trang Album gia đình thành công!");
+                    } else {
+                      btn.disabled = false;
+                      btn.textContent = "✅ Phê duyệt & Đưa lên Album";
+                      alert("Lỗi kết nối mạng khi lưu phê duyệt. Vui lòng thử lại.");
+                    }
+                  };
+                });
+
+                const btnAll = document.getElementById("btn-approve-all-vo");
+                if (btnAll) {
+                  btnAll.onclick = async function() {
+                    btnAll.disabled = true;
+                    btnAll.textContent = "⏳ Đang phê duyệt tất cả...";
+                    const allNotes = (latestVoData.notes || []).map(function(n) {
+                      if (isApprovedNote(n)) return n;
+                      return Object.assign({}, n, {
+                        id: "approved_" + String(n.id).replace(/^approved_/, ""),
+                        updatedAt: new Date().toISOString()
+                      });
+                    });
+                    const ok = await persistVoNotes(allNotes);
+                    if (ok) {
+                      latestVoData.notes = allNotes;
+                      updateAdminTopButton();
+                      if (typeof window.LEO_SYNC_APPROVED_FROM_VO === "function") {
+                        window.LEO_SYNC_APPROVED_FROM_VO(latestVoData);
+                      }
+                      renderWifeModal("✅ Đã phê duyệt toàn bộ câu chuyện và đưa lên Album gia đình!");
+                    } else {
+                      btnAll.disabled = false;
+                      btnAll.textContent = "✅ Phê duyệt tất cả";
+                      alert("Lỗi kết nối mạng. Vui lòng thử lại.");
+                    }
+                  };
+                }
+
+                wifeBody.querySelectorAll(".vo-btn-reject-one").forEach(function(btn) {
+                  btn.onclick = async function() {
+                    const targetId = btn.getAttribute("data-id");
+                    if (!confirm("Xóa ghi chú này khỏi danh sách chờ duyệt? (Ảnh gốc trong 99 Inbox/Vo vẫn được giữ nguyên).")) return;
+                    btn.disabled = true;
+                    const allNotes = (latestVoData.notes || []).filter(function(n) { return n.id !== targetId; });
+                    const ok = await persistVoNotes(allNotes);
+                    if (ok) {
+                      latestVoData.notes = allNotes;
+                      updateAdminTopButton();
+                      renderWifeModal("Đã xóa ghi chú khỏi danh sách chờ duyệt.");
+                    } else {
+                      btn.disabled = false;
+                      alert("Lỗi kết nối mạng khi xóa.");
+                    }
+                  };
+                });
               }
 
-              if (btnWife) btnWife.addEventListener('click', renderWifeModal);
+              if (btnWife) btnWife.addEventListener('click', function() { renderWifeModal(); });
               if (wifeClose) wifeClose.addEventListener('click', function() { wifeModal.style.display = 'none'; });
               if (wifeModal) wifeModal.addEventListener('click', function(e) { if (e.target === wifeModal) wifeModal.style.display = 'none'; });
               checkWifeInbox();
 
               const btnNotes = document.getElementById('btn-admin-open-notes');
-              const btnGuide = document.getElementById('btn-admin-flow-guide');
               if (btnNotes) {
                 btnNotes.addEventListener('click', function() {
                   const fab = document.getElementById('fab-notes');
                   if (fab) fab.click();
-                });
-              }
-              if (btnGuide) {
-                btnGuide.addEventListener('click', function() {
-                  alert(
-                    "📌 QUY TRÌNH BIÊN TẬP VÀ XUẤT BẢN RA INDEX:\n\n" +
-                    "1. Thao tác trên giao diện này:\n" +
-                    "   - Bấm thùng rác trên góc ảnh để loại bỏ ảnh xấu/mờ.\n" +
-                    "   - Bấm 'Viết lời kể cho ngày này' để ghi chú kỷ niệm.\n" +
-                    "   - Bấm vào ảnh mở Lightbox để gõ chú thích riêng cho từng ảnh.\n\n" +
-                    "2. Xuất dữ liệu nháp:\n" +
-                    "   - Bấm nút nổi 'Ghi chú' (góc phải dưới) -> Chọn 'Tải leo-notes.json'.\n\n" +
-                    "3. Đồng bộ & Cập nhật ra index.html:\n" +
-                    "   - Mở terminal chạy 2 lệnh:\n" +
-                    "     python \"00 System/scripts/sync_notes.py\"\n" +
-                    "     python \"00 System/scripts/build_for_web.py\"\n\n" +
-                    "✨ Dữ liệu sẽ được lưu vĩnh viễn vào file Markdown gốc và tự động tạo lại bản index.html sạch sẽ cho cả nhà!"
-                  );
                 });
               }
             })();

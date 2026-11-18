@@ -2461,7 +2461,15 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       lb.img.alt = photo.caption || L.title || '';
       lb.img.src = thumb || full;
       lb.img.classList.toggle('is-loading', !thumb && !!full);
-      if (full && thumb) {
+      if (photo.drive_id && !photo._fullLoaded && typeof window.LEO_FETCH_DRIVE_PREVIEW === 'function') {
+        window.LEO_FETCH_DRIVE_PREVIEW(photo.drive_id).then(dataUrl => {
+          if (dataUrl) {
+            photo.thumb_base64 = dataUrl;
+            photo._fullLoaded = true;
+            if (token === loadToken) lb.img.src = dataUrl;
+          }
+        }).catch(() => {});
+      } else if (full && thumb) {
         const probe = new Image();
         probe.onload = () => { if (token === loadToken) lb.img.src = full; };
         probe.src = full;
@@ -2959,8 +2967,31 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
   }
 
   /* =====================================================================
-     INIT
+     INIT & LIVE CLOUD SYNC HOOK
      ===================================================================== */
+  window.LEO_UPSERT_LIVE_ITEMS = function(liveItems) {
+    if (!Array.isArray(liveItems) || !liveItems.length) return;
+    liveItems.forEach(newIt => {
+      if (!newIt || !newIt.id) return;
+      const idx = items.findIndex(x => x.id === newIt.id);
+      if (idx >= 0) items[idx] = newIt;
+      else items.push(newIt);
+      typesPresent.add(newIt.type || '');
+      searchIndex.set(newIt, fold([
+        newIt.title, newIt.summary, newIt.content, newIt.open_at,
+        (newIt.tags || []).join(' '), (newIt.children || []).filter(c => c !== 'Chung').join(' '),
+        (newIt.photos || []).map(p => p.caption).join(' '), formatDateVN(newIt.date),
+        TYPE_META[newIt.type] ? TYPE_META[newIt.type].label : ''
+      ].join(' ')));
+    });
+    items.sort((a, b) =>
+      (b.date || '').localeCompare(a.date || '') ||
+      (b.time || '').localeCompare(a.time || '') ||
+      folderRank(a) - folderRank(b));
+    renderHeader();
+    refresh();
+  };
+
   function init() {
     document.documentElement.setAttribute('data-viewer', VERSION);
     enhanceSearch();
@@ -3079,6 +3110,102 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
       if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
     })();
     </script>
+  <script>
+        (function() {
+          const VO_API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+          window.LEO_VO_THUMB_CACHE = window.LEO_VO_THUMB_CACHE || {};
+
+          window.LEO_FETCH_DRIVE_PREVIEW = async function(driveId) {
+            if (!driveId) return "";
+            try {
+              const res = await fetch(VO_API_URL + "?action=preview&id=" + encodeURIComponent(driveId));
+              const data = await res.json();
+              if (data && data.ok && data.dataUrl) {
+                window.LEO_VO_THUMB_CACHE[driveId] = data.dataUrl;
+                return data.dataUrl;
+              }
+            } catch (e) {}
+            return "";
+          };
+
+          window.LEO_SYNC_APPROVED_FROM_VO = async function(voData) {
+            if (!voData || !Array.isArray(voData.notes) || typeof window.LEO_UPSERT_LIVE_ITEMS !== "function") return;
+            const approved = voData.notes.filter(function(n) {
+              return n && String(n.id || "").indexOf("approved_") === 0;
+            });
+            if (!approved.length) return;
+
+            const allFiles = Array.isArray(voData.files) ? voData.files : [];
+            const needThumbIds = [];
+
+            function buildLiveItems() {
+              return approved.map(function(n) {
+                const fNames = n.files || [];
+                const fIds = n.fileIds || [];
+                const photos = fNames.map(function(fn, idx) {
+                  let fid = fIds[idx] || "";
+                  if (!fid) {
+                    const found = allFiles.find(function(x) { return String(x.name || "").toLowerCase() === String(fn).toLowerCase(); });
+                    if (found) fid = found.id;
+                  }
+                  const cached = fid ? (window.LEO_VO_THUMB_CACHE[fid] || "") : "";
+                  if (fid && !cached && needThumbIds.indexOf(fid) === -1) needThumbIds.push(fid);
+                  const isVid = /\.(mov|mp4|m4v|webm|avi|mkv)$/i.test(fn);
+                  return {
+                    filename: fn,
+                    original_path: "",
+                    preview_path: "",
+                    thumb_base64: cached,
+                    drive_id: fid,
+                    media_type: isVid ? "video" : "image",
+                    caption: ""
+                  };
+                });
+
+                const rawChildren = (Array.isArray(n.children) && n.children.length) ? n.children.slice() : ["Chung"];
+                return {
+                  id: "vo_" + n.id,
+                  date: n.date || new Date().toISOString().split("T")[0],
+                  time: "",
+                  children: rawChildren,
+                  type: "story",
+                  title: n.title || "",
+                  summary: "",
+                  content: n.text || "",
+                  age_text: "",
+                  tags: [],
+                  open_at: "",
+                  photos: photos
+                };
+              });
+            }
+
+            window.LEO_UPSERT_LIVE_ITEMS(buildLiveItems());
+
+            if (needThumbIds.length > 0) {
+              try {
+                const res = await fetch(VO_API_URL + "?action=thumbs&ids=" + encodeURIComponent(needThumbIds.join(",")));
+                const tData = await res.json();
+                if (tData && tData.ok && tData.thumbs) {
+                  Object.keys(tData.thumbs).forEach(function(fid) {
+                    if (tData.thumbs[fid]) window.LEO_VO_THUMB_CACHE[fid] = tData.thumbs[fid];
+                  });
+                  window.LEO_UPSERT_LIVE_ITEMS(buildLiveItems());
+                }
+              } catch (e) {}
+            }
+          };
+
+          if (window.ARCHIVE_READ_ONLY) {
+            fetch(VO_API_URL + "?action=list&_t=" + Date.now())
+              .then(function(r) { return r.json(); })
+              .then(function(d) {
+                if (d && d.ok) window.LEO_SYNC_APPROVED_FROM_VO(d);
+              })
+              .catch(function() {});
+          }
+        })();
+        </script>
   
 </body>
 </html>

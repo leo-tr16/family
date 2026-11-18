@@ -1154,7 +1154,8 @@
 
     // Runtime state
     let driveFiles = [];          // [{ id, name, mimeType, size, isVideo, date, createdAt, updatedAt, folder }]
-    let notes = [];               // [{ id, text, title, date, children, files, fileIds, updatedAt }]
+    let notes = [];               // [{ id, text, title, date, children, files, fileIds, updatedAt }] (active/pending)
+    let approvedNotes = [];       // Ghi chú đã được Admin phê duyệt trên Cloud (giữ nguyên khi lưu, ẩn khỏi màn hình Vợ)
     let selectedFileIds = new Set();
     let currentFilter = "all";
     let thumbCache = new Map();   // fileId -> dataUri | "none"
@@ -1544,10 +1545,19 @@
           return;
         }
 
-        driveFiles = data.files;
         if (Array.isArray(data.notes)) {
-          notes = data.notes;
+          approvedNotes = data.notes.filter(n => n && String(n.id || "").indexOf("approved_") === 0);
+          notes = data.notes.filter(n => !n || String(n.id || "").indexOf("approved_") !== 0);
         }
+
+        // Ẩn các ảnh đã thuộc câu chuyện được Admin phê duyệt khỏi lưới chờ của Vợ
+        const approvedFileIds = new Set();
+        const approvedFileNames = new Set();
+        approvedNotes.forEach(n => {
+          (n.fileIds || []).forEach(fid => { if (fid) approvedFileIds.add(fid); });
+          (n.files || []).forEach(fn => { if (fn) approvedFileNames.add(String(fn).toLowerCase()); });
+        });
+        driveFiles = data.files.filter(f => !approvedFileIds.has(f.id) && !approvedFileNames.has(String(f.name || "").toLowerCase()));
 
         const validIds = new Set(driveFiles.map(f => f.id));
         selectedFileIds.forEach(id => {
@@ -2188,11 +2198,12 @@
     // ĐỒNG BỘ DRIVE & SEND TO ADMIN (KẾT THÚC ĐỢT KHI USER CHỌN)
     // =========================================================================
     function buildNotesPayload() {
+      const combinedNotes = [...approvedNotes, ...notes];
       const lines = [];
-      lines.push(`LEO FAMILY STORY — DANH SÁCH GHI CHÚ (${notes.length})`);
+      lines.push(`LEO FAMILY STORY — DANH SÁCH GHI CHÚ (${combinedNotes.length})`);
       lines.push(`========================================`);
 
-      notes.forEach((n, idx) => {
+      combinedNotes.forEach((n, idx) => {
         lines.push("");
         const membersStr = formatMemberList(n.children);
         const metaHead = membersStr ? `${n.date || todayStr} | ${membersStr}` : (n.date || todayStr);
@@ -2203,8 +2214,8 @@
 
       const jsonObj = {
         version: "4.0",
-        total_stories: notes.length,
-        stories: notes.map((n, idx) => ({
+        total_stories: combinedNotes.length,
+        stories: combinedNotes.map((n, idx) => ({
           id: n.id,
           story_index: idx + 1,
           event_title: n.title || shortTitleFromText(n.text),
