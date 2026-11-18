@@ -44,8 +44,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      padding: 14px 14px 135px 14px;
+      line-height: 1.45;
+      padding: 12px 12px 145px 12px;
       max-width: 560px;
       margin: 0 auto;
     }
@@ -53,29 +53,29 @@
     /* Header */
     header {
       text-align: center;
-      padding: 14px 0 12px 0;
+      padding: 10px 0 10px 0;
     }
     .badge-sub {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.4px;
       color: #8c6a22;
       background: #fdf6e6;
-      padding: 4px 12px;
+      padding: 3px 11px;
       border-radius: 20px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     h1 {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       letter-spacing: -0.4px;
     }
     .subhead {
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
@@ -83,39 +83,26 @@
     .card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
+      padding: 15px;
+      margin-bottom: 12px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
-    }
-
-    .step-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
     }
     .step-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.4px;
       padding: 4px 10px;
       border-radius: 8px;
+      margin-bottom: 8px;
     }
     .badge-1 { background: var(--primary-light); color: var(--primary); }
     .badge-2 { background: #fde8ea; color: #c82333; }
     .badge-3 { background: var(--green-light); color: var(--green); }
-
-    .card-title {
-      font-size: 16.5px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
 
     /* Buttons */
     .btn {
@@ -124,7 +111,7 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      padding: 14px 16px;
+      padding: 13px 16px;
       border-radius: 14px;
       font-size: 15px;
       font-weight: 700;
@@ -134,21 +121,18 @@
       transition: transform 0.14s, opacity 0.2s;
       font-family: inherit;
     }
-    .btn:active {
-      transform: scale(0.98);
-    }
+    .btn:active { transform: scale(0.98); }
     .btn-drive {
       background: var(--primary);
       color: #ffffff;
       box-shadow: 0 4px 14px rgba(31, 58, 95, 0.25);
-      margin: 6px 0 12px 0;
+      margin-bottom: 10px;
     }
     .btn-pick {
-      background: #f5f7fa;
+      background: #f4f7fb;
       color: var(--primary);
       border: 2px dashed #9cb1c9;
-      padding: 15px 14px;
-      margin: 6px 0 10px 0;
+      padding: 16px 14px;
       flex-direction: column;
       gap: 4px;
     }
@@ -162,177 +146,185 @@
       color: #ffffff;
       box-shadow: 0 4px 12px rgba(47, 93, 80, 0.22);
     }
+    .btn-outline-sm {
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #c5d1df;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
 
-    /* Short guide bullets */
+    /* Short guide + Warning */
     .mini-steps {
-      font-size: 13.5px;
+      font-size: 13px;
       color: #333833;
       background: #faf9f6;
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: 9px 11px;
+      border-radius: 11px;
       border: 1px solid #eeece4;
-      line-height: 1.55;
+      line-height: 1.5;
     }
-    .mini-steps b {
-      color: var(--primary);
-    }
+    .mini-steps b { color: var(--primary); }
 
-    /* Video < 30s warning box */
     .video-warn {
       display: flex;
       align-items: flex-start;
-      gap: 9px;
+      gap: 8px;
       background: var(--warn-bg);
       border: 1px solid #f0cf7a;
       border-left: 4px solid var(--warn-border);
       color: var(--warn-text);
-      padding: 10px 12px;
+      padding: 9px 11px;
       border-radius: 10px;
-      font-size: 13px;
-      margin-top: 10px;
-      line-height: 1.45;
+      font-size: 12.5px;
+      margin-top: 9px;
+      line-height: 1.4;
     }
-    .video-warn strong {
-      color: #6b4400;
-    }
+    .video-warn strong { color: #6b4400; }
 
-    /* Form elements */
-    .form-row {
+    /* Segmented Tabs (Photos vs Stories) */
+    .tabs {
       display: grid;
-      grid-template-columns: 1fr 132px;
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      background: #efede6;
+      padding: 4px;
+      border-radius: 12px;
       margin-bottom: 12px;
+      gap: 4px;
     }
-    .form-group {
-      margin-bottom: 12px;
-    }
-    label {
-      display: block;
-      font-size: 11px;
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 9px 8px;
+      border-radius: 9px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-    input[type="text"], input[type="date"], textarea {
-      width: 100%;
-      padding: 11px 12px;
-      font-size: 15px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #faf9f6;
-      color: var(--text);
-      outline: none;
+      cursor: pointer;
+      transition: all 0.16s;
       font-family: inherit;
-      transition: border-color 0.2s, background 0.2s;
     }
-    input:focus, textarea:focus {
-      border-color: var(--primary);
+    .tab-btn.active {
       background: #ffffff;
-    }
-    textarea {
-      min-height: 82px;
-      resize: vertical;
-      line-height: 1.45;
-    }
-    .mic-hint {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
-    /* Child Chips */
-    .chips-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
+    /* Progress Bar when loading 100 photos */
+    .progress-wrap {
+      display: none;
+      background: #f4f7fb;
+      border: 1px solid #d2deec;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0 10px 0;
     }
-    .chip {
-      padding: 6px 13px;
-      border-radius: 18px;
-      font-size: 13px;
+    .progress-label {
+      font-size: 12.5px;
       font-weight: 600;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text-muted);
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.16s;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
     }
-    .chip.active {
+    .progress-bar-bg {
+      height: 7px;
+      background: #dce5f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width 0.12s;
+    }
+
+    /* Filter Pills */
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-pill {
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: #faf9f6;
+      color: var(--text-muted);
+      border-radius: 16px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .filter-pill.active {
       background: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
     }
 
-    /* Divider */
-    .section-divider {
-      height: 1px;
-      background: #eeece4;
-      margin: 14px 0;
-    }
-
-    /* Media Grid */
-    .media-toolbar {
+    .toolbar-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 8px 0 10px 0;
-      font-size: 12.5px;
+      margin-bottom: 8px;
+      font-size: 12px;
       color: var(--text-muted);
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    .btn-link-sm {
+    .btn-link {
       background: none;
       border: none;
       color: var(--primary);
       font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
-      padding: 4px 6px;
+      padding: 4px 5px;
+      font-family: inherit;
     }
-    .btn-link-danger {
-      color: var(--heart);
-    }
+    .btn-link.danger { color: var(--heart); }
 
-    .media-grid {
+    /* 3-Column Apple Photos Style Grid */
+    .photo-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin-top: 6px;
     }
-    .media-card {
-      background: #faf9f6;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 2px solid var(--border);
-      display: flex;
-      flex-direction: column;
+    .photo-tile {
       position: relative;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .media-card.selected {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(31, 58, 95, 0.18);
-    }
-    .thumb-wrap {
-      width: 100%;
-      height: 150px;
-      background: #1b222c;
-      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #232a34;
+      border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
+      user-select: none;
+      border: 2.5px solid transparent;
+      transition: transform 0.1s, border-color 0.12s;
     }
-    .thumb-wrap img, .thumb-wrap video {
+    .photo-tile.selected {
+      border-color: #1f3a5f;
+      transform: scale(0.95);
+    }
+    .photo-tile img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .fallback-box {
+    .photo-tile.has-story img {
+      opacity: 0.78;
+    }
+    .tile-fallback {
       width: 100%;
       height: 100%;
       display: flex;
@@ -340,182 +332,177 @@
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      padding: 10px;
+      font-size: 10px;
+      padding: 6px;
       text-align: center;
-      background: #2b3a4a;
-      font-size: 11px;
       word-break: break-all;
+      background: #2d3a4b;
     }
-    .select-check {
+    .tile-num {
       position: absolute;
-      top: 7px;
-      left: 7px;
-      width: 26px;
-      height: 26px;
+      top: 4px;
+      left: 4px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 5px;
+      z-index: 2;
+    }
+    .tile-check {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      border: 2px solid #9aa4b2;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid #8a94a6;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 12px;
+      font-weight: 900;
       color: transparent;
       z-index: 3;
-      cursor: pointer;
     }
-    .media-card.selected .select-check {
+    .photo-tile.selected .tile-check {
       background: var(--primary);
-      border-color: var(--primary);
+      border-color: #ffffff;
       color: #ffffff;
     }
-    .fav-btn {
+    .tile-vid-badge {
       position: absolute;
-      top: 7px;
-      right: 7px;
-      width: 30px;
-      height: 30px;
+      bottom: 4px;
+      left: 4px;
+      background: rgba(20, 90, 50, 0.88);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .tile-vid-badge.over {
+      background: #c82333;
+    }
+    .tile-story-tag {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(31, 58, 95, 0.92);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 4px;
+      z-index: 2;
+      max-width: 70%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile-zoom {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(0, 0, 0, 0.55);
+      color: #ffffff;
       border: none;
+      font-size: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
-      z-index: 3;
+      z-index: 4;
       cursor: pointer;
     }
-    .fav-btn.active {
-      background: #fde8ea;
-    }
-    .media-index {
-      position: absolute;
-      bottom: 6px;
-      left: 6px;
-      background: rgba(0, 0, 0, 0.68);
-      color: #ffffff;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 6px;
-      backdrop-filter: blur(4px);
-    }
-    .video-badge {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      background: rgba(20, 90, 50, 0.88);
-      color: #ffffff;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 6px;
-    }
-    .video-badge.over-limit {
-      background: #c82333;
-    }
-    .over-limit-bar {
-      background: var(--danger-bg);
-      color: var(--danger-text);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 5px 7px;
-      text-align: center;
-      border-bottom: 1px solid #f5c2c7;
-    }
 
-    .group-tags-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 6px 7px 0 7px;
-    }
-    .group-pill {
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 10px;
-      background: #e9eef4;
-      color: #1f3a5f;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .media-body {
-      padding: 7px;
+    /* Stories List Tab */
+    .story-list {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 10px;
     }
-    .media-fname {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .caption-input {
-      width: 100%;
-      padding: 7px 8px;
-      font-size: 12.5px;
+    .story-card {
+      background: #faf9f6;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #ffffff;
-      color: var(--text);
-      outline: none;
-      font-family: inherit;
+      border-left: 4px solid var(--primary);
+      border-radius: 13px;
+      padding: 12px;
     }
-    .caption-input:focus {
-      border-color: var(--primary);
+    .story-card.starred {
+      border-left-color: var(--heart);
     }
-
-    /* Group Notes Summary Box */
-    .group-notes-list {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .group-note-item {
-      background: #f4f7fb;
-      border: 1px solid #d2deec;
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 13px;
-    }
-    .group-note-head {
+    .story-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 4px;
-    }
-    .group-note-title {
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 12.5px;
-    }
-    .group-note-files {
-      font-size: 11.5px;
-      color: var(--text-muted);
+      gap: 6px;
       margin-bottom: 5px;
     }
-    .group-note-text {
-      color: var(--text);
-      line-height: 1.4;
-      white-space: pre-wrap;
+    .story-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
     }
-    .group-actions {
+    .story-meta {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .story-title-txt {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .story-body-txt {
+      font-size: 13.5px;
+      color: #2f3330;
+      white-space: pre-wrap;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .story-thumbs {
       display: flex;
-      gap: 8px;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .story-thumb-mini {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .story-files-txt {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      word-break: break-word;
+    }
+    .empty-box {
+      text-align: center;
+      padding: 26px 14px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      background: #faf9f6;
+      border-radius: 12px;
+      border: 1px dashed var(--border);
     }
 
-    /* Floating Selection Bar (appears when >=1 photo ticked) */
+    /* Floating Selection Bar */
     .selection-bar {
       display: none;
       position: fixed;
-      bottom: 86px;
+      bottom: 84px;
       left: 12px;
       right: 12px;
       max-width: 536px;
@@ -527,52 +514,64 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      box-shadow: 0 8px 24px rgba(31, 58, 95, 0.35);
+      box-shadow: 0 8px 24px rgba(31, 58, 95, 0.38);
       z-index: 1050;
     }
-    .selection-bar.show {
-      display: flex;
+    .selection-bar.show { display: flex; }
+    .sel-left {
+      min-width: 0;
     }
-    .sel-info {
+    .sel-count {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
+    }
+    .sel-nums {
+      font-size: 11px;
+      opacity: 0.85;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 165px;
     }
     .sel-btns {
       display: flex;
       gap: 6px;
+      flex-shrink: 0;
     }
-    .btn-sel-primary {
+    .btn-sel-create {
       background: #ffffff;
       color: var(--primary);
       border: none;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12.5px;
+      border-radius: 11px;
+      padding: 9px 13px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
+      font-family: inherit;
     }
     .btn-sel-clear {
       background: rgba(255, 255, 255, 0.18);
       color: #ffffff;
       border: none;
-      border-radius: 10px;
-      padding: 8px 10px;
+      border-radius: 11px;
+      padding: 9px 10px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
+      font-family: inherit;
     }
 
-    /* Fixed Bottom Send Bar */
+    /* Bottom Fixed Send Bar */
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
-      padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
+      padding: 9px 12px calc(9px + env(safe-area-inset-bottom, 0px)) 12px;
       z-index: 1000;
     }
     .bottom-inner {
@@ -590,10 +589,34 @@
       padding: 13px 18px;
       font-size: 16px;
     }
-    .send-summary {
+    .send-sub {
       font-size: 11.5px;
       text-align: center;
       color: var(--text-muted);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: #1f3a5f;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      z-index: 3000;
+      transition: transform 0.25s ease;
+      white-space: nowrap;
+      max-width: 92vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Modals */
@@ -601,78 +624,135 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.58);
       z-index: 2000;
       align-items: flex-end;
       justify-content: center;
-      padding: 12px;
+      padding: 10px;
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
     }
-    .modal-overlay.center {
-      align-items: center;
-    }
-    .modal-overlay.show {
-      display: flex;
-    }
+    .modal-overlay.center { align-items: center; }
+    .modal-overlay.show { display: flex; }
+
     .modal-sheet {
       background: #ffffff;
       border-radius: 22px;
-      padding: 20px;
+      padding: 18px;
       width: 100%;
-      max-width: 440px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-      max-height: 88vh;
+      max-width: 460px;
+      max-height: 90vh;
       overflow-y: auto;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
     }
     .modal-title {
       font-size: 17px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .modal-sub {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       line-height: 1.4;
     }
-    .preview-text-box {
-      background: #f7f6f2;
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 130px;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .form-group { margin-bottom: 10px; }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    input[type="text"], input[type="date"], textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 15px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 12.5px;
+      border-radius: 11px;
+      background: #faf9f6;
       color: var(--text);
-      white-space: pre-wrap;
-      max-height: 200px;
-      overflow-y: auto;
-      margin-bottom: 14px;
-      text-align: left;
+      outline: none;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+    textarea {
+      min-height: 95px;
+      resize: vertical;
       line-height: 1.45;
     }
+
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      padding: 6px 12px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .star-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 8px 0 4px 0;
+      cursor: pointer;
+    }
+    .star-check input { width: 18px; height: 18px; accent-color: var(--heart); }
+
     .modal-btn-row {
       display: flex;
       gap: 8px;
       margin-top: 12px;
     }
-    .btn-cancel {
-      background: #f0eee6;
+    .btn-cancel { background: #f0eee6; color: var(--text); }
+    .btn-save { background: var(--primary); color: #ffffff; }
+    .btn-zalo { background: #0068ff; color: #ffffff; margin-bottom: 8px; }
+    .btn-copy { background: #eef2f7; color: var(--primary); margin-bottom: 8px; }
+    .btn-reset { background: #e9f0ed; color: #2f5d50; margin-bottom: 8px; }
+
+    .preview-text-box {
+      background: #f7f6f2;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px;
+      font-size: 12px;
       color: var(--text);
-    }
-    .btn-save {
-      background: var(--primary);
-      color: #ffffff;
-    }
-    .btn-zalo {
-      background: #0068ff;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-    .btn-copy {
-      background: #eef2f7;
-      color: var(--primary);
-      margin-bottom: 8px;
+      white-space: pre-wrap;
+      max-height: 210px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      text-align: left;
+      line-height: 1.45;
     }
     .subtle-json-link {
       display: block;
@@ -687,222 +767,275 @@
       text-decoration: underline;
     }
 
-    /* Peace note */
+    /* Lightbox Preview */
+    .lightbox-img {
+      width: 100%;
+      max-height: 60vh;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #000;
+      margin-bottom: 10px;
+    }
+
     .peace-note {
       text-align: center;
       font-size: 12px;
       color: var(--text-muted);
       padding: 4px 8px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
   </style>
 </head>
 <body>
 
+  <div class="toast" id="toast"></div>
+
   <header>
     <div class="badge-sub">Leo-Family Story</div>
     <h1>Kỷ Niệm Của Mẹ ❤️</h1>
-    <div class="subhead">2 bước siêu gọn: Tải ảnh lên Drive ➔ Ghi chú &amp; Send to Leo</div>
+    <div class="subhead">1 link duy nhất • Tải ảnh lên Drive ➔ Chọn ảnh tạo Story ➔ Send to Leo</div>
   </header>
 
-  <!-- ==================== BƯỚC 1: UPLOAD ẢNH & VIDEO ==================== -->
+  <!-- ==================== BƯỚC 1: UPLOAD LÊN DRIVE ==================== -->
   <div class="card">
-    <div class="step-row">
-      <span class="step-badge badge-1">Bước 1 • Tải ảnh &amp; video gốc</span>
-    </div>
+    <span class="step-badge badge-1">Bước 1 • Tải ảnh &amp; video gốc</span>
 
     <a href="https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5" class="btn btn-drive" id="btnOpenDrive" target="_blank" rel="noopener">
       <span>📤 Mở Thư Mục "99 Inbox / Vo" Để Upload</span>
     </a>
 
     <div class="mini-steps">
-      Vào thư mục ➔ Bấm dấu <b>+</b> ➔ Chọn <b>Tải lên</b> ➔ Chọn ảnh &amp; video từ máy rồi bấm <b>Tải lên</b>.<br>
-      <i>(Tải xong cứ khoá máy bỏ túi, ảnh gốc 100% vẫn giữ nguyên trên iPhone của mẹ).</i>
+      Bấm nút trên ➔ vào thẳng thư mục <b>Vo</b> ➔ bấm dấu <b>+</b> ➔ <b>Tải lên</b> ➔ chọn ảnh &amp; video trên iPhone.
     </div>
 
     <div class="video-warn">
-      <span style="font-size: 18px; line-height: 1.2;">🎬</span>
+      <span style="font-size: 17px; line-height: 1.2;">🎬</span>
       <div>
-        <strong>Lưu ý về Video:</strong> Được phép gửi kèm <strong>video ngắn DƯỚI 30 GIÂY</strong> mẹ nhé!
+        <strong>Lưu ý Video:</strong> Được phép tải kèm <strong>video ngắn DƯỚI 30 GIÂY</strong> mẹ nhé!
         <i>(Video dài hơn 30 giây sẽ làm nặng kho và chậm khi cả nhà mở xem lại).</i>
       </div>
     </div>
   </div>
 
-  <!-- ==================== BƯỚC 2: GHI CHÚ TRỰC QUAN ==================== -->
+  <!-- ==================== BƯỚC 2: CHỌN ẢNH TẠO NHIỀU STORIES ==================== -->
   <div class="card">
-    <div class="step-row">
-      <span class="step-badge badge-2">Bước 2 • Ghi chú chi tiết</span>
-    </div>
-    <div class="card-title">✍️ Ghi chú sự kiện &amp; từng ảnh / nhóm ảnh</div>
+    <span class="step-badge badge-2">Bước 2 • Tạo 1 hoặc nhiều Stories rồi gửi 1 lần</span>
 
-    <!-- Thông tin chung -->
-    <div class="form-row">
-      <div>
-        <label>Tên sự kiện</label>
-        <input type="text" id="eventTitle" placeholder="VD: Marc đi tiêm, Ben thi bơi...">
-      </div>
-      <div>
-        <label>Ngày chụp</label>
-        <input type="date" id="eventDate">
-      </div>
+    <!-- 2 Tabs -->
+    <div class="tabs">
+      <button type="button" class="tab-btn active" id="tabPhotosBtn">📸 Ảnh &amp; Video (<span id="tabPhotoCount">0</span>)</button>
+      <button type="button" class="tab-btn" id="tabStoriesBtn">📖 Stories đã tạo (<span id="tabStoryCount">0</span>)</button>
     </div>
 
-    <div class="form-group">
-      <label>Nhân vật trong ảnh</label>
-      <div class="chips-group" id="childChips">
-        <div class="chip active" data-child="Marc">Marc</div>
-        <div class="chip" data-child="Alex">Alex</div>
-        <div class="chip" data-child="Ben">Ben</div>
-        <div class="chip" data-child="Tomey">Tomey</div>
-        <div class="chip" data-child="Chung">Cả nhà</div>
-      </div>
-    </div>
+    <!-- TAB 1: PHOTOS GRID -->
+    <div id="tabPhotosPanel">
+      <input type="file" id="mediaPicker" accept="image/*,video/*" multiple style="display: none;">
 
-    <div class="form-group">
-      <label>Lời kể chung của buổi hôm đó (không bắt buộc)</label>
-      <textarea id="momStory" placeholder="Kể ngắn gọn không khí hoặc kỷ niệm đáng nhớ của buổi hôm nay..."></textarea>
-      <div class="mic-hint">💡 Chạm vào ô chữ rồi bấm nút <b>Micro 🎙️</b> trên bàn phím iPhone để nói cho nhanh!</div>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- Chọn ảnh & video để ghi chú từng ảnh hoặc theo nhóm -->
-    <label>Ghi chú cho từng ảnh / nhiều ảnh cùng lúc</label>
-
-    <input type="file" id="mediaPicker" accept="image/*,video/*" multiple style="display: none;">
-    <button type="button" class="btn btn-pick" id="btnPickMedia">
-      <span>🖼️ Bấm chọn ảnh &amp; video ngắn để ghi chú</span>
-      <small>Hiện hình ngay trên máy (không tốn 4G) • Hỗ trợ chọn nhiều tấm 1 lúc</small>
-    </button>
-
-    <div id="videoDurationAlert" class="video-warn" style="display: none; background: #fdecec; border-color: #f5c2c7; border-left-color: #c82333; color: #991b1b;">
-      <span style="font-size: 16px;">⚠️</span>
-      <div id="videoDurationAlertText">Có video dài hơn 30 giây! Mẹ cắt ngắn dưới 30s trước khi gửi lên Drive nhé.</div>
-    </div>
-
-    <div id="mediaArea" style="display: none;">
-      <div class="media-toolbar">
-        <span id="mediaCountLabel"><b>0</b> ảnh/video đang mở</span>
-        <div>
-          <button type="button" class="btn-link-sm" id="btnSelectAll">Chọn tất cả</button>
-          <button type="button" class="btn-link-sm" id="btnAddMore">+ Thêm ảnh</button>
-          <button type="button" class="btn-link-sm btn-link-danger" id="btnClearMedia">Xóa hết</button>
+      <div id="emptyPickerArea">
+        <button type="button" class="btn btn-pick" id="btnPickMedia">
+          <span>🖼️ Bấm chọn ảnh &amp; video từ iPhone</span>
+          <small>Cân mượt 100+ ảnh • Tự nén xem trước siêu nhẹ • Không tốn 4G</small>
+        </button>
+        <div style="text-align: center; margin-top: 8px;">
+          <button type="button" class="btn-outline-sm" id="btnNewTextStoryEmpty">+ Hoặc viết Story nhanh không cần chọn ảnh</button>
         </div>
       </div>
 
-      <div style="font-size: 12px; color: var(--text-muted); background: #f8f7f3; padding: 8px 10px; border-radius: 10px; margin-bottom: 8px; line-height: 1.45;">
-        • <b>Ghi chú 1 ảnh:</b> Gõ/nói thẳng vào ô bên dưới tấm đó.<br>
-        • <b>Ghi chú NHÓM nhiều ảnh:</b> Chạm chọn nhiều hình ➔ Bấm nút xanh <b>"Ghi chú chung"</b> hiện ra ở dưới. Làm xong nhiều nhóm rồi mới bấm <b>Send to Leo</b>!
+      <!-- Loading Progress Bar -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-label">
+          <span id="progressText">Đang chuẩn bị ảnh xem trước...</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
       </div>
 
-      <div class="media-grid" id="mediaGrid"></div>
-
-      <!-- Danh sách các ghi chú nhóm đã tạo -->
-      <div id="groupNotesSection" style="display: none; margin-top: 14px;">
-        <label>🏷️ Các ghi chú nhóm mẹ đã tạo (sẽ gửi cùng lúc cho Leo)</label>
-        <div class="group-notes-list" id="groupNotesList"></div>
+      <!-- Alert if any video > 30s -->
+      <div id="videoOverAlert" class="video-warn" style="display: none; background: var(--danger-bg); border-color: #f5c2c7; border-left-color: #c82333; color: #991b1b; margin-bottom: 8px;">
+        <span>⚠️</span>
+        <div id="videoOverAlertText">Có video dài quá 30 giây!</div>
       </div>
+
+      <!-- Active Grid Area -->
+      <div id="gridArea" style="display: none;">
+        <!-- Smart Filters -->
+        <div class="filter-row">
+          <button type="button" class="filter-pill active" data-filter="all" id="pillAll">Tất cả (0)</button>
+          <button type="button" class="filter-pill" data-filter="todo" id="pillTodo">Chưa có Story (0)</button>
+          <button type="button" class="filter-pill" data-filter="done" id="pillDone">Đã làm Story (0)</button>
+        </div>
+
+        <div class="toolbar-row">
+          <span>Chạm chọn 1 hoặc nhiều ảnh ➔ <b>Tạo Story</b></span>
+          <div>
+            <button type="button" class="btn-link" id="btnAddMore">+ Thêm ảnh</button>
+            <button type="button" class="btn-link danger" id="btnClearGrid">Xóa lưới</button>
+          </div>
+        </div>
+
+        <div class="photo-grid" id="photoGrid"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: STORIES LIST -->
+    <div id="tabStoriesPanel" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px;">
+        <button type="button" class="btn-outline-sm" id="btnAddNoPhotoStory">+ Thêm Story chữ</button>
+        <button type="button" class="btn-link danger" id="btnClearAllStories" style="display: none;">Xóa hết Stories</button>
+      </div>
+      <div class="story-list" id="storyList"></div>
     </div>
   </div>
 
-  <!-- ==================== BƯỚC 3: XEM KHO KỶ NIỆM ==================== -->
+  <!-- ==================== BƯỚC 3: KHO KỶ NIỆM ==================== -->
   <div class="card">
-    <div class="step-row">
-      <span class="step-badge badge-3">Kho kỷ niệm gia đình</span>
-    </div>
+    <span class="step-badge badge-3">Thành phẩm gia đình</span>
     <a href="./index.html" class="btn btn-viewer">
       <span>🏠 Xem Kho Kỷ Niệm Leo-Family Story</span>
     </a>
   </div>
 
   <div class="peace-note">
-    💚 Ảnh gốc vẫn ở nguyên trên iPhone của mẹ • Anh Leo sẽ tự biên tập và dọn sạch ảnh thừa trên Drive sau khi duyệt.
+    💚 Tự động lưu nháp toàn bộ Stories trên máy • Ảnh gốc giữ nguyên 100% trên iPhone • Anh Leo tự dọn sạch ảnh thừa sau khi duyệt.
   </div>
 
-  <!-- ==================== THANH CHỌN NHÓM NỔI ==================== -->
+  <!-- ==================== FLOATING SELECTION BAR ==================== -->
   <div class="selection-bar" id="selectionBar">
-    <div class="sel-info" id="selCountText">Đã chọn 0 mục</div>
+    <div class="sel-left">
+      <div class="sel-count" id="selCountText">Đã chọn 0 ảnh</div>
+      <div class="sel-nums" id="selNumsText"></div>
+    </div>
     <div class="sel-btns">
-      <button type="button" class="btn-sel-primary" id="btnOpenGroupModal">✍️ Ghi chú chung</button>
-      <button type="button" class="btn-sel-clear" id="btnClearSelection">Bỏ chọn</button>
+      <button type="button" class="btn-sel-create" id="btnCreateStoryFromSel">✍️ Tạo Story</button>
+      <button type="button" class="btn-sel-clear" id="btnClearSel">Bỏ chọn</button>
     </div>
   </div>
 
-  <!-- ==================== THANH SEND TO LEO CỐ ĐỊNH ==================== -->
+  <!-- ==================== FIXED BOTTOM SEND BAR ==================== -->
   <div class="bottom-bar">
     <div class="bottom-inner">
       <button type="button" class="btn btn-send" id="btnSend">
-        <span>Send to Leo ❤️</span>
+        <span id="btnSendLabel">Send to Leo ❤️</span>
       </button>
-      <div class="send-summary" id="sendSummary">Mẹ có thể viết bao nhiêu ghi chú tùy thích rồi bấm gửi 1 lần</div>
+      <div class="send-sub" id="sendSub">Tạo xong bao nhiêu Stories tùy thích rồi bấm gửi 1 lần duy nhất</div>
     </div>
   </div>
 
-  <!-- ==================== MODAL VIẾT GHI CHÚ CHO NHÓM ẢNH ==================== -->
-  <div class="modal-overlay" id="groupModal">
+  <!-- ==================== MODAL TẠO / SỬA STORY ==================== -->
+  <div class="modal-overlay" id="storyModal">
     <div class="modal-sheet">
-      <div class="modal-title" id="groupModalTitle">✍️ Ghi chú chung cho nhóm ảnh</div>
-      <div class="modal-sub" id="groupModalFiles">Áp dụng cho: ...</div>
-      <textarea id="groupNoteInput" placeholder="Ví dụ: Cả 3 tấm này là lúc Marc lần đầu được ăn kem, cười tít mắt..." style="min-height: 110px;"></textarea>
-      <div class="mic-hint">💡 Bấm nút <b>Micro 🎙️</b> trên bàn phím iPhone để nói cho nhanh!</div>
+      <div class="modal-title" id="storyModalTitle">✍️ Tạo Story #1</div>
+      <div class="modal-sub" id="storyModalSub">Chọn ảnh nào sẽ gắn trực tiếp tên ảnh đó vào Story</div>
+
+      <div class="story-thumbs" id="modalSelectedThumbs" style="margin-bottom: 10px;"></div>
+
+      <div class="form-row">
+        <div>
+          <label>Tên Story (tùy chọn)</label>
+          <input type="text" id="stTitle" placeholder="VD: Marc ăn kem, Ben bơi...">
+        </div>
+        <div>
+          <label>Ngày</label>
+          <input type="date" id="stDate">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nhân vật chính</label>
+        <div class="chips-group" id="stChildChips">
+          <div class="chip active" data-child="Marc">Marc</div>
+          <div class="chip" data-child="Alex">Alex</div>
+          <div class="chip" data-child="Ben">Ben</div>
+          <div class="chip" data-child="Tomey">Tomey</div>
+          <div class="chip" data-child="Chung">Cả nhà</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Lời kể của Mẹ</label>
+        <textarea id="stText" placeholder="Bấm nút Micro 🎙️ trên bàn phím iPhone để kể lại khoảnh khắc này cho nhanh mẹ nhé..."></textarea>
+      </div>
+
+      <label class="star-check">
+        <input type="checkbox" id="stStarred">
+        <span>❤️ Đánh dấu Story / ảnh mẹ thích nhất</span>
+      </label>
+
       <div class="modal-btn-row">
-        <button type="button" class="btn btn-cancel" id="btnCancelGroup">Hủy</button>
-        <button type="button" class="btn btn-save" id="btnSaveGroup">Lưu ghi chú ✓</button>
+        <button type="button" class="btn btn-cancel" id="btnCancelStory">Hủy</button>
+        <button type="button" class="btn btn-save" id="btnSaveStory">Lưu Story ✓</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL HOÀN TẤT SEND TO LEO ==================== -->
+  <!-- ==================== MODAL XEM LỚN 1 ẢNH ==================== -->
+  <div class="modal-overlay center" id="zoomModal">
+    <div class="modal-sheet" style="text-align: center;">
+      <div class="modal-title" id="zoomTitle">Ảnh #1</div>
+      <div class="modal-sub" id="zoomSub"></div>
+      <img id="zoomImg" class="lightbox-img" style="display: none;">
+      <div id="zoomFallback" style="display: none; padding: 30px; background: #232a34; color: #fff; border-radius: 12px; margin-bottom: 10px;"></div>
+      <div class="modal-btn-row">
+        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">✓ Chọn ảnh này</button>
+        <button type="button" class="btn btn-cancel" onclick="closeZoomModal()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL SEND TO LEO ==================== -->
   <div class="modal-overlay center" id="sendModal">
     <div class="modal-sheet" style="text-align: center;">
-      <div style="font-size: 40px; margin-bottom: 6px;">🎉❤️</div>
-      <div class="modal-title">Sẵn sàng gửi cho Leo!</div>
-      <div class="modal-sub">Toàn bộ lời kể &amp; ghi chú từng ảnh/nhóm ảnh đã được đóng gói gọn gàng bên dưới:</div>
+      <div style="font-size: 38px; margin-bottom: 4px;">🎉❤️</div>
+      <div class="modal-title" id="sendModalTitle">Sẵn sàng gửi cho Leo!</div>
+      <div class="modal-sub">Toàn bộ các Stories kèm đúng tên ảnh/video đã đóng gói sẵn bên dưới:</div>
 
       <div class="preview-text-box" id="finalPreviewText"></div>
 
       <button type="button" class="btn btn-zalo" id="btnNativeShare">
         <span>💬 Gửi Ngay Qua Zalo / Tin Nhắn Cho Leo</span>
       </button>
-      <button type="button" class="btn btn-copy" id="btnCopyAgain">
+      <button type="button" class="btn btn-copy" id="btnCopyAll">
         <span>📋 Sao Chép Toàn Bộ Nội Dung</span>
       </button>
-      <button type="button" class="btn btn-cancel" onclick="closeSendModal()">Đóng lại</button>
+      <button type="button" class="btn btn-reset" id="btnDoneReset">
+        <span>🧹 Đã gửi xong — Dọn trống cho đợt mới</span>
+      </button>
+      <button type="button" class="btn btn-cancel" onclick="closeSendModal()">Đóng lại (giữ nguyên)</button>
 
       <button type="button" class="subtle-json-link" id="btnDownloadJson">
-        (Tùy chọn nâng cao: Tải file dữ liệu .json cho Leo)
+        (Tùy chọn cho Leo: Tải file dữ liệu .json)
       </button>
     </div>
   </div>
 
   <script>
     // =========================================================================
-    // CẤU HÌNH LINK THƯ MỤC GOOGLE DRIVE 99 INBOX / VO
-    // Anh Leo dán đúng link thư mục "99 Inbox/Vo" vào dòng dưới đây
+    // LINK TRỰC TIẾP THƯ MỤC 99 INBOX / VO
     // =========================================================================
     const DRIVE_VO_FOLDER_URL = "https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5";
-
     document.getElementById("btnOpenDrive").href = DRIVE_VO_FOLDER_URL;
 
-    // State
-    const STORAGE_KEY = "leo_mom_guide_v2_draft";
+    const STORIES_STORAGE_KEY = "leo_mom_v3_stories";
     const VIDEO_MAX_SEC = 30;
+    const THUMB_SIZE = 240;
 
-    let mediaList = [];       // { id, file, name, url, isVideo, durationSec, overLimit, caption, starred }
+    // Runtime state
+    let mediaList = [];      // { id, num, name, size, lastModified, isVideo, thumbDataUrl, durationSec, overLimit }
     let selectedIds = new Set();
-    let groupNotes = [];      // { id, fileIds: [], fileNames: [], text: "" }
-    let editingGroupId = null;
+    let stories = [];        // { id, title, date, children: [], text, fileNames: [], starred: bool, createdAt }
+    let currentFilter = "all";
+    let editingStoryId = null;
+    let modalFileNames = [];
+    let zoomingMediaId = null;
     let lastPayloadText = "";
     let lastPayloadJson = null;
 
-    // Default date = today
     const todayStr = new Date().toISOString().split("T")[0];
-    document.getElementById("eventDate").value = todayStr;
 
-    // --- Helper ---
     function uid() {
-      return "id_" + Math.random().toString(36).slice(2, 9);
+      return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
     }
 
     function formatSec(sec) {
@@ -913,553 +1046,725 @@
       return m > 0 ? `${m}p${r < 10 ? "0" : ""}${r}s` : `${r}s`;
     }
 
-    function getSelectedChildren() {
-      const list = [];
-      document.querySelectorAll("#childChips .chip.active").forEach(c => {
-        list.push(c.getAttribute("data-child"));
-      });
-      return list;
+    function formatDateFromTs(ts) {
+      if (!ts) return todayStr;
+      try {
+        const d = new Date(ts);
+        if (isNaN(d.getTime())) return todayStr;
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      } catch (e) {
+        return todayStr;
+      }
     }
 
-    // --- Chips ---
-    document.querySelectorAll("#childChips .chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        chip.classList.toggle("active");
-        saveTextDraft();
-        updateSummary();
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    // --- Persist Stories to localStorage (chống mất dữ liệu 100%) ---
+    function saveStoriesStorage() {
+      try {
+        localStorage.setItem(STORIES_STORAGE_KEY, JSON.stringify(stories));
+      } catch (e) {}
+      updateCounts();
+    }
+
+    function loadStoriesStorage() {
+      try {
+        const raw = localStorage.getItem(STORIES_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) stories = parsed;
+        }
+      } catch (e) {}
+      updateCounts();
+      renderStoriesList();
+    }
+
+    // --- Helper: find which stories include a filename ---
+    function getStoryIndicesForFile(fileName) {
+      const res = [];
+      stories.forEach((st, idx) => {
+        if (Array.isArray(st.fileNames) && st.fileNames.includes(fileName)) {
+          res.push(idx + 1);
+        }
+      });
+      return res;
+    }
+
+    // --- Tabs ---
+    const tabPhotosBtn = document.getElementById("tabPhotosBtn");
+    const tabStoriesBtn = document.getElementById("tabStoriesBtn");
+    const tabPhotosPanel = document.getElementById("tabPhotosPanel");
+    const tabStoriesPanel = document.getElementById("tabStoriesPanel");
+
+    function switchTab(name) {
+      if (name === "photos") {
+        tabPhotosBtn.classList.add("active");
+        tabStoriesBtn.classList.remove("active");
+        tabPhotosPanel.style.display = "block";
+        tabStoriesPanel.style.display = "none";
+        updateSelectionBar();
+      } else {
+        tabStoriesBtn.classList.add("active");
+        tabPhotosBtn.classList.remove("active");
+        tabStoriesPanel.style.display = "block";
+        tabPhotosPanel.style.display = "none";
+        document.getElementById("selectionBar").classList.remove("show");
+        renderStoriesList();
+      }
+    }
+
+    tabPhotosBtn.addEventListener("click", () => switchTab("photos"));
+    tabStoriesBtn.addEventListener("click", () => switchTab("stories"));
+
+    // --- Filter Pills ---
+    document.querySelectorAll(".filter-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        currentFilter = pill.getAttribute("data-filter");
+        document.querySelectorAll(".filter-pill").forEach(p => p.classList.toggle("active", p === pill));
+        renderPhotoGrid();
       });
     });
 
-    // --- Draft Save/Load (text fields) ---
-    function saveTextDraft() {
-      const draft = {
-        event_title: document.getElementById("eventTitle").value,
-        event_date: document.getElementById("eventDate").value,
-        children: getSelectedChildren(),
-        story: document.getElementById("momStory").value
-      };
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
-      } catch (e) {}
+    // --- Lightweight Thumbnail Generator (chống crash Safari với 100+ ảnh) ---
+    function createImageThumb(file) {
+      return new Promise((resolve) => {
+        const rawUrl = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = THUMB_SIZE;
+            canvas.height = THUMB_SIZE;
+            const ctx = canvas.getContext("2d");
+            const minSide = Math.min(img.width, img.height);
+            const sx = (img.width - minSide) / 2;
+            const sy = (img.height - minSide) / 2;
+            ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, THUMB_SIZE, THUMB_SIZE);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.65);
+            URL.revokeObjectURL(rawUrl);
+            resolve({ thumbDataUrl: dataUrl });
+          } catch (e) {
+            URL.revokeObjectURL(rawUrl);
+            resolve({ thumbDataUrl: null });
+          }
+        };
+        img.onerror = () => {
+          URL.revokeObjectURL(rawUrl);
+          resolve({ thumbDataUrl: null });
+        };
+        img.src = rawUrl;
+      });
     }
 
-    function loadTextDraft() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-        const d = JSON.parse(raw);
-        if (d.event_title) document.getElementById("eventTitle").value = d.event_title;
-        if (d.event_date) document.getElementById("eventDate").value = d.event_date;
-        if (d.story) document.getElementById("momStory").value = d.story;
-        if (Array.isArray(d.children) && d.children.length) {
-          document.querySelectorAll("#childChips .chip").forEach(c => {
-            c.classList.toggle("active", d.children.includes(c.getAttribute("data-child")));
+    function createVideoThumbAndDuration(file) {
+      return new Promise((resolve) => {
+        const rawUrl = URL.createObjectURL(file);
+        const video = document.createElement("video");
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+
+        let settled = false;
+        const finish = (durationSec, thumbDataUrl) => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          video.src = "";
+          URL.revokeObjectURL(rawUrl);
+          resolve({
+            durationSec: durationSec || null,
+            overLimit: durationSec ? durationSec > VIDEO_MAX_SEC : false,
+            thumbDataUrl: thumbDataUrl || null
           });
-        }
-      } catch (e) {}
-      updateSummary();
+        };
+
+        const timer = setTimeout(() => finish(video.duration || null, null), 3500);
+
+        video.onloadedmetadata = () => {
+          const dur = video.duration;
+          try {
+            video.currentTime = Math.min(0.2, (dur || 1) / 2);
+          } catch (e) {
+            finish(dur, null);
+          }
+        };
+
+        video.onseeked = () => {
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = THUMB_SIZE;
+            canvas.height = THUMB_SIZE;
+            const ctx = canvas.getContext("2d");
+            const vw = video.videoWidth || THUMB_SIZE;
+            const vh = video.videoHeight || THUMB_SIZE;
+            const minSide = Math.min(vw, vh);
+            const sx = (vw - minSide) / 2;
+            const sy = (vh - minSide) / 2;
+            ctx.drawImage(video, sx, sy, minSide, minSide, 0, 0, THUMB_SIZE, THUMB_SIZE);
+            finish(video.duration, canvas.toDataURL("image/jpeg", 0.65));
+          } catch (e) {
+            finish(video.duration, null);
+          }
+        };
+
+        video.onerror = () => finish(null, null);
+        video.src = rawUrl;
+      });
     }
 
-    document.getElementById("eventTitle").addEventListener("input", () => { saveTextDraft(); updateSummary(); });
-    document.getElementById("eventDate").addEventListener("change", () => { saveTextDraft(); updateSummary(); });
-    document.getElementById("momStory").addEventListener("input", () => { saveTextDraft(); updateSummary(); });
-
-    // --- Media Picker ---
+    // --- Media Picker (supports 100+ files smoothly in small batches) ---
     const mediaPicker = document.getElementById("mediaPicker");
     document.getElementById("btnPickMedia").addEventListener("click", () => mediaPicker.click());
     document.getElementById("btnAddMore").addEventListener("click", () => mediaPicker.click());
 
-    mediaPicker.addEventListener("change", (e) => {
+    mediaPicker.addEventListener("change", async (e) => {
       const files = Array.from(e.target.files || []);
+      mediaPicker.value = "";
       if (!files.length) return;
 
-      files.forEach(file => {
-        // Tránh trùng lặp cùng tên + size
-        const exists = mediaList.some(m => m.name === file.name && m.size === file.size);
-        if (exists) return;
-
-        const isVideo = file.type.startsWith("video/") || /\.(mov|mp4|m4v)$/i.test(file.name);
-        const url = URL.createObjectURL(file);
-        mediaList.push({
-          id: uid(),
-          file,
-          name: file.name,
-          size: file.size,
-          url,
-          isVideo,
-          durationSec: null,
-          overLimit: false,
-          caption: "",
-          starred: false
-        });
-      });
-
-      mediaPicker.value = "";
-      renderMediaGrid();
-      updateSummary();
-    });
-
-    document.getElementById("btnClearMedia").addEventListener("click", () => {
-      if (!confirm("Bỏ danh sách ảnh đang mở trên trang này nhé mẹ? (Không xóa ảnh trong iPhone)")) return;
-      mediaList.forEach(m => URL.revokeObjectURL(m.url));
-      mediaList = [];
-      selectedIds.clear();
-      groupNotes = [];
-      renderMediaGrid();
-      renderGroupNotes();
-      updateSelectionBar();
-      updateSummary();
-    });
-
-    document.getElementById("btnSelectAll").addEventListener("click", () => {
-      if (selectedIds.size === mediaList.length) {
-        selectedIds.clear();
-      } else {
-        mediaList.forEach(m => selectedIds.add(m.id));
-      }
-      renderMediaGrid();
-      updateSelectionBar();
-    });
-
-    function checkOverLimitBanner() {
-      const overVideos = mediaList.filter(m => m.isVideo && m.overLimit);
-      const box = document.getElementById("videoDurationAlert");
-      if (overVideos.length > 0) {
-        const names = overVideos.map(v => `${v.name} (${formatSec(v.durationSec)})`).join(", ");
-        document.getElementById("videoDurationAlertText").innerHTML =
-          `<b>Có ${overVideos.length} video dài quá 30 giây:</b> ${names}. Mẹ vui lòng cắt ngắn dưới 30s để kho gia đình xem mượt nhé!`;
-        box.style.display = "flex";
-      } else {
-        box.style.display = "none";
-      }
-    }
-
-    function renderMediaGrid() {
-      const area = document.getElementById("mediaArea");
-      const grid = document.getElementById("mediaGrid");
-      const countLbl = document.getElementById("mediaCountLabel");
-      const pickBtn = document.getElementById("btnPickMedia");
-
-      if (mediaList.length === 0) {
-        area.style.display = "none";
-        pickBtn.style.display = "flex";
-        document.getElementById("videoDurationAlert").style.display = "none";
+      const newFiles = files.filter(f => !mediaList.some(m => m.name === f.name && m.size === f.size));
+      if (!newFiles.length) {
+        showToast("Các ảnh này đã có sẵn trong lưới rồi mẹ nhé!");
         return;
       }
 
-      area.style.display = "block";
-      pickBtn.style.display = "none";
-      countLbl.innerHTML = `<b>${mediaList.length}</b> ảnh/video đang mở`;
+      const progressWrap = document.getElementById("progressWrap");
+      const progressFill = document.getElementById("progressFill");
+      const progressText = document.getElementById("progressText");
+      const progressPct = document.getElementById("progressPct");
 
-      const selectAllBtn = document.getElementById("btnSelectAll");
-      selectAllBtn.textContent = selectedIds.size === mediaList.length ? "Bỏ chọn hết" : "Chọn tất cả";
+      progressWrap.style.display = "block";
+      let done = 0;
+      const total = newFiles.length;
 
-      grid.innerHTML = "";
-      mediaList.forEach((item, idx) => {
-        const isSel = selectedIds.has(item.id);
-        const card = document.createElement("div");
-        card.className = "media-card" + (isSel ? " selected" : "");
-
-        // Tìm các nhóm chứa ảnh này
-        const myGroups = [];
-        groupNotes.forEach((g, gIdx) => {
-          if (g.fileIds.includes(item.id)) {
-            myGroups.push(`🏷️ Nhóm ${gIdx + 1}`);
+      // Xử lý từng nhóm 4 ảnh để Safari iPhone cực mượt, không ngốn RAM
+      const CONCURRENCY = 4;
+      for (let i = 0; i < total; i += CONCURRENCY) {
+        const batch = newFiles.slice(i, i + CONCURRENCY);
+        await Promise.all(batch.map(async (file) => {
+          const isVideo = file.type.startsWith("video/") || /\.(mov|mp4|m4v)$/i.test(file.name);
+          let meta = {};
+          if (isVideo) {
+            meta = await createVideoThumbAndDuration(file);
+          } else {
+            meta = await createImageThumb(file);
           }
-        });
-
-        const thumbWrap = document.createElement("div");
-        thumbWrap.className = "thumb-wrap";
-        thumbWrap.onclick = () => toggleSelect(item.id);
-
-        if (item.isVideo) {
-          const vid = document.createElement("video");
-          vid.src = item.url;
-          vid.muted = true;
-          vid.playsInline = true;
-          vid.preload = "metadata";
-          vid.onloadedmetadata = () => {
-            item.durationSec = vid.duration;
-            item.overLimit = vid.duration > VIDEO_MAX_SEC;
-            const badge = card.querySelector(".video-badge");
-            if (badge) {
-              badge.textContent = item.overLimit
-                ? `⚠️ ${formatSec(vid.duration)} (>30s)`
-                : `🎬 ${formatSec(vid.duration)} ✓`;
-              badge.classList.toggle("over-limit", item.overLimit);
-            }
-            const warnBar = card.querySelector(".over-limit-bar");
-            if (warnBar) {
-              warnBar.style.display = item.overLimit ? "block" : "none";
-            }
-            checkOverLimitBanner();
-          };
-          thumbWrap.appendChild(vid);
-
-          const vBadge = document.createElement("div");
-          vBadge.className = "video-badge" + (item.overLimit ? " over-limit" : "");
-          vBadge.textContent = item.durationSec
-            ? (item.overLimit ? `⚠️ ${formatSec(item.durationSec)} (>30s)` : `🎬 ${formatSec(item.durationSec)} ✓`)
-            : "🎬 Video";
-          thumbWrap.appendChild(vBadge);
-        } else {
-          const img = document.createElement("img");
-          img.src = item.url;
-          img.alt = item.name;
-          img.onerror = () => {
-            img.style.display = "none";
-            const fb = document.createElement("div");
-            fb.className = "fallback-box";
-            fb.innerHTML = `<div style="font-size:24px;margin-bottom:4px;">🖼️</div><div>${item.name}</div>`;
-            thumbWrap.appendChild(fb);
-          };
-          thumbWrap.appendChild(img);
-        }
-
-        const chk = document.createElement("div");
-        chk.className = "select-check";
-        chk.textContent = "✓";
-        thumbWrap.appendChild(chk);
-
-        const favBtn = document.createElement("button");
-        favBtn.type = "button";
-        favBtn.className = "fav-btn" + (item.starred ? " active" : "");
-        favBtn.textContent = item.starred ? "❤️" : "🤍";
-        favBtn.onclick = (ev) => {
-          ev.stopPropagation();
-          item.starred = !item.starred;
-          favBtn.classList.toggle("active", item.starred);
-          favBtn.textContent = item.starred ? "❤️" : "🤍";
-          updateSummary();
-        };
-        thumbWrap.appendChild(favBtn);
-
-        const idxBadge = document.createElement("div");
-        idxBadge.className = "media-index";
-        idxBadge.textContent = `#${idx + 1}`;
-        thumbWrap.appendChild(idxBadge);
-
-        card.appendChild(thumbWrap);
-
-        // Thanh cảnh báo video > 30s trên từng thẻ
-        if (item.isVideo) {
-          const warnBar = document.createElement("div");
-          warnBar.className = "over-limit-bar";
-          warnBar.style.display = item.overLimit ? "block" : "none";
-          warnBar.textContent = "⚠️ Quá 30 giây — hãy cắt ngắn!";
-          card.appendChild(warnBar);
-        }
-
-        // Nhãn nhóm nếu ảnh thuộc nhóm ghi chú
-        if (myGroups.length > 0) {
-          const tagRow = document.createElement("div");
-          tagRow.className = "group-tags-row";
-          myGroups.forEach(t => {
-            const p = document.createElement("span");
-            p.className = "group-pill";
-            p.textContent = t;
-            tagRow.appendChild(p);
+          mediaList.push({
+            id: uid(),
+            num: 0,
+            name: file.name,
+            size: file.size,
+            lastModified: file.lastModified,
+            isVideo,
+            thumbDataUrl: meta.thumbDataUrl || null,
+            durationSec: meta.durationSec || null,
+            overLimit: Boolean(meta.overLimit)
           });
-          card.appendChild(tagRow);
+          done++;
+          const pct = Math.round((done / total) * 100);
+          progressText.textContent = `Đang tạo ảnh xem trước: ${done}/${total}`;
+          progressPct.textContent = `${pct}%`;
+          progressFill.style.width = `${pct}%`;
+        }));
+      }
+
+      // Đánh lại số thứ tự #1..#N
+      mediaList.forEach((m, idx) => m.num = idx + 1);
+
+      progressWrap.style.display = "none";
+      renderPhotoGrid();
+      updateCounts();
+      showToast(`Đã nạp xong ${total} ảnh/video cực mượt!`);
+    });
+
+    document.getElementById("btnClearGrid").addEventListener("click", () => {
+      if (!confirm("Bỏ danh sách ảnh khỏi lưới xem trước nhé mẹ?\n(Các Stories mẹ đã tạo vẫn được giữ nguyên!)")) return;
+      mediaList = [];
+      selectedIds.clear();
+      renderPhotoGrid();
+      updateSelectionBar();
+      updateCounts();
+    });
+
+    // --- Render 3-Column Grid ---
+    function renderPhotoGrid() {
+      const emptyArea = document.getElementById("emptyPickerArea");
+      const gridArea = document.getElementById("gridArea");
+      const grid = document.getElementById("photoGrid");
+
+      if (mediaList.length === 0) {
+        emptyArea.style.display = "block";
+        gridArea.style.display = "none";
+        document.getElementById("videoOverAlert").style.display = "none";
+        return;
+      }
+
+      emptyArea.style.display = "none";
+      gridArea.style.display = "block";
+
+      // Check video > 30s
+      const overVideos = mediaList.filter(m => m.isVideo && m.overLimit);
+      const alertBox = document.getElementById("videoOverAlert");
+      if (overVideos.length > 0) {
+        const listStr = overVideos.map(v => `#${v.num} (${formatSec(v.durationSec)})`).join(", ");
+        document.getElementById("videoOverAlertText").innerHTML =
+          `<b>Có ${overVideos.length} video dài quá 30 giây:</b> ${listStr}. Mẹ nhớ cắt ngắn dưới 30s khi tải lên Drive nhé!`;
+        alertBox.style.display = "flex";
+      } else {
+        alertBox.style.display = "none";
+      }
+
+      // Filter counts
+      let doneCount = 0;
+      let todoCount = 0;
+      const filtered = [];
+
+      mediaList.forEach(item => {
+        const stNums = getStoryIndicesForFile(item.name);
+        const hasSt = stNums.length > 0;
+        if (hasSt) doneCount++; else todoCount++;
+
+        if (currentFilter === "all" || (currentFilter === "todo" && !hasSt) || (currentFilter === "done" && hasSt)) {
+          filtered.push({ item, stNums });
         }
-
-        // Tên file + ô ghi chú riêng
-        const body = document.createElement("div");
-        body.className = "media-body";
-
-        const fnameEl = document.createElement("div");
-        fnameEl.className = "media-fname";
-        fnameEl.textContent = item.name;
-        body.appendChild(fnameEl);
-
-        const inp = document.createElement("input");
-        inp.type = "text";
-        inp.className = "caption-input";
-        inp.placeholder = `Ghi chú riêng tấm #${idx + 1}...`;
-        inp.value = item.caption;
-        inp.oninput = (ev) => {
-          item.caption = ev.target.value;
-          updateSummary();
-        };
-        body.appendChild(inp);
-
-        card.appendChild(body);
-        grid.appendChild(card);
       });
 
-      checkOverLimitBanner();
+      document.getElementById("pillAll").textContent = `Tất cả (${mediaList.length})`;
+      document.getElementById("pillTodo").textContent = `Chưa có Story (${todoCount})`;
+      document.getElementById("pillDone").textContent = `Đã làm Story (${doneCount})`;
+
+      grid.innerHTML = "";
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-box" style="grid-column: 1 / -1;">
+          ${currentFilter === "todo" ? "🎉 Tuyệt vời! Tất cả ảnh đã có Story rồi mẹ ơi!" : "Chưa có ảnh nào trong mục này."}
+        </div>`;
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      filtered.forEach(({ item, stNums }) => {
+        const isSel = selectedIds.has(item.id);
+        const tile = document.createElement("div");
+        tile.className = "photo-tile" + (isSel ? " selected" : "") + (stNums.length ? " has-story" : "");
+        tile.onclick = () => toggleSelect(item.id);
+
+        if (item.thumbDataUrl) {
+          const img = document.createElement("img");
+          img.src = item.thumbDataUrl;
+          img.alt = item.name;
+          img.loading = "lazy";
+          tile.appendChild(img);
+        } else {
+          const fb = document.createElement("div");
+          fb.className = "tile-fallback";
+          fb.innerHTML = `<div style="font-size:20px;margin-bottom:3px;">${item.isVideo ? "🎬" : "🖼️"}</div><div>${item.name}</div>`;
+          tile.appendChild(fb);
+        }
+
+        const numEl = document.createElement("div");
+        numEl.className = "tile-num";
+        numEl.textContent = `#${item.num}`;
+        tile.appendChild(numEl);
+
+        const chkEl = document.createElement("div");
+        chkEl.className = "tile-check";
+        chkEl.textContent = "✓";
+        tile.appendChild(chkEl);
+
+        if (item.isVideo) {
+          const vBadge = document.createElement("div");
+          vBadge.className = "tile-vid-badge" + (item.overLimit ? " over" : "");
+          vBadge.textContent = item.overLimit ? `⚠️ ${formatSec(item.durationSec)}` : `🎬 ${formatSec(item.durationSec)}`;
+          tile.appendChild(vBadge);
+        } else {
+          const zoomBtn = document.createElement("button");
+          zoomBtn.type = "button";
+          zoomBtn.className = "tile-zoom";
+          zoomBtn.textContent = "🔍";
+          zoomBtn.onclick = (ev) => {
+            ev.stopPropagation();
+            openZoomModal(item.id);
+          };
+          tile.appendChild(zoomBtn);
+        }
+
+        if (stNums.length > 0) {
+          const stTag = document.createElement("div");
+          stTag.className = "tile-story-tag";
+          stTag.textContent = stNums.map(n => `S${n}`).join(",");
+          tile.appendChild(stTag);
+        }
+
+        frag.appendChild(tile);
+      });
+
+      grid.appendChild(frag);
     }
 
     function toggleSelect(id) {
-      if (selectedIds.has(id)) {
-        selectedIds.delete(id);
-      } else {
-        selectedIds.add(id);
-      }
-      renderMediaGrid();
+      if (selectedIds.has(id)) selectedIds.delete(id);
+      else selectedIds.add(id);
+      renderPhotoGrid();
       updateSelectionBar();
     }
 
     function updateSelectionBar() {
       const bar = document.getElementById("selectionBar");
       const n = selectedIds.size;
-      if (n > 0) {
+      if (n > 0 && tabPhotosPanel.style.display !== "none") {
+        const picked = mediaList.filter(m => selectedIds.has(m.id));
         document.getElementById("selCountText").textContent = `Đã chọn ${n} ảnh/video`;
+        document.getElementById("selNumsText").textContent = picked.map(m => `#${m.num}`).join(", ");
+        document.getElementById("btnCreateStoryFromSel").textContent = `✍️ Tạo Story (${n})`;
         bar.classList.add("show");
       } else {
         bar.classList.remove("show");
       }
     }
 
-    document.getElementById("btnClearSelection").addEventListener("click", () => {
+    document.getElementById("btnClearSel").addEventListener("click", () => {
       selectedIds.clear();
-      renderMediaGrid();
+      renderPhotoGrid();
       updateSelectionBar();
     });
 
-    // --- Group Notes Modal ---
-    const groupModal = document.getElementById("groupModal");
-    const groupNoteInput = document.getElementById("groupNoteInput");
+    // --- Lightbox Zoom ---
+    function openZoomModal(id) {
+      const item = mediaList.find(m => m.id === id);
+      if (!item) return;
+      zoomingMediaId = id;
+      document.getElementById("zoomTitle").textContent = `Ảnh #${item.num}`;
+      document.getElementById("zoomSub").textContent = `${item.name} • Ngày file: ${formatDateFromTs(item.lastModified)}`;
+      const zImg = document.getElementById("zoomImg");
+      const zFb = document.getElementById("zoomFallback");
+      if (item.thumbDataUrl) {
+        zImg.src = item.thumbDataUrl;
+        zImg.style.display = "block";
+        zFb.style.display = "none";
+      } else {
+        zImg.style.display = "none";
+        zFb.textContent = item.name;
+        zFb.style.display = "block";
+      }
+      document.getElementById("btnZoomToggleSelect").textContent =
+        selectedIds.has(id) ? "✕ Bỏ chọn ảnh này" : "✓ Chọn ảnh này";
+      document.getElementById("zoomModal").classList.add("show");
+    }
 
-    document.getElementById("btnOpenGroupModal").addEventListener("click", () => {
-      if (selectedIds.size === 0) return;
-      editingGroupId = null;
-      const picked = mediaList
-        .map((m, i) => ({ m, num: i + 1 }))
-        .filter(x => selectedIds.has(x.m.id));
-      document.getElementById("groupModalTitle").textContent = `✍️ Ghi chú chung cho ${picked.length} ảnh/video`;
-      document.getElementById("groupModalFiles").textContent =
-        "Áp dụng cho: " + picked.map(x => `#${x.num} (${x.m.name})`).join(", ");
-      groupNoteInput.value = "";
-      groupModal.classList.add("show");
-      setTimeout(() => groupNoteInput.focus(), 120);
+    function closeZoomModal() {
+      document.getElementById("zoomModal").classList.remove("show");
+      zoomingMediaId = null;
+    }
+
+    document.getElementById("btnZoomToggleSelect").addEventListener("click", () => {
+      if (zoomingMediaId) toggleSelect(zoomingMediaId);
+      closeZoomModal();
     });
 
-    document.getElementById("btnCancelGroup").addEventListener("click", () => {
-      groupModal.classList.remove("show");
-      editingGroupId = null;
+    // --- Story Modal (Create / Edit) ---
+    const storyModal = document.getElementById("storyModal");
+
+    document.querySelectorAll("#stChildChips .chip").forEach(chip => {
+      chip.addEventListener("click", () => chip.classList.toggle("active"));
     });
 
-    document.getElementById("btnSaveGroup").addEventListener("click", () => {
-      const text = groupNoteInput.value.trim();
-      if (!text) {
-        alert("Mẹ nhập hoặc bấm micro nói vài chữ cho nhóm ảnh này nhé!");
-        groupNoteInput.focus();
+    function setModalChildren(list) {
+      const arr = Array.isArray(list) && list.length ? list : ["Marc"];
+      document.querySelectorAll("#stChildChips .chip").forEach(c => {
+        c.classList.toggle("active", arr.includes(c.getAttribute("data-child")));
+      });
+    }
+
+    function getModalChildren() {
+      const res = [];
+      document.querySelectorAll("#stChildChips .chip.active").forEach(c => {
+        res.push(c.getAttribute("data-child"));
+      });
+      return res.length ? res : ["Marc"];
+    }
+
+    function openStoryModal({ editId = null, fileNames = [], suggestedDate = todayStr }) {
+      editingStoryId = editId;
+      modalFileNames = [...fileNames];
+
+      const thumbsWrap = document.getElementById("modalSelectedThumbs");
+      thumbsWrap.innerHTML = "";
+      modalFileNames.forEach(fn => {
+        const m = mediaList.find(x => x.name === fn);
+        if (m && m.thumbDataUrl) {
+          const img = document.createElement("img");
+          img.src = m.thumbDataUrl;
+          img.className = "story-thumb-mini";
+          thumbsWrap.appendChild(img);
+        }
+      });
+
+      if (editId) {
+        const idx = stories.findIndex(s => s.id === editId);
+        const st = stories[idx];
+        document.getElementById("storyModalTitle").textContent = `✍️ Sửa Story #${idx + 1}`;
+        document.getElementById("storyModalSub").textContent = modalFileNames.length
+          ? `Gắn với ${modalFileNames.length} ảnh/video: ${modalFileNames.join(", ")}`
+          : "Story bằng chữ (chưa gắn ảnh cụ thể)";
+        document.getElementById("stTitle").value = st.title || "";
+        document.getElementById("stDate").value = st.date || todayStr;
+        setModalChildren(st.children);
+        document.getElementById("stText").value = st.text || "";
+        document.getElementById("stStarred").checked = Boolean(st.starred);
+        document.getElementById("btnSaveStory").textContent = "Cập nhật ✓";
+      } else {
+        const nextNum = stories.length + 1;
+        document.getElementById("storyModalTitle").textContent = `✍️ Tạo Story #${nextNum}`;
+        document.getElementById("storyModalSub").textContent = modalFileNames.length
+          ? `Gắn với ${modalFileNames.length} ảnh/video: ${modalFileNames.join(", ")}`
+          : "Viết lời kể nhanh (không gắn ảnh cụ thể)";
+        document.getElementById("stTitle").value = "";
+        document.getElementById("stDate").value = suggestedDate || todayStr;
+        // Giữ lại nhân vật của Story vừa tạo trước đó để đỡ bấm lại
+        const prevChildren = stories.length ? stories[stories.length - 1].children : ["Marc"];
+        setModalChildren(prevChildren);
+        document.getElementById("stText").value = "";
+        document.getElementById("stStarred").checked = false;
+        document.getElementById("btnSaveStory").textContent = `Lưu Story #${nextNum} ✓`;
+      }
+
+      storyModal.classList.add("show");
+      setTimeout(() => document.getElementById("stText").focus(), 140);
+    }
+
+    document.getElementById("btnCreateStoryFromSel").addEventListener("click", () => {
+      const picked = mediaList.filter(m => selectedIds.has(m.id));
+      if (!picked.length) return;
+      const suggestedDate = formatDateFromTs(picked[0].lastModified);
+      openStoryModal({
+        editId: null,
+        fileNames: picked.map(m => m.name),
+        suggestedDate
+      });
+    });
+
+    document.getElementById("btnNewTextStoryEmpty").addEventListener("click", () => {
+      openStoryModal({ editId: null, fileNames: [], suggestedDate: todayStr });
+    });
+    document.getElementById("btnAddNoPhotoStory").addEventListener("click", () => {
+      openStoryModal({ editId: null, fileNames: [], suggestedDate: todayStr });
+    });
+
+    document.getElementById("btnCancelStory").addEventListener("click", () => {
+      storyModal.classList.remove("show");
+      editingStoryId = null;
+    });
+
+    document.getElementById("btnSaveStory").addEventListener("click", () => {
+      const title = document.getElementById("stTitle").value.trim();
+      const date = document.getElementById("stDate").value || todayStr;
+      const children = getModalChildren();
+      const text = document.getElementById("stText").value.trim();
+      const starred = document.getElementById("stStarred").checked;
+
+      if (!title && !text) {
+        alert("Mẹ nhập tên hoặc bấm micro nói vài câu cho Story này nhé!");
+        document.getElementById("stText").focus();
         return;
       }
 
-      if (editingGroupId) {
-        const g = groupNotes.find(x => x.id === editingGroupId);
-        if (g) g.text = text;
+      if (editingStoryId) {
+        const st = stories.find(s => s.id === editingStoryId);
+        if (st) {
+          st.title = title;
+          st.date = date;
+          st.children = children;
+          st.text = text;
+          st.starred = starred;
+        }
+        showToast("✅ Đã cập nhật Story!");
       } else {
-        const picked = mediaList.filter(m => selectedIds.has(m.id));
-        groupNotes.push({
+        stories.push({
           id: uid(),
-          fileIds: picked.map(m => m.id),
-          fileNames: picked.map(m => m.name),
-          text
+          title,
+          date,
+          children,
+          text,
+          fileNames: [...modalFileNames],
+          starred,
+          createdAt: new Date().toISOString()
         });
         selectedIds.clear();
+        showToast(`✅ Đã lưu Story #${stories.length}! Chọn tiếp ảnh cho Story #${stories.length + 1} nhé.`);
       }
 
-      editingGroupId = null;
-      groupModal.classList.remove("show");
-      renderMediaGrid();
-      renderGroupNotes();
+      editingStoryId = null;
+      storyModal.classList.remove("show");
+      saveStoriesStorage();
+      renderPhotoGrid();
+      renderStoriesList();
       updateSelectionBar();
-      updateSummary();
     });
 
-    function renderGroupNotes() {
-      const sec = document.getElementById("groupNotesSection");
-      const listEl = document.getElementById("groupNotesList");
-      if (groupNotes.length === 0) {
-        sec.style.display = "none";
+    // --- Render Stories List ---
+    function renderStoriesList() {
+      const listEl = document.getElementById("storyList");
+      const clearBtn = document.getElementById("btnClearAllStories");
+      clearBtn.style.display = stories.length ? "inline-block" : "none";
+
+      if (stories.length === 0) {
+        listEl.innerHTML = `<div class="empty-box">
+          Chưa có Story nào.<br>Mẹ sang tab <b>📸 Ảnh &amp; Video</b>, chạm chọn ảnh rồi bấm <b>✍️ Tạo Story</b> nhé!
+        </div>`;
         return;
       }
-      sec.style.display = "block";
+
       listEl.innerHTML = "";
+      stories.forEach((st, idx) => {
+        const card = document.createElement("div");
+        card.className = "story-card" + (st.starred ? " starred" : "");
 
-      groupNotes.forEach((g, idx) => {
-        const nums = g.fileIds.map(fid => {
-          const pos = mediaList.findIndex(m => m.id === fid);
-          return pos >= 0 ? `#${pos + 1} (${mediaList[pos].name})` : "";
-        }).filter(Boolean).join(", ");
+        // Render mini thumbs if photos currently loaded
+        let thumbsHtml = "";
+        if (st.fileNames && st.fileNames.length) {
+          const imgs = st.fileNames.map(fn => {
+            const m = mediaList.find(x => x.name === fn);
+            return m && m.thumbDataUrl ? `<img src="${m.thumbDataUrl}" class="story-thumb-mini">` : "";
+          }).filter(Boolean).join("");
+          if (imgs) thumbsHtml = `<div class="story-thumbs">${imgs}</div>`;
+        }
 
-        const div = document.createElement("div");
-        div.className = "group-note-item";
-        div.innerHTML = `
-          <div class="group-note-head">
-            <span class="group-note-title">🏷️ Nhóm ${idx + 1} (${g.fileIds.length} mục)</span>
-            <div class="group-actions">
-              <button type="button" class="btn-link-sm" data-edit="${g.id}">Sửa</button>
-              <button type="button" class="btn-link-sm btn-link-danger" data-del="${g.id}">Xóa</button>
+        const fileNumsLabel = (st.fileNames || []).map(fn => {
+          const m = mediaList.find(x => x.name === fn);
+          return m ? `#${m.num} (${fn})` : fn;
+        }).join(", ");
+
+        card.innerHTML = `
+          <div class="story-head">
+            <span class="story-num">${st.starred ? "❤️ " : ""}Story #${idx + 1}</span>
+            <div>
+              <button type="button" class="btn-link" data-edit="${st.id}">Sửa</button>
+              <button type="button" class="btn-link danger" data-del="${st.id}">Xóa</button>
             </div>
           </div>
-          <div class="group-note-files">${nums}</div>
-          <div class="group-note-text"></div>
+          <div class="story-meta">📅 ${st.date} • 👦 ${(st.children || []).join(", ")}</div>
+          ${st.title ? `<div class="story-title-txt"></div>` : ""}
+          ${st.text ? `<div class="story-body-txt"></div>` : ""}
+          ${thumbsHtml}
+          <div class="story-files-txt">${st.fileNames && st.fileNames.length ? `🖼️ ${st.fileNames.length} ảnh/video: ${fileNumsLabel}` : "📝 Story chỉ có chữ"}</div>
         `;
-        div.querySelector(".group-note-text").textContent = g.text;
 
-        div.querySelector(`[data-edit="${g.id}"]`).onclick = () => {
-          editingGroupId = g.id;
-          document.getElementById("groupModalTitle").textContent = `✍️ Sửa ghi chú Nhóm ${idx + 1}`;
-          document.getElementById("groupModalFiles").textContent = "Áp dụng cho: " + nums;
-          groupNoteInput.value = g.text;
-          groupModal.classList.add("show");
-          setTimeout(() => groupNoteInput.focus(), 120);
+        if (st.title) card.querySelector(".story-title-txt").textContent = st.title;
+        if (st.text) card.querySelector(".story-body-txt").textContent = st.text;
+
+        card.querySelector(`[data-edit="${st.id}"]`).onclick = () => {
+          openStoryModal({ editId: st.id, fileNames: st.fileNames || [], suggestedDate: st.date });
+        };
+        card.querySelector(`[data-del="${st.id}"]`).onclick = () => {
+          if (!confirm(`Xóa Story #${idx + 1} nhé mẹ?`)) return;
+          stories = stories.filter(s => s.id !== st.id);
+          saveStoriesStorage();
+          renderPhotoGrid();
+          renderStoriesList();
         };
 
-        div.querySelector(`[data-del="${g.id}"]`).onclick = () => {
-          groupNotes = groupNotes.filter(x => x.id !== g.id);
-          renderMediaGrid();
-          renderGroupNotes();
-          updateSummary();
-        };
-
-        listEl.appendChild(div);
+        listEl.appendChild(card);
       });
     }
 
-    // --- Live Summary on Bottom Bar ---
-    function updateSummary() {
-      const storyLen = document.getElementById("momStory").value.trim().length > 0 ? 1 : 0;
-      const grpCount = groupNotes.length;
-      const capCount = mediaList.filter(m => m.caption.trim().length > 0).length;
-      const favCount = mediaList.filter(m => m.starred).length;
+    document.getElementById("btnClearAllStories").addEventListener("click", () => {
+      if (!confirm(`Xóa sạch toàn bộ ${stories.length} Stories đã tạo để làm đợt mới?`)) return;
+      stories = [];
+      saveStoriesStorage();
+      renderPhotoGrid();
+      renderStoriesList();
+      showToast("Đã dọn trống danh sách Stories!");
+    });
 
-      const parts = [];
-      if (storyLen) parts.push("1 lời kể chung");
-      if (grpCount) parts.push(`${grpCount} ghi chú nhóm`);
-      if (capCount) parts.push(`${capCount} ghi chú riêng`);
-      if (favCount) parts.push(`${favCount} ảnh ❤️`);
-
-      document.getElementById("sendSummary").textContent = parts.length
-        ? "Đang có: " + parts.join(" • ")
-        : "Mẹ có thể viết bao nhiêu ghi chú tùy thích rồi bấm gửi 1 lần";
+    function updateCounts() {
+      document.getElementById("tabPhotoCount").textContent = mediaList.length;
+      document.getElementById("tabStoryCount").textContent = stories.length;
+      document.getElementById("btnSendLabel").textContent = stories.length > 0
+        ? `Send to Leo ❤️ (${stories.length} Stories)`
+        : "Send to Leo ❤️";
+      document.getElementById("sendSub").textContent = stories.length > 0
+        ? `Đã lưu tự động ${stories.length} Stories • Bấm gửi 1 lần cho anh Leo`
+        : "Tạo xong bao nhiêu Stories tùy thích rồi bấm gửi 1 lần duy nhất";
     }
 
-    // --- Build Final Payload ---
-    function buildPayload() {
-      const title = document.getElementById("eventTitle").value.trim();
-      const date = document.getElementById("eventDate").value || todayStr;
-      const children = getSelectedChildren();
-      const story = document.getElementById("momStory").value.trim();
-
-      const captionsMap = {};
-      const starredList = [];
-      mediaList.forEach(m => {
-        if (m.caption.trim()) captionsMap[m.name] = m.caption.trim();
-        if (m.starred) starredList.push(m.name);
-      });
-
-      const formattedGroups = groupNotes.map((g, i) => {
-        const fnames = g.fileIds
-          .map(fid => mediaList.find(m => m.id === fid))
-          .filter(Boolean)
-          .map(m => m.name);
-        return {
-          group_index: i + 1,
-          files: fnames,
-          note: g.text
-        };
-      });
-
-      // Văn bản cực kỳ rõ ràng cho Zalo / iMessage
+    // --- Build Final Payload (All 20+ Stories at once) ---
+    function buildFinalPayload() {
       const lines = [];
-      lines.push(`❤️ KỶ NIỆM CỦA MẸ — SEND TO LEO`);
-      lines.push(`📅 Ngày: ${date}`);
-      lines.push(`✨ Sự kiện: ${title || "(Chưa đặt tên)"}`);
-      lines.push(`👦 Nhân vật: ${children.length ? children.join(", ") : "Marc"}`);
+      lines.push(`❤️ KỶ NIỆM CỦA MẸ — SEND TO LEO (${stories.length} STORIES)`);
+      lines.push(`====================================`);
 
-      if (story) {
+      stories.forEach((st, idx) => {
         lines.push("");
-        lines.push(`📝 Lời kể chung:`);
-        lines.push(story);
-      }
-
-      if (formattedGroups.length > 0) {
-        lines.push("");
-        lines.push(`🏷️ Ghi chú theo nhóm ảnh (${formattedGroups.length} nhóm):`);
-        formattedGroups.forEach(g => {
-          lines.push(`- Nhóm ${g.group_index} [${g.files.join(", ")}]: ${g.note}`);
-        });
-      }
-
-      const capEntries = Object.entries(captionsMap);
-      if (capEntries.length > 0) {
-        lines.push("");
-        lines.push(`🖼️ Ghi chú riêng từng ảnh (${capEntries.length} ảnh):`);
-        capEntries.forEach(([fn, txt]) => {
-          lines.push(`- ${fn}: ${txt}`);
-        });
-      }
-
-      if (starredList.length > 0) {
-        lines.push("");
-        lines.push(`❤️ Ảnh mẹ thích nhất: ${starredList.join(", ")}`);
-      }
+        const starMark = st.starred ? " ❤️" : "";
+        lines.push(`📌 STORY #${idx + 1}${starMark} — ${st.date} | ${(st.children || []).join(", ")}`);
+        if (st.title) lines.push(`✨ Tiêu đề: ${st.title}`);
+        if (st.fileNames && st.fileNames.length) {
+          lines.push(`🖼️ Ảnh/Video (${st.fileNames.length}): ${st.fileNames.join(", ")}`);
+        }
+        if (st.text) {
+          lines.push(`📝 Lời kể: ${st.text}`);
+        }
+      });
 
       const jsonObj = {
-        version: "2.0",
-        event_title: title,
-        event_date: date,
-        children: children.length ? children : ["Marc"],
-        story: story,
-        group_notes: formattedGroups,
-        captions: captionsMap,
-        starred_photos: starredList,
-        total_selected_files: mediaList.length,
+        version: "3.0",
+        total_stories: stories.length,
+        stories: stories.map((st, idx) => ({
+          story_index: idx + 1,
+          event_title: st.title,
+          event_date: st.date,
+          children: st.children,
+          story: st.text,
+          files: st.fileNames || [],
+          starred: Boolean(st.starred)
+        })),
         submitted_at: new Date().toISOString()
       };
 
       return { text: lines.join("\n"), json: jsonObj };
     }
 
-    // --- Send to Leo Action ---
+    // --- Send to Leo ---
     document.getElementById("btnSend").addEventListener("click", async () => {
-      const title = document.getElementById("eventTitle").value.trim();
-      const story = document.getElementById("momStory").value.trim();
-      const hasAnyNote = story || groupNotes.length > 0 || mediaList.some(m => m.caption.trim() || m.starred);
-
-      if (!title && !hasAnyNote) {
-        alert("Mẹ nhập tên sự kiện hoặc viết ít nhất 1 ghi chú rồi bấm Send to Leo nhé!");
-        document.getElementById("eventTitle").focus();
+      if (stories.length === 0) {
+        if (selectedIds.size > 0) {
+          document.getElementById("btnCreateStoryFromSel").click();
+          return;
+        }
+        alert("Mẹ chưa tạo Story nào! Hãy chọn ảnh rồi bấm '✍️ Tạo Story' trước khi bấm Send to Leo nhé.");
         return;
       }
 
-      const overVideos = mediaList.filter(m => m.isVideo && m.overLimit);
-      if (overVideos.length > 0) {
-        const proceed = confirm(
-          `Lưu ý: Có ${overVideos.length} video dài hơn 30 giây. Mẹ nhớ cắt ngắn dưới 30s khi tải lên Drive nhé!\n\nBấm OK để tiếp tục gửi ghi chú cho anh Leo.`
-        );
-        if (!proceed) return;
-      }
-
-      const payload = buildPayload();
+      const payload = buildFinalPayload();
       lastPayloadText = payload.text;
       lastPayloadJson = payload.json;
 
-      // Tự động sao chép sẵn vào clipboard
       if (navigator.clipboard) {
         try { await navigator.clipboard.writeText(lastPayloadText); } catch (e) {}
       }
 
+      document.getElementById("sendModalTitle").textContent = `Sẵn sàng gửi ${stories.length} Stories cho Leo!`;
       document.getElementById("finalPreviewText").textContent = lastPayloadText;
 
-      // Ưu tiên mở bảng chia sẻ gốc của iPhone (Zalo / iMessage)
       if (navigator.share) {
         try {
           await navigator.share({
-            title: `Kỷ niệm: ${title || "Của Mẹ"}`,
+            title: `Kỷ niệm của Mẹ (${stories.length} Stories)`,
             text: lastPayloadText
           });
-          // Sau khi chia sẻ xong cũng mở nhẹ modal xác nhận phòng trường hợp cần gửi lại
           document.getElementById("sendModal").classList.add("show");
           return;
-        } catch (err) {
-          // Nếu mẹ bấm hủy bảng share thì hiện modal để mẹ chủ động copy hoặc mở lại
-        }
+        } catch (err) {}
       }
 
       document.getElementById("sendModal").classList.add("show");
@@ -1469,30 +1774,41 @@
       if (navigator.share) {
         try {
           await navigator.share({
-            title: "Kỷ Niệm Của Mẹ — Send to Leo",
+            title: `Kỷ niệm của Mẹ (${stories.length} Stories)`,
             text: lastPayloadText
           });
           return;
         } catch (e) {}
       }
-      // Fallback: copy + mở Zalo
       if (navigator.clipboard) {
         try { await navigator.clipboard.writeText(lastPayloadText); } catch (e) {}
       }
       window.open("https://zalo.me/", "_blank");
     });
 
-    document.getElementById("btnCopyAgain").addEventListener("click", async () => {
-      const btn = document.getElementById("btnCopyAgain");
+    document.getElementById("btnCopyAll").addEventListener("click", async () => {
+      const btn = document.getElementById("btnCopyAll");
       try {
         await navigator.clipboard.writeText(lastPayloadText);
         btn.innerHTML = "<span>✅ Đã sao chép! Mẹ dán vào Zalo cho Leo nhé</span>";
-        setTimeout(() => {
-          btn.innerHTML = "<span>📋 Sao Chép Toàn Bộ Nội Dung</span>";
-        }, 2500);
+        setTimeout(() => { btn.innerHTML = "<span>📋 Sao Chép Toàn Bộ Nội Dung</span>"; }, 2500);
       } catch (e) {
-        alert("Mẹ hãy bôi đen khung chữ ở trên để sao chép nhé!");
+        alert("Mẹ bôi đen khung chữ bên trên để sao chép nhé!");
       }
+    });
+
+    document.getElementById("btnDoneReset").addEventListener("click", () => {
+      if (!confirm("Mẹ đã gửi thành công cho anh Leo rồi và muốn dọn trống danh sách để chuẩn bị cho đợt sau nhé?")) return;
+      stories = [];
+      mediaList = [];
+      selectedIds.clear();
+      saveStoriesStorage();
+      renderPhotoGrid();
+      renderStoriesList();
+      updateSelectionBar();
+      closeSendModal();
+      switchTab("photos");
+      showToast("✨ Đã dọn trống sẵn sàng cho đợt kỷ niệm mới!");
     });
 
     document.getElementById("btnDownloadJson").addEventListener("click", () => {
@@ -1501,7 +1817,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `mom_notes_${lastPayloadJson.event_date || todayStr}.json`;
+      a.download = `mom_stories_${todayStr}.json`;
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -1511,7 +1827,7 @@
     }
 
     // Init
-    window.addEventListener("DOMContentLoaded", loadTextDraft);
+    window.addEventListener("DOMContentLoaded", loadStoriesStorage);
   </script>
 </body>
 </html>
