@@ -4,31 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Gửi Leo">
+  <meta name="apple-mobile-web-app-title" content="Leo Archive">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>Gửi Ảnh &amp; Ghi Chú Cho Leo</title>
+  <title>Leo-Family Archive — Tải ảnh &amp; Ghi chú</title>
   <style>
     :root {
-      --bg: #f6f4ef;
+      --bg: #f6f5f1;
       --card: #ffffff;
-      --text: #1e2421;
-      --muted: #646a64;
-      --border: #e5e2d8;
-      --primary: #1f3a5f;
-      --primary-soft: #eaf0f7;
-      --accent: #d93848;
-      --accent-grad: linear-gradient(135deg, #e04151 0%, #c42737 100%);
-      --green: #24634b;
-      --green-soft: #e7f3ee;
-      --warn-bg: #fff8e6;
-      --warn-border: #e8b339;
-      --warn-text: #7c5200;
-      --radius: 18px;
-      --shadow: 0 3px 16px rgba(20, 30, 45, 0.055);
+      --text: #182026;
+      --muted: #5c6670;
+      --border: #e3e5e8;
+      --primary: #1b365d;
+      --primary-soft: #ebf0f6;
+      --accent: #0f766e;
+      --accent-dark: #0d5e58;
+      --accent-soft: #e6f4f1;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --warn-bg: #fffbeb;
+      --warn-border: #d97706;
+      --warn-text: #78350f;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
     }
 
     * {
@@ -43,7 +45,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.45;
-      padding: 12px 12px 150px 12px;
+      padding: 14px 12px 176px 12px;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -54,10 +56,10 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 6px 2px 14px 2px;
+      padding: 4px 2px 14px 2px;
     }
     .topbar h1 {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
       color: var(--primary);
       letter-spacing: -0.3px;
@@ -70,13 +72,14 @@
     .btn-album-mini {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
       text-decoration: none;
-      background: var(--green-soft);
-      color: var(--green);
-      border: 1px solid #c6dfd4;
-      border-radius: 20px;
-      padding: 7px 12px;
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0 12px;
+      min-height: 36px;
       font-size: 12.5px;
       font-weight: 700;
       white-space: nowrap;
@@ -98,26 +101,31 @@
       justify-content: space-between;
       gap: 8px;
       margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .card-head-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .part-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       padding: 4px 10px;
-      border-radius: 8px;
+      border-radius: 6px;
     }
     .part-1 { background: var(--primary-soft); color: var(--primary); }
-    .part-2 { background: #fdebed; color: var(--accent); }
+    .part-2 { background: var(--accent-soft); color: var(--accent-dark); }
 
     .card-title {
-      font-size: 16.5px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .card-desc {
       font-size: 13px;
@@ -132,26 +140,26 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      padding: 13px 16px;
-      border-radius: 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
       font-size: 15px;
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
       border: none;
       font-family: inherit;
-      transition: transform 0.12s, opacity 0.18s;
+      transition: transform 0.12s, opacity 0.18s, background-color 0.15s;
     }
     .btn:active { transform: scale(0.985); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.58; cursor: not-allowed; }
 
     .btn-upload-primary {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(31, 58, 95, 0.24);
+      box-shadow: 0 3px 10px rgba(27, 54, 93, 0.2);
       flex-direction: column;
       gap: 2px;
-      padding: 14px 16px;
+      padding: 13px 16px;
     }
     .btn-upload-primary small {
       font-size: 11.5px;
@@ -161,46 +169,53 @@
 
     .btn-drive-alt {
       margin-top: 9px;
-      background: #f8f9fb;
+      background: #f8fafc;
       color: var(--primary);
-      border: 1.5px solid #cfd9e6;
+      border: 1px solid #cbd5e1;
       padding: 11px 14px;
       font-size: 13.5px;
     }
 
-    .btn-refresh {
+    .btn-compact {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 5px;
       background: var(--primary-soft);
       color: var(--primary);
-      border: 1px solid #cddae8;
-      border-radius: 10px;
-      padding: 6px 11px;
+      border: 1px solid #cfd9e6;
+      border-radius: 9px;
+      padding: 0 11px;
+      min-height: 36px;
       font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
+      white-space: nowrap;
     }
-    .btn-refresh:active { transform: scale(0.96); }
+    .btn-compact.accent {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      border-color: #b7ded7;
+    }
+    .btn-compact:active { transform: scale(0.97); }
+    .btn-compact:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .hint-line {
       font-size: 12px;
       color: var(--muted);
-      margin-top: 9px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-top: 10px;
+      line-height: 1.45;
     }
 
-    /* Upload Progress & Alerts */
+    /* Upload Progress & Notices */
     .progress-box {
       display: none;
       margin-top: 12px;
       background: #f4f7fb;
       border: 1px solid #d1deed;
-      border-radius: 12px;
-      padding: 11px 12px;
+      border-radius: 10px;
+      padding: 10px 12px;
     }
     .progress-box.show { display: block; }
     .progress-top {
@@ -213,7 +228,7 @@
       margin-bottom: 6px;
     }
     .progress-track {
-      height: 8px;
+      height: 7px;
       background: #dde6f0;
       border-radius: 8px;
       overflow: hidden;
@@ -229,26 +244,26 @@
       display: none;
       margin-top: 10px;
       padding: 10px 12px;
-      border-radius: 11px;
+      border-radius: 10px;
       font-size: 12.5px;
       line-height: 1.45;
       background: var(--warn-bg);
-      border: 1px solid #efd081;
+      border: 1px solid #f3d08a;
       border-left: 4px solid var(--warn-border);
       color: var(--warn-text);
     }
     .notice-box.show { display: block; }
     .notice-box.error {
-      background: #fef2f2;
+      background: var(--danger-soft);
       border-color: #f5c2c7;
-      border-left-color: #c82333;
+      border-left-color: var(--danger);
       color: #991b1b;
     }
     .notice-box.success {
-      background: var(--green-soft);
-      border-color: #b7dccb;
-      border-left-color: var(--green);
-      color: #1c4d3a;
+      background: var(--accent-soft);
+      border-color: #b7ded7;
+      border-left-color: var(--accent);
+      color: #115e59;
     }
 
     /* Filter Pills */
@@ -263,10 +278,11 @@
     .filter-pill {
       white-space: nowrap;
       border: 1px solid var(--border);
-      background: #faf9f6;
+      background: #f8fafc;
       color: var(--muted);
       border-radius: 18px;
-      padding: 6px 12px;
+      padding: 0 11px;
+      min-height: 36px;
       font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
@@ -282,12 +298,12 @@
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
+      gap: 6px;
     }
     .photo-tile {
       position: relative;
       aspect-ratio: 1 / 1;
-      background: #e9e7df;
+      background: #e9ecee;
       border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
@@ -296,7 +312,7 @@
       transition: transform 0.1s, border-color 0.14s;
     }
     .photo-tile.selected {
-      border-color: var(--accent);
+      border-color: var(--primary);
       transform: scale(0.95);
     }
     .photo-tile img {
@@ -306,12 +322,12 @@
       display: block;
     }
     .photo-tile.noted img {
-      opacity: 0.85;
+      opacity: 0.82;
     }
     .tile-skeleton {
       width: 100%;
       height: 100%;
-      background: linear-gradient(110deg, #eceae2 8%, #f7f6f1 18%, #eceae2 33%);
+      background: linear-gradient(110deg, #eceef0 8%, #f8f9fa 18%, #eceef0 33%);
       background-size: 200% 100%;
       animation: shimmer 1.3s linear infinite;
       display: flex;
@@ -320,7 +336,7 @@
       justify-content: center;
       padding: 6px;
       text-align: center;
-      color: #7d827c;
+      color: #6b7280;
       font-size: 10px;
       word-break: break-all;
     }
@@ -350,8 +366,8 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.88);
-      border: 2px solid #8a94a6;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #94a3b8;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -359,25 +375,25 @@
       font-weight: 900;
       color: transparent;
       z-index: 3;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
     }
     .photo-tile.selected .tile-check {
-      background: var(--accent);
+      background: var(--primary);
       border-color: #ffffff;
       color: #ffffff;
     }
 
     .tile-zoom {
       position: absolute;
-      bottom: 5px;
-      left: 5px;
-      width: 25px;
-      height: 25px;
+      bottom: 4px;
+      left: 4px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.58);
+      background: rgba(15, 23, 42, 0.64);
       color: #ffffff;
       border: none;
-      font-size: 11px;
+      font-size: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -388,26 +404,26 @@
       position: absolute;
       top: 5px;
       left: 5px;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(15, 23, 42, 0.78);
       color: #ffffff;
       font-size: 9.5px;
       font-weight: 700;
-      padding: 2px 5px;
-      border-radius: 5px;
+      padding: 2px 6px;
+      border-radius: 4px;
       z-index: 2;
     }
     .tile-note-tag {
       position: absolute;
       bottom: 5px;
       right: 5px;
-      background: rgba(36, 99, 75, 0.94);
+      background: rgba(15, 118, 110, 0.94);
       color: #ffffff;
-      font-size: 9.5px;
+      font-size: 10px;
       font-weight: 800;
       padding: 2px 6px;
       border-radius: 5px;
       z-index: 3;
-      max-width: 68%;
+      max-width: 58%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -415,17 +431,17 @@
 
     .state-box {
       text-align: center;
-      padding: 28px 16px;
-      background: #faf9f6;
-      border: 1px dashed var(--border);
-      border-radius: 14px;
+      padding: 26px 16px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
       color: var(--muted);
       font-size: 13.5px;
       line-height: 1.5;
     }
     .spinner {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border: 3px solid #dce4ee;
       border-top-color: var(--primary);
       border-radius: 50%;
@@ -434,7 +450,7 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Saved Notes Section inside Part 2 */
+    /* Completed Notes List inside Part 2 */
     .notes-divider {
       margin: 18px 0 12px 0;
       padding-top: 14px;
@@ -445,7 +461,7 @@
       gap: 8px;
     }
     .notes-heading {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 800;
       color: var(--primary);
     }
@@ -455,10 +471,10 @@
       gap: 10px;
     }
     .note-card {
-      background: #faf9f6;
+      background: #f8fafc;
       border: 1px solid var(--border);
-      border-left: 4px solid var(--green);
-      border-radius: 13px;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
       padding: 12px;
     }
     .note-card-head {
@@ -466,15 +482,15 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .note-num {
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 800;
-      color: var(--green);
+      color: var(--accent-dark);
     }
     .note-meta {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -506,7 +522,8 @@
       border-radius: 7px;
       background: #2b3847;
       color: #ffffff;
-      font-size: 16px;
+      font-size: 11px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -525,34 +542,35 @@
       font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
-      padding: 4px 6px;
+      padding: 5px 7px;
       font-family: inherit;
     }
-    .btn-text.danger { color: var(--accent); }
+    .btn-text.danger { color: var(--danger); }
 
-    /* Floating Selection Bar */
+    /* Floating Selection Bar (clear separation above bottom-bar) */
     .selection-bar {
       display: none;
       position: fixed;
-      bottom: 84px;
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));
       left: 12px;
       right: 12px;
       max-width: 576px;
       margin: 0 auto;
       background: var(--primary);
       color: #ffffff;
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 10px 12px;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      box-shadow: 0 8px 26px rgba(20, 40, 70, 0.36);
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
       z-index: 1050;
     }
     .selection-bar.show { display: flex; }
     .sel-info {
       font-size: 13.5px;
       font-weight: 800;
+      white-space: nowrap;
     }
     .sel-actions {
       display: flex;
@@ -563,26 +581,28 @@
       background: #ffffff;
       color: var(--primary);
       border: none;
-      border-radius: 11px;
+      border-radius: 10px;
       padding: 9px 14px;
       font-size: 13.5px;
       font-weight: 800;
       cursor: pointer;
       font-family: inherit;
+      white-space: nowrap;
     }
     .btn-sel-clear {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.16);
       color: #ffffff;
       border: none;
-      border-radius: 11px;
-      padding: 9px 10px;
+      border-radius: 10px;
+      padding: 9px 11px;
       font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
+      white-space: nowrap;
     }
 
-    /* Bottom Notify Bar */
+    /* Fixed Bottom Submit Bar */
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -592,7 +612,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
-      padding: 9px 12px calc(9px + env(safe-area-inset-bottom, 0px)) 12px;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) 12px;
       z-index: 1000;
     }
     .bottom-inner {
@@ -602,14 +622,15 @@
       flex-direction: column;
       gap: 4px;
     }
-    .btn-notify {
-      background: var(--accent-grad);
+    .btn-send {
+      background: var(--accent);
       color: #ffffff;
-      border-radius: 26px;
+      border-radius: 12px;
       padding: 13px 18px;
       font-size: 15.5px;
-      box-shadow: 0 4px 14px rgba(217, 56, 72, 0.32);
+      box-shadow: 0 3px 12px rgba(15, 118, 110, 0.28);
     }
+    .btn-send:hover { background: var(--accent-dark); }
     .sync-status {
       font-size: 11.5px;
       text-align: center;
@@ -633,20 +654,42 @@
     .modal-overlay.show { display: flex; }
 
     .modal-sheet {
+      position: relative;
       background: #ffffff;
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 18px;
       width: 100%;
       max-width: 500px;
-      max-height: 90vh;
+      max-height: 90dvh;
       overflow-y: auto;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+    }
+    .modal-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
     }
     .modal-title {
       font-size: 17px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 4px;
+    }
+    .modal-close-x {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f5f9;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
     .modal-sub {
       font-size: 12.5px;
@@ -666,7 +709,7 @@
       width: 60px;
       height: 60px;
       flex-shrink: 0;
-      border-radius: 10px;
+      border-radius: 9px;
       overflow: hidden;
       border: 1px solid var(--border);
       background: #2b3847;
@@ -684,19 +727,20 @@
       align-items: center;
       justify-content: center;
       color: #fff;
-      font-size: 20px;
+      font-size: 11px;
+      font-weight: 700;
     }
     .picked-remove {
       position: absolute;
       top: 2px;
       right: 2px;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(15, 23, 42, 0.78);
       color: #fff;
       border: none;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -704,7 +748,7 @@
       justify-content: center;
     }
 
-    /* Form Controls */
+    /* Form Controls (>= 16px to prevent iOS Safari auto-zoom) */
     .field-group { margin-bottom: 12px; }
     .field-head {
       display: flex;
@@ -722,11 +766,11 @@
     }
     textarea, input[type="date"] {
       width: 100%;
-      padding: 11px 12px;
-      font-size: 15.5px;
+      padding: 10px 12px;
+      font-size: 16px;
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      background: #faf9f6;
+      border-radius: 10px;
+      background: #f8fafc;
       color: var(--text);
       outline: none;
       font-family: inherit;
@@ -736,15 +780,15 @@
       background: #ffffff;
     }
     textarea {
-      min-height: 115px;
-      resize: vertical;
+      min-height: 112px;
+      resize: none;
       line-height: 1.5;
     }
 
     /* Optional Meta Row */
     .opt-meta-grid {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 1fr 155px;
       gap: 10px;
       align-items: start;
       margin-bottom: 6px;
@@ -752,18 +796,19 @@
     .chips-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 6px;
     }
     .chip {
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 16px;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 600;
-      border: 1px solid var(--border);
+      border: 1px solid #cbd5e1;
       background: #ffffff;
       color: var(--muted);
       cursor: pointer;
       user-select: none;
+      font-family: inherit;
     }
     .chip.active {
       background: var(--primary);
@@ -776,51 +821,65 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: #fdebed;
-      color: var(--accent);
-      border: 1px solid #f5c2c7;
-      border-radius: 18px;
-      padding: 5px 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 6px 12px;
       font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
     }
     .btn-mic.listening {
-      background: var(--accent);
+      background: var(--danger);
       color: #ffffff;
-      border-color: #b82332;
+      border-color: var(--danger);
       animation: micPulse 1.2s infinite;
     }
     @keyframes micPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(217, 56, 72, 0.45); }
-      50% { box-shadow: 0 0 0 7px rgba(217, 56, 72, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.4); }
+      50% { box-shadow: 0 0 0 7px rgba(185, 28, 28, 0); }
     }
     .mic-status {
       display: none;
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--muted);
       margin-top: 5px;
     }
     .mic-status.show { display: block; }
-    .mic-status.active { color: var(--accent); font-weight: 600; }
+    .mic-status.active { color: var(--danger); font-weight: 600; }
 
     .modal-actions {
       display: flex;
       gap: 8px;
       margin-top: 14px;
     }
-    .btn-cancel { background: #efede6; color: var(--text); }
-    .btn-save { background: var(--primary); color: #ffffff; }
+    .btn-cancel { background: #eef0f3; color: var(--text); flex: 1; }
+    .btn-save { background: var(--primary); color: #ffffff; flex: 1.75; }
 
-    /* Lightbox */
+    /* Lightbox & Send Summary */
     .lightbox-img {
       width: 100%;
-      max-height: 62vh;
+      max-height: 60dvh;
       object-fit: contain;
-      border-radius: 12px;
-      background: #111;
+      border-radius: 10px;
+      background: #111827;
       margin-bottom: 10px;
+    }
+    .summary-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 12.5px;
+      color: var(--text);
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow-y: auto;
+      text-align: left;
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
 
     /* Toast */
@@ -829,15 +888,15 @@
       top: 14px;
       left: 50%;
       transform: translateX(-50%) translateY(-80px);
-      background: #1f3a5f;
+      background: #182026;
       color: #ffffff;
       padding: 10px 16px;
-      border-radius: 24px;
+      border-radius: 10px;
       font-size: 13px;
-      font-weight: 700;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
       z-index: 3000;
-      transition: transform 0.24s ease;
+      transition: transform 0.22s ease;
       max-width: 92vw;
       white-space: nowrap;
       overflow: hidden;
@@ -845,47 +904,46 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 420px) {
+    @media (max-width: 440px) {
       .opt-meta-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <div class="topbar">
+  <header class="topbar">
     <div>
-      <h1>Gửi Kỷ Niệm Cho Leo ❤️</h1>
-      <div class="topbar-sub">2 bước gọn nhẹ: Tải lên Drive ➔ Chọn ảnh viết ghi chú</div>
+      <h1>Leo-Family Archive</h1>
+      <div class="topbar-sub">Tải tệp lên Drive và thêm ghi chú</div>
     </div>
-    <a href="./index.html" class="btn-album-mini">🏠 Album</a>
-  </div>
+    <a href="./index.html" class="btn-album-mini">Xem Album</a>
+  </header>
 
   <!-- ======================================================================= -->
   <!-- PHẦN 1: UPLOAD ẢNH / VIDEO LÊN FOLDER 99 INBOX/VO                       -->
   <!-- ======================================================================= -->
   <section class="card">
     <div class="card-head">
-      <span class="part-badge part-1">Phần 1 • Tải lên Drive</span>
+      <span class="part-badge part-1">Phần 1</span>
     </div>
-    <div class="card-title">Upload ảnh / video lên 99 Inbox/Vo</div>
-    <div class="card-desc">Chọn ảnh hoặc video ngắn trên máy để tải thẳng lên thư mục <b>99 Inbox/Vo</b>. Tải xong ảnh sẽ tự hiện ngay ở Phần 2.</div>
+    <div class="card-title">Tải ảnh / video lên 99 Inbox/Vo</div>
+    <div class="card-desc">Chọn ảnh hoặc video để tải trực tiếp lên thư mục <b>99 Inbox/Vo</b>. Tệp sau khi tải sẽ hiển thị ở Phần 2.</div>
 
     <input type="file" id="uploadInput" accept="image/*,video/*" multiple style="display: none;">
 
     <button type="button" class="btn btn-upload-primary" id="btnDirectUpload">
-      <span>📤 Chọn ảnh / video tải lên ngay</span>
-      <small>Hỗ trợ chọn nhiều ảnh cùng lúc (≤ 25 MB/file)</small>
+      <span>Tải ảnh / video lên</span>
+      <small>Chọn một hoặc nhiều tệp (tối đa 25 MB/tệp)</small>
     </button>
 
     <a href="https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5" class="btn btn-drive-alt" id="btnOpenDrive" target="_blank" rel="noopener">
-      <span>📁 Hoặc mở app Google Drive (99 Inbox/Vo)</span>
+      <span>Mở thư mục Google Drive (99 Inbox/Vo)</span>
     </a>
 
     <div class="hint-line">
-      <span>🎬</span>
-      <span>Video nên ngắn <b>dưới 30 giây</b>. Video nặng (&gt; 25 MB) hoặc gửi rất nhiều ảnh thì mở app Google Drive tải sẽ nhanh hơn.</span>
+      Khuyến nghị video dưới 30 giây. Tệp trên 25 MB hoặc tải số lượng lớn nên tải qua ứng dụng Google Drive.
     </div>
 
     <div class="progress-box" id="uploadProgressBox">
@@ -906,130 +964,155 @@
   <!-- ======================================================================= -->
   <section class="card">
     <div class="card-head">
-      <span class="part-badge part-2">Phần 2 • Chọn ảnh &amp; Ghi chú</span>
-      <button type="button" class="btn-refresh" id="btnRefreshDrive">🔄 Tải lại</button>
+      <span class="part-badge part-2">Phần 2</span>
+      <div class="card-head-actions">
+        <button type="button" class="btn-compact accent" id="btnJumpNotes" style="display: none;">Ghi chú (0) ↓</button>
+        <button type="button" class="btn-compact" id="btnRefreshDrive">Tải lại</button>
+      </div>
     </div>
-    <div class="card-title">Ảnh / video trong 99 Inbox/Vo</div>
-    <div class="card-desc">Chạm chọn <b>1 ảnh</b> hoặc <b>nhiều ảnh</b> bên dưới rồi bấm <b>Viết ghi chú</b>.</div>
+    <div class="card-title">Chọn ảnh từ Drive và viết ghi chú</div>
+    <div class="card-desc">Chọn 1 hoặc nhiều ảnh/video để tạo một ghi chú. Hoàn tất từng ghi chú một, sau khi xong toàn bộ mới bấm <b>Send to Leo</b>.</div>
 
-    <!-- Thông báo nếu backend cần cập nhật hoặc lỗi mạng -->
     <div class="notice-box error" id="driveErrorBox" style="margin-top: 0; margin-bottom: 12px;"></div>
 
-    <!-- Bộ lọc -->
     <div class="filter-row" id="filterRow" style="display: none;">
       <button type="button" class="filter-pill active" data-filter="all" id="pillAll">Tất cả (0)</button>
       <button type="button" class="filter-pill" data-filter="todo" id="pillTodo">Chưa ghi chú (0)</button>
       <button type="button" class="filter-pill" data-filter="done" id="pillDone">Đã ghi chú (0)</button>
     </div>
 
-    <!-- Trạng thái đang tải / trống -->
     <div id="driveLoadingState" class="state-box">
       <div class="spinner"></div>
-      <div>Đang tải ảnh từ Google Drive <b>99 Inbox/Vo</b>...</div>
+      <div>Đang tải danh sách tệp từ <b>99 Inbox/Vo</b>...</div>
     </div>
 
     <div id="driveEmptyState" class="state-box" style="display: none;">
-      <div style="font-size: 28px; margin-bottom: 6px;">📂</div>
-      <div>Chưa có ảnh/video nào trong <b>99 Inbox/Vo</b>.<br>Hãy tải ảnh lên ở <b>Phần 1</b>, hoặc bấm <b>🔄 Tải lại</b> nếu vừa tải qua app Google Drive nhé!</div>
+      Chưa có ảnh hoặc video nào trong <b>99 Inbox/Vo</b>.<br>
+      Tải tệp ở Phần 1 hoặc bấm <b>Tải lại</b> để cập nhật.
     </div>
 
-    <!-- Lưới ảnh 3 cột từ Google Drive -->
     <div class="photo-grid" id="photoGrid"></div>
 
-    <!-- Danh sách ghi chú đã viết (hiển thị luôn ngay bên dưới lưới) -->
     <div class="notes-divider" id="notesDivider" style="display: none;">
-      <div class="notes-heading">📝 Ghi chú đã lưu (<span id="notesCount">0</span>)</div>
+      <div class="notes-heading">Ghi chú đã hoàn tất (<span id="notesCount">0</span>)</div>
     </div>
     <div class="notes-list" id="notesList"></div>
   </section>
 
   <!-- ==================== FLOATING SELECTION BAR ==================== -->
   <div class="selection-bar" id="selectionBar">
-    <div class="sel-info" id="selInfoText">Đã chọn 0 ảnh</div>
+    <div class="sel-info" id="selInfoText">Đã chọn 0</div>
     <div class="sel-actions">
       <button type="button" class="btn-sel-clear" id="btnClearSel">Bỏ chọn</button>
-      <button type="button" class="btn-sel-write" id="btnWriteNote">✍️ Viết ghi chú</button>
+      <button type="button" class="btn-sel-write" id="btnWriteNote">Viết ghi chú</button>
     </div>
   </div>
 
-  <!-- ==================== FIXED BOTTOM NOTIFY BAR ==================== -->
+  <!-- ==================== FIXED BOTTOM SUBMIT BAR ==================== -->
   <div class="bottom-bar">
     <div class="bottom-inner">
-      <button type="button" class="btn btn-notify" id="btnNotifyLeo">
-        <span id="btnNotifyLabel">📩 Báo cho anh Leo ❤️</span>
+      <button type="button" class="btn btn-send" id="btnSendToLeo">
+        <span id="btnSendLabel">Send to Leo</span>
       </button>
-      <div class="sync-status" id="syncStatus">Mọi ghi chú đều được tự động lưu thẳng vào Google Drive 99 Inbox/Vo</div>
+      <div class="sync-status" id="syncStatus">Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo</div>
     </div>
   </div>
 
   <!-- ==================== MODAL VIẾT / SỬA GHI CHÚ ==================== -->
-  <div class="modal-overlay" id="noteModal">
+  <div class="modal-overlay" id="noteModal" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle">
     <div class="modal-sheet">
-      <div class="modal-title" id="noteModalTitle">✍️ Viết ghi chú</div>
-      <div class="modal-sub" id="noteModalSub">Ghi chú sẽ được gắn với các ảnh bên dưới</div>
+      <div class="modal-header-row">
+        <div class="modal-title" id="noteModalTitle">Ghi chú #1</div>
+        <button type="button" class="modal-close-x" id="btnCloseNoteX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="noteModalSub">Gắn với 1 tệp</div>
 
       <div class="picked-strip" id="modalPickedStrip"></div>
 
       <div class="field-group">
         <div class="field-head">
           <span class="field-label">Nội dung ghi chú</span>
-          <button type="button" class="btn-mic" id="btnMic">🎙️ Nói</button>
+          <button type="button" class="btn-mic" id="btnMic">Nhập giọng nói</button>
         </div>
-        <textarea id="noteTextarea" placeholder="Viết hoặc bấm 🎙️ Nói để ghi lại chuyện vui, địa điểm, kỷ niệm của các ảnh này..."></textarea>
+        <textarea id="noteTextarea" placeholder="Nhập nội dung ghi chú cho các ảnh/video đã chọn..."></textarea>
         <div class="mic-status" id="micStatus"></div>
       </div>
 
       <div class="opt-meta-grid">
         <div>
-          <div class="field-label" style="margin-bottom: 5px;">Bé trong ảnh (tùy chọn)</div>
+          <div class="field-label" style="margin-bottom: 6px;">Thành viên (tùy chọn)</div>
           <div class="chips-group" id="childChips">
-            <div class="chip" data-child="Marc">Marc</div>
-            <div class="chip" data-child="Alex">Alex</div>
-            <div class="chip" data-child="Ben">Ben</div>
-            <div class="chip" data-child="Tomey">Tomey</div>
-            <div class="chip" data-child="Chung">Cả nhà</div>
+            <button type="button" class="chip" data-child="Marc" aria-pressed="false">Marc</button>
+            <button type="button" class="chip" data-child="Alex" aria-pressed="false">Alex</button>
+            <button type="button" class="chip" data-child="Ben" aria-pressed="false">Ben</button>
+            <button type="button" class="chip" data-child="Tomey" aria-pressed="false">Tomey</button>
+            <button type="button" class="chip" data-child="Chung" aria-pressed="false">Cả nhà</button>
           </div>
         </div>
         <div>
-          <div class="field-label" style="margin-bottom: 5px;">Ngày</div>
-          <input type="date" id="noteDateInput" style="padding: 6px 8px; font-size: 13.5px;">
+          <div class="field-label" style="margin-bottom: 6px;">Ngày</div>
+          <input type="date" id="noteDateInput">
         </div>
       </div>
 
       <div class="modal-actions">
         <button type="button" class="btn btn-cancel" id="btnCancelNote">Hủy</button>
-        <button type="button" class="btn btn-save" id="btnSaveNote">💾 Lưu ghi chú</button>
+        <button type="button" class="btn btn-save" id="btnSaveNote">Hoàn tất ghi chú</button>
       </div>
     </div>
   </div>
 
   <!-- ==================== MODAL XEM LỚN 1 ẢNH/VIDEO ==================== -->
-  <div class="modal-overlay center" id="zoomModal">
-    <div class="modal-sheet" style="text-align: center;">
-      <div class="modal-title" id="zoomTitle" style="word-break: break-word;">Xem ảnh</div>
-      <div class="modal-sub" id="zoomSub"></div>
-      <div id="zoomLoading" style="padding: 36px 0; color: var(--muted); font-size: 13px;">
-        <div class="spinner"></div>Đang tải ảnh rõ nét...
+  <div class="modal-overlay center" id="zoomModal" role="dialog" aria-modal="true" aria-labelledby="zoomTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="zoomTitle" style="word-break: break-word;">Xem tệp</div>
+        <button type="button" class="modal-close-x" id="btnZoomCloseX" aria-label="Đóng">&times;</button>
       </div>
-      <img id="zoomImg" class="lightbox-img" style="display: none;" alt="">
-      <div id="zoomFallback" style="display: none; padding: 26px 14px; background: #263240; color: #fff; border-radius: 12px; margin-bottom: 10px; font-size: 13px;"></div>
+      <div class="modal-sub" id="zoomSub"></div>
+      <div id="zoomLoading" style="padding: 32px 0; text-align: center; color: var(--muted); font-size: 13px;">
+        <div class="spinner"></div>Đang tải ảnh xem trước...
+      </div>
+      <img id="zoomImg" class="lightbox-img" style="display: none;" alt="Xem trước ảnh">
+      <div id="zoomFallback" style="display: none; padding: 24px 14px; background: #263240; color: #fff; border-radius: 10px; margin-bottom: 10px; font-size: 13px; text-align: center;"></div>
       <div class="modal-actions">
-        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">✓ Chọn ảnh này</button>
+        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">Chọn ảnh này</button>
         <button type="button" class="btn btn-cancel" id="btnZoomClose">Đóng</button>
       </div>
     </div>
   </div>
 
+  <!-- ==================== MODAL XÁC NHẬN SEND TO LEO ==================== -->
+  <div class="modal-overlay center" id="sendConfirmModal" role="dialog" aria-modal="true" aria-labelledby="sendConfirmTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="sendConfirmTitle">Đã gửi cho Leo</div>
+        <button type="button" class="modal-close-x" id="btnSendConfirmX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="sendConfirmSub"></div>
+      <div class="summary-box" id="sendConfirmSummary"></div>
+      <button type="button" class="btn btn-save" id="btnSendConfirmClose">Đóng</button>
+    </div>
+  </div>
+
   <script>
     // =========================================================================
-    // CẤU HÌNH API GOOGLE APPS SCRIPT & FOLDER 99 INBOX/VO
+    // CẤU HÌNH GOOGLE DRIVE & APPS SCRIPT API
     // =========================================================================
     const DRIVE_VO_FOLDER_URL = "https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5";
     const API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
-    const MAX_DIRECT_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB mỗi file
+    const MAX_DIRECT_UPLOAD_BYTES = 25 * 1024 * 1024;
     const VIDEO_WARN_SEC = 30;
     const THUMB_BATCH_SIZE = 8;
     const THUMB_CONCURRENCY = 2;
+
+    const MEMBER_LABELS = {
+      Marc: "Marc",
+      Alex: "Alex",
+      Ben: "Ben",
+      Tomey: "Tomey",
+      Chung: "Cả nhà"
+    };
 
     document.getElementById("btnOpenDrive").href = DRIVE_VO_FOLDER_URL;
 
@@ -1044,8 +1127,8 @@
 
     // Modal state
     let editingNoteId = null;
-    let modalFileIds = [];        // Drive file IDs attached to current modal note
-    let modalFileNames = [];      // Fallback filenames (for notes whose files might have been moved)
+    let modalFileIds = [];
+    let modalFileNames = [];
     let zoomingFileId = null;
     let openedDriveExternally = false;
     let isSavingNotes = false;
@@ -1065,11 +1148,22 @@
       return (bytes / (1024 * 1024)).toFixed(1) + " MB";
     }
 
+    function formatMemberList(list) {
+      if (!Array.isArray(list) || !list.length) return "";
+      return list.map(c => MEMBER_LABELS[c] || c).join(", ");
+    }
+
     function shortTitleFromText(text) {
       const clean = String(text || "").trim().replace(/\s+/g, " ");
       if (!clean) return "";
       const firstLine = clean.split(/[\n.!?]/)[0].trim();
       return firstLine.length > 55 ? firstLine.slice(0, 52).trim() + "..." : firstLine;
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[s]));
     }
 
     let toastTimer = null;
@@ -1103,7 +1197,6 @@
       box.innerHTML = html;
     }
 
-    // Session cache cho thumbnails để đỡ tải lại khi làm mới
     function getCachedThumb(fileId) {
       if (thumbCache.has(fileId)) return thumbCache.get(fileId);
       try {
@@ -1121,9 +1214,7 @@
       if (dataUrl) {
         try {
           sessionStorage.setItem("leo_th_" + fileId, dataUrl);
-        } catch (e) {
-          // sessionStorage đầy thì giữ trong RAM Map là đủ
-        }
+        } catch (e) {}
       }
     }
 
@@ -1161,7 +1252,6 @@
       openedDriveExternally = true;
     });
 
-    // Khi quay lại tab sau khi mở app Google Drive -> tự động làm mới danh sách ở Phần 2
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "visible" && openedDriveExternally) {
         openedDriveExternally = false;
@@ -1177,7 +1267,7 @@
           const comma = res.indexOf(",");
           resolve(comma >= 0 ? res.slice(comma + 1) : res);
         };
-        reader.onerror = () => reject(new Error("Không đọc được file"));
+        reader.onerror = () => reject(new Error("Không đọc được tệp"));
         reader.readAsDataURL(file);
       });
     }
@@ -1239,7 +1329,6 @@
 
     function normalizeUploadName(origName, index) {
       const clean = String(origName || "photo.jpg").trim();
-      // iPhone Safari đôi khi đặt trùng tên "image.jpg" hoặc "video.mov" cho nhiều ảnh cùng chọn
       if (/^(image|photo)\.(jpe?g|png|heic|webp)$/i.test(clean) || /^video\.(mov|mp4)$/i.test(clean)) {
         const ext = clean.slice(clean.lastIndexOf("."));
         const d = new Date();
@@ -1270,7 +1359,7 @@
 
       if (!uploadable.length && oversized.length) {
         setUploadNotice(
-          `⚠️ Các file sau nặng quá 25 MB: <b>${oversized.join(", ")}</b>.<br>Hãy bấm nút <b>📁 Hoặc mở app Google Drive</b> ở trên để tải các file nặng này nhé!`,
+          `Các tệp vượt quá giới hạn 25 MB: <b>${escapeHtml(oversized.join(", "))}</b>.<br>Vui lòng dùng nút <b>Mở thư mục Google Drive</b> ở trên để tải các tệp dung lượng lớn.`,
           ""
         );
         return;
@@ -1323,12 +1412,9 @@
             if (localMeta.thumb) {
               setCachedThumb(data.file.id, localMeta.thumb);
             }
-            if (data.duplicate) {
-              duplicateCount++;
-            } else {
-              uploadedCount++;
-            }
-            // Cập nhật ngay vào danh sách driveFiles ở Phần 2
+            if (data.duplicate) duplicateCount++;
+            else uploadedCount++;
+
             if (!driveFiles.some(x => x.id === data.file.id)) {
               driveFiles.unshift(data.file);
             }
@@ -1347,28 +1433,32 @@
       btnDirectUpload.disabled = false;
       setTimeout(() => progressBox.classList.remove("show"), 900);
 
-      // Render lại Phần 2 ngay lập tức
       renderDriveGrid();
 
       const msgs = [];
-      if (uploadedCount > 0) msgs.push(`✅ Đã tải thành công <b>${uploadedCount} file</b> lên 99 Inbox/Vo!`);
-      if (duplicateCount > 0) msgs.push(`ℹ️ Có ${duplicateCount} file đã tồn tại sẵn trong Drive.`);
-      if (longVideos.length) msgs.push(`🎬 Lưu ý video dài hơn 30s: ${longVideos.join(", ")}.`);
-      if (oversized.length) msgs.push(`⚠️ File nặng > 25 MB chưa tải trực tiếp được: <b>${oversized.join(", ")}</b> — hãy tải bằng nút Mở app Google Drive nhé.`);
-      if (failedNames.length) msgs.push(`❌ Không tải được: ${failedNames.join(", ")} (kiểm tra mạng hoặc thử mở app Google Drive).`);
+      if (uploadedCount > 0) msgs.push(`Đã tải lên thành công <b>${uploadedCount} tệp</b> vào 99 Inbox/Vo.`);
+      if (duplicateCount > 0) msgs.push(`${duplicateCount} tệp đã tồn tại sẵn trong thư mục.`);
+      if (longVideos.length) msgs.push(`Lưu ý video dài hơn 30 giây: ${escapeHtml(longVideos.join(", "))}.`);
+      if (oversized.length) msgs.push(`Tệp vượt quá 25 MB chưa thể tải trực tiếp: <b>${escapeHtml(oversized.join(", "))}</b>. Vui lòng tải qua ứng dụng Google Drive.`);
+      if (failedNames.length) msgs.push(`Không thể tải lên: ${escapeHtml(failedNames.join(", "))}. Vui lòng kiểm tra kết nối mạng hoặc thử lại.`);
 
       const noticeType = failedNames.length ? "error" : (oversized.length || longVideos.length ? "" : "success");
       setUploadNotice(msgs.join("<br>"), noticeType);
       if (uploadedCount > 0) {
-        showToast(`✅ Đã tải ${uploadedCount} ảnh/video lên Drive!`);
+        showToast(`Đã tải lên ${uploadedCount} tệp vào 99 Inbox/Vo`);
         loadMissingThumbnails();
       }
     });
 
     // =========================================================================
-    // PHẦN 2: TẢI DANH SÁCH ẢNH/VIDEO & GHI CHÚ TỪ GOOGLE DRIVE 99 INBOX/VO
+    // PHẦN 2: ĐỌC DANH SÁCH TỆP & GHI CHÚ TỪ GOOGLE DRIVE 99 INBOX/VO
     // =========================================================================
     document.getElementById("btnRefreshDrive").addEventListener("click", () => loadDriveFolder(true));
+
+    document.getElementById("btnJumpNotes").addEventListener("click", () => {
+      const target = document.getElementById("notesDivider");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
 
     async function loadDriveFolder(isManual = false) {
       const loadingEl = document.getElementById("driveLoadingState");
@@ -1377,7 +1467,7 @@
 
       setDriveError("");
       refreshBtn.disabled = true;
-      refreshBtn.textContent = "⏳ Đang tải...";
+      refreshBtn.textContent = "Đang tải...";
 
       if (driveFiles.length === 0) {
         loadingEl.style.display = "block";
@@ -1392,15 +1482,14 @@
           throw new Error((data && data.error) || "Phản hồi không hợp lệ");
         }
 
-        // Kiểm tra trường hợp Apps Script vẫn đang chạy bản cũ v3 (chưa có data.files)
         if (!Array.isArray(data.files)) {
           loadingEl.style.display = "none";
           setDriveError(
-            `<b>⚠️ Cần cập nhật Google Apps Script lên bản v4.0:</b><br>` +
-            `Anh Leo mở Apps Script ➔ dán code mới từ <code>00 System/scripts/mom_intake_apps_script.gs</code> ➔ bấm <b>Triển khai ➔ Quản lý các bản triển khai ➔ Chỉnh sửa ➔ Phiên bản mới ➔ Triển khai</b> (giữ nguyên link cũ).`
+            `<b>Cần cập nhật Google Apps Script lên phiên bản v4.0:</b><br>` +
+            `Cập nhật code từ <code>00 System/scripts/mom_intake_apps_script.gs</code> và triển khai phiên bản mới.`
           );
           refreshBtn.disabled = false;
-          refreshBtn.textContent = "🔄 Tải lại";
+          refreshBtn.textContent = "Tải lại";
           return;
         }
 
@@ -1409,7 +1498,6 @@
           notes = data.notes;
         }
 
-        // Loại bỏ fileId đang chọn nếu file đó không còn trong Drive
         const validIds = new Set(driveFiles.map(f => f.id));
         selectedFileIds.forEach(id => {
           if (!validIds.has(id)) selectedFileIds.delete(id);
@@ -1419,23 +1507,22 @@
         renderDriveGrid();
         renderNotesList();
         updateSelectionBar();
-        updateNotifyBar();
+        updateBottomBar();
 
         if (isManual) {
-          showToast(`🔄 Đã cập nhật ${driveFiles.length} ảnh/video từ Drive`);
+          showToast(`Đã cập nhật ${driveFiles.length} tệp từ Drive`);
         }
 
         loadMissingThumbnails();
       } catch (err) {
         loadingEl.style.display = "none";
-        setDriveError(`⚠️ Không kết nối được tới Google Drive (${err.message}). Mẹ kiểm tra Wi-Fi/4G rồi bấm <b>🔄 Tải lại</b> nhé.`);
+        setDriveError(`Không thể kết nối tới Google Drive (${escapeHtml(err.message)}). Vui lòng kiểm tra kết nối mạng và bấm <b>Tải lại</b>.`);
       } finally {
         refreshBtn.disabled = false;
-        refreshBtn.textContent = "🔄 Tải lại";
+        refreshBtn.textContent = "Tải lại";
       }
     }
 
-    // Kéo thumbnail theo lô 8 ảnh/lần (tối đa 2 lô song song) -> mượt, không chạm giới hạn GAS
     async function loadMissingThumbnails(forceRetryNone = false) {
       const needIds = driveFiles
         .map(f => f.id)
@@ -1490,7 +1577,6 @@
       }
       await Promise.all(workers);
 
-      // Nếu có ảnh/video mới tải lên Google Drive chưa kịp tạo thumbnail -> thử kéo lại 1 lần sau 5 giây
       if (anyNullReturned && !forceRetryNone && !thumbRetryScheduled) {
         thumbRetryScheduled = true;
         setTimeout(() => {
@@ -1516,15 +1602,9 @@
       } else {
         const fb = document.createElement("div");
         fb.className = "tile-fallback tile-media-slot";
-        fb.innerHTML = `<div style="font-size:22px;">${file && file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file ? file.name : "")}</div>`;
+        fb.innerHTML = `<div style="font-weight:700;font-size:11px;">${file && file.isVideo ? "VIDEO" : "IMAGE"}</div><div>${escapeHtml(file ? file.name : "")}</div>`;
         oldMedia.replaceWith(fb);
       }
-    }
-
-    function escapeHtml(str) {
-      return String(str || "").replace(/[&<>"']/g, s => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[s]));
     }
 
     // --- Filter Pills ---
@@ -1576,7 +1656,7 @@
       grid.innerHTML = "";
       if (filtered.length === 0) {
         grid.innerHTML = `<div class="state-box" style="grid-column: 1 / -1;">
-          ${currentFilter === "todo" ? "🎉 Tất cả ảnh/video đều đã có ghi chú!" : "Chưa có ảnh nào trong mục này."}
+          ${currentFilter === "todo" ? "Toàn bộ ảnh/video hiện tại đều đã được gắn ghi chú." : "Chưa có ảnh/video nào được gắn ghi chú."}
         </div>`;
         return;
       }
@@ -1587,6 +1667,9 @@
         const tile = document.createElement("div");
         tile.className = "photo-tile" + (isSel ? " selected" : "") + (noteNums.length ? " noted" : "");
         tile.setAttribute("data-id", file.id);
+        tile.setAttribute("role", "button");
+        tile.setAttribute("aria-pressed", String(isSel));
+        tile.setAttribute("aria-label", file.name);
         tile.onclick = () => toggleSelectFile(file.id);
 
         const cached = getCachedThumb(file.id);
@@ -1599,24 +1682,25 @@
         } else if (cached === "none") {
           const fb = document.createElement("div");
           fb.className = "tile-fallback tile-media-slot";
-          fb.innerHTML = `<div style="font-size:22px;">${file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file.name)}</div>`;
+          fb.innerHTML = `<div style="font-weight:700;font-size:11px;">${file.isVideo ? "VIDEO" : "IMAGE"}</div><div>${escapeHtml(file.name)}</div>`;
           tile.appendChild(fb);
         } else {
           const sk = document.createElement("div");
           sk.className = "tile-skeleton tile-media-slot";
-          sk.innerHTML = `<div style="font-size:18px;margin-bottom:3px;">${file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file.name.slice(0, 18))}</div>`;
+          sk.innerHTML = `<div style="font-weight:700;margin-bottom:2px;">${file.isVideo ? "VIDEO" : "..."}</div><div>${escapeHtml(file.name.slice(0, 18))}</div>`;
           tile.appendChild(sk);
         }
 
         if (file.isVideo) {
           const vb = document.createElement("div");
           vb.className = "tile-vid-badge";
-          vb.textContent = "🎬 Video";
+          vb.textContent = "Video";
           tile.appendChild(vb);
         }
 
         const chk = document.createElement("div");
         chk.className = "tile-check";
+        chk.setAttribute("aria-hidden", "true");
         chk.textContent = "✓";
         tile.appendChild(chk);
 
@@ -1624,6 +1708,7 @@
         zoomBtn.type = "button";
         zoomBtn.className = "tile-zoom";
         zoomBtn.title = "Xem lớn";
+        zoomBtn.setAttribute("aria-label", `Xem lớn ${file.name}`);
         zoomBtn.textContent = "🔍";
         zoomBtn.onclick = (ev) => {
           ev.stopPropagation();
@@ -1634,7 +1719,7 @@
         if (noteNums.length > 0) {
           const tag = document.createElement("div");
           tag.className = "tile-note-tag";
-          tag.textContent = "✓ " + noteNums.map(n => `#${n}`).join(",");
+          tag.textContent = noteNums.map(n => `#${n}`).join(", ");
           tile.appendChild(tag);
         }
 
@@ -1655,8 +1740,8 @@
       const bar = document.getElementById("selectionBar");
       const n = selectedFileIds.size;
       if (n > 0) {
-        document.getElementById("selInfoText").textContent = n === 1 ? "Đã chọn 1 ảnh/video" : `Đã chọn ${n} ảnh/video`;
-        document.getElementById("btnWriteNote").textContent = n === 1 ? "✍️ Viết ghi chú" : `✍️ Ghi chú (${n} ảnh)`;
+        document.getElementById("selInfoText").textContent = `Đã chọn ${n}`;
+        document.getElementById("btnWriteNote").textContent = n === 1 ? "Viết ghi chú" : `Viết ghi chú (${n})`;
         bar.classList.add("show");
       } else {
         bar.classList.remove("show");
@@ -1678,15 +1763,16 @@
       zoomingFileId = fileId;
 
       document.getElementById("zoomTitle").textContent = file.name;
-      document.getElementById("zoomSub").textContent = `Ngày: ${file.date}${file.size ? " • " + formatBytes(file.size) : ""}`;
+      document.getElementById("zoomSub").textContent = `Ngày: ${file.date}${file.size ? " · " + formatBytes(file.size) : ""}`;
       document.getElementById("btnZoomToggleSelect").textContent =
-        selectedFileIds.has(fileId) ? "✕ Bỏ chọn" : "✓ Chọn ảnh này";
+        selectedFileIds.has(fileId) ? "Bỏ chọn" : "Chọn tệp này";
 
       const zImg = document.getElementById("zoomImg");
       const zFb = document.getElementById("zoomFallback");
       const zLoad = document.getElementById("zoomLoading");
 
-      // Hiện tạm thumbnail trước trong lúc tải bản nét
+      zImg.alt = file.name;
+
       const cached = getCachedThumb(fileId);
       if (cached && cached !== "none") {
         zImg.src = cached;
@@ -1710,8 +1796,8 @@
           zFb.style.display = "none";
         } else if (!cached || cached === "none") {
           zImg.style.display = "none";
-          zFb.innerHTML = `${file.isVideo ? "🎬 Video trên Google Drive" : "🖼️ Không xem trước được định dạng này"}<br><br>` +
-            (data && data.viewUrl ? `<a href="${data.viewUrl}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;">Mở xem trên Google Drive ↗</a>` : "");
+          zFb.innerHTML = `${file.isVideo ? "Video lưu trên Google Drive" : "Không hiển thị được bản xem trước cho định dạng này"}<br><br>` +
+            (data && data.viewUrl ? `<a href="${data.viewUrl}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;">Mở tệp trên Google Drive ↗</a>` : "");
           zFb.style.display = "block";
         }
       } catch (e) {
@@ -1726,6 +1812,7 @@
     }
 
     document.getElementById("btnZoomClose").addEventListener("click", closeZoomModal);
+    document.getElementById("btnZoomCloseX").addEventListener("click", closeZoomModal);
     document.getElementById("zoomModal").addEventListener("click", (e) => {
       if (e.target.id === "zoomModal") closeZoomModal();
     });
@@ -1735,18 +1822,24 @@
     });
 
     // =========================================================================
-    // MODAL VIẾT / SỬA GHI CHÚ (1 ẢNH HOẶC NHIỀU ẢNH)
+    // MODAL VIẾT / SỬA GHI CHÚ (HOÀN TẤT TỪNG STORY i, TIẾP TỤC STORY i+1)
     // =========================================================================
     const noteModal = document.getElementById("noteModal");
 
     document.querySelectorAll("#childChips .chip").forEach(chip => {
-      chip.addEventListener("click", () => chip.classList.toggle("active"));
+      chip.addEventListener("click", () => {
+        const next = !chip.classList.contains("active");
+        chip.classList.toggle("active", next);
+        chip.setAttribute("aria-pressed", String(next));
+      });
     });
 
     function setChipSelection(list) {
       const arr = Array.isArray(list) ? list : [];
       document.querySelectorAll("#childChips .chip").forEach(c => {
-        c.classList.toggle("active", arr.includes(c.getAttribute("data-child")));
+        const active = arr.includes(c.getAttribute("data-child"));
+        c.classList.toggle("active", active);
+        c.setAttribute("aria-pressed", String(active));
       });
     }
 
@@ -1764,8 +1857,8 @@
 
       const count = modalFileNames.length;
       document.getElementById("noteModalSub").textContent = count === 1
-        ? `Ghi chú cho 1 ảnh/video: ${modalFileNames[0]}`
-        : `Ghi chú chung cho ${count} ảnh/video (bấm × để bỏ bớt ảnh nếu cần)`;
+        ? `Gắn với 1 tệp: ${modalFileNames[0]}`
+        : `Gắn với ${count} tệp (bấm × để bỏ bớt nếu cần)`;
 
       modalFileNames.forEach((fn, idx) => {
         const fid = modalFileIds[idx] || "";
@@ -1784,7 +1877,7 @@
         } else {
           const fb = document.createElement("div");
           fb.className = "picked-item-fb";
-          fb.textContent = (fileObj && fileObj.isVideo) ? "🎬" : "🖼️";
+          fb.textContent = (fileObj && fileObj.isVideo) ? "VID" : "IMG";
           wrap.appendChild(fb);
         }
 
@@ -1793,7 +1886,7 @@
           rm.type = "button";
           rm.className = "picked-remove";
           rm.textContent = "×";
-          rm.title = "Bỏ ảnh này khỏi ghi chú";
+          rm.setAttribute("aria-label", `Bỏ ${fn} khỏi ghi chú`);
           rm.onclick = () => {
             modalFileNames.splice(idx, 1);
             modalFileIds.splice(idx, 1);
@@ -1815,25 +1908,28 @@
       if (editId) {
         const idx = notes.findIndex(n => n.id === editId);
         const note = notes[idx];
-        document.getElementById("noteModalTitle").textContent = `✍️ Sửa ghi chú #${idx + 1}`;
+        document.getElementById("noteModalTitle").textContent = `Sửa ghi chú #${idx + 1}`;
         document.getElementById("noteTextarea").value = note.text || "";
         document.getElementById("noteDateInput").value = note.date || suggestedDate || todayStr;
         setChipSelection(note.children || []);
-        document.getElementById("btnSaveNote").textContent = "💾 Cập nhật ghi chú";
+        document.getElementById("btnSaveNote").textContent = "Lưu thay đổi";
       } else {
-        const count = modalFileNames.length;
-        document.getElementById("noteModalTitle").textContent = count === 1
-          ? "✍️ Viết ghi chú cho 1 ảnh"
-          : `✍️ Viết ghi chú cho ${count} ảnh`;
+        const nextNum = notes.length + 1;
+        document.getElementById("noteModalTitle").textContent = `Ghi chú #${nextNum}`;
         document.getElementById("noteTextarea").value = "";
         document.getElementById("noteDateInput").value = suggestedDate || todayStr;
         setChipSelection([]);
-        document.getElementById("btnSaveNote").textContent = "💾 Lưu ghi chú";
+        document.getElementById("btnSaveNote").textContent = `Hoàn tất ghi chú #${nextNum}`;
       }
 
       renderModalPickedStrip();
       noteModal.classList.add("show");
-      setTimeout(() => document.getElementById("noteTextarea").focus(), 140);
+    }
+
+    function closeNoteModal() {
+      stopDictation();
+      noteModal.classList.remove("show");
+      editingNoteId = null;
     }
 
     document.getElementById("btnWriteNote").addEventListener("click", () => {
@@ -1847,11 +1943,8 @@
       });
     });
 
-    document.getElementById("btnCancelNote").addEventListener("click", () => {
-      stopDictation();
-      noteModal.classList.remove("show");
-      editingNoteId = null;
-    });
+    document.getElementById("btnCancelNote").addEventListener("click", closeNoteModal);
+    document.getElementById("btnCloseNoteX").addEventListener("click", closeNoteModal);
 
     document.getElementById("btnSaveNote").addEventListener("click", async () => {
       stopDictation();
@@ -1860,25 +1953,28 @@
       const children = getChipSelection();
 
       if (!text) {
-        alert("Mẹ gõ hoặc bấm nút 🎙️ Nói để viết ghi chú nhé!");
+        alert("Vui lòng nhập nội dung ghi chú.");
         document.getElementById("noteTextarea").focus();
         return;
       }
       if (!modalFileNames.length) {
-        alert("Ghi chú cần gắn với ít nhất 1 ảnh/video!");
+        alert("Mỗi ghi chú cần gắn với ít nhất 1 ảnh hoặc video.");
         return;
       }
 
       const saveBtn = document.getElementById("btnSaveNote");
       const oldText = saveBtn.textContent;
       saveBtn.disabled = true;
-      saveBtn.textContent = "⏳ Đang lưu lên Drive...";
+      saveBtn.textContent = "Đang lưu...";
 
       const prevNotesSnapshot = JSON.stringify(notes);
+      const wasEditing = Boolean(editingNoteId);
+      let editedIdx = -1;
 
       if (editingNoteId) {
-        const n = notes.find(x => x.id === editingNoteId);
-        if (n) {
+        editedIdx = notes.findIndex(x => x.id === editingNoteId);
+        if (editedIdx >= 0) {
+          const n = notes[editedIdx];
           n.text = text;
           n.title = shortTitleFromText(text);
           n.date = date;
@@ -1905,35 +2001,43 @@
       saveBtn.textContent = oldText;
 
       if (ok) {
-        if (!editingNoteId) selectedFileIds.clear();
-        editingNoteId = null;
-        noteModal.classList.remove("show");
+        if (!wasEditing) selectedFileIds.clear();
+        closeNoteModal();
         renderDriveGrid();
         renderNotesList();
         updateSelectionBar();
-        updateNotifyBar();
-        showToast("☁️ Đã lưu ghi chú thẳng lên Google Drive!");
+        updateBottomBar();
+        if (wasEditing) {
+          showToast(`Đã cập nhật Ghi chú #${editedIdx + 1}`);
+        } else {
+          showToast(`Đã hoàn tất Ghi chú #${notes.length}. Tiếp tục chọn ảnh hoặc bấm Send to Leo.`);
+        }
       } else {
         notes = JSON.parse(prevNotesSnapshot);
-        alert("Chưa lưu được do mất kết nối mạng. Mẹ thử bấm Lưu lại nhé!");
+        alert("Không thể lưu do lỗi kết nối mạng. Vui lòng thử lại.");
       }
     });
 
     // =========================================================================
-    // DANH SÁCH GHI CHÚ ĐÃ LƯU (NGAY DƯỚI LƯỚI ẢNH)
+    // DANH SÁCH GHI CHÚ ĐÃ HOÀN TẤT
     // =========================================================================
     function renderNotesList() {
       const divider = document.getElementById("notesDivider");
       const listEl = document.getElementById("notesList");
+      const jumpBtn = document.getElementById("btnJumpNotes");
+
       document.getElementById("notesCount").textContent = notes.length;
 
       if (notes.length === 0) {
         divider.style.display = "none";
+        jumpBtn.style.display = "none";
         listEl.innerHTML = "";
         return;
       }
 
       divider.style.display = "flex";
+      jumpBtn.style.display = "inline-flex";
+      jumpBtn.textContent = `Ghi chú (${notes.length}) ↓`;
       listEl.innerHTML = "";
 
       notes.forEach((n, idx) => {
@@ -1941,9 +2045,10 @@
         card.className = "note-card";
 
         const metaParts = [];
-        if (n.date) metaParts.push(`📅 ${n.date}`);
-        if (n.children && n.children.length) metaParts.push(`👦 ${n.children.join(", ")}`);
-        metaParts.push(`🖼️ ${(n.files || []).length} ảnh/video`);
+        if (n.date) metaParts.push(n.date);
+        const membersStr = formatMemberList(n.children);
+        if (membersStr) metaParts.push(membersStr);
+        metaParts.push(`${(n.files || []).length} tệp`);
 
         let thumbsHtml = "";
         (n.files || []).forEach((fn, fIdx) => {
@@ -1952,9 +2057,9 @@
           const realId = fObj ? fObj.id : fid;
           const tUrl = realId ? getCachedThumb(realId) : null;
           if (tUrl && tUrl !== "none") {
-            thumbsHtml += `<img src="${tUrl}" class="note-thumb" alt="">`;
+            thumbsHtml += `<img src="${tUrl}" class="note-thumb" alt="${escapeHtml(fn)}">`;
           } else {
-            thumbsHtml += `<div class="note-thumb-placeholder">${fObj && fObj.isVideo ? "🎬" : "🖼️"}</div>`;
+            thumbsHtml += `<div class="note-thumb-placeholder">${fObj && fObj.isVideo ? "VID" : "IMG"}</div>`;
           }
         });
 
@@ -1966,7 +2071,7 @@
               <button type="button" class="btn-text danger" data-del="${n.id}">Xóa</button>
             </div>
           </div>
-          <div class="note-meta">${escapeHtml(metaParts.join(" • "))}</div>
+          <div class="note-meta">${escapeHtml(metaParts.join(" · "))}</div>
           <div class="note-body"></div>
           ${thumbsHtml ? `<div class="note-thumbs">${thumbsHtml}</div>` : ""}
           <div class="note-files-caption">${escapeHtml((n.files || []).join(", "))}</div>
@@ -1987,21 +2092,22 @@
         };
 
         card.querySelector(`[data-del="${n.id}"]`).onclick = async () => {
-          if (!confirm(`Xóa ghi chú #${idx + 1} nhé mẹ? (Ảnh gốc trên Drive vẫn giữ nguyên)`)) return;
+          if (!confirm(`Xóa Ghi chú #${idx + 1}? Ảnh và video gốc trên Google Drive sẽ không bị ảnh hưởng.`)) return;
           const prev = JSON.stringify(notes);
           notes = notes.filter(x => x.id !== n.id);
           renderDriveGrid();
           renderNotesList();
-          updateNotifyBar();
+          updateBottomBar();
           const ok = await syncNotesToDrive(false);
           if (ok) {
-            showToast("🗑️ Đã xóa ghi chú trên Drive");
+            updateBottomBar();
+            showToast(`Đã xóa Ghi chú #${idx + 1}`);
           } else {
             notes = JSON.parse(prev);
             renderDriveGrid();
             renderNotesList();
-            updateNotifyBar();
-            alert("Chưa xóa được do mất mạng, mẹ thử lại nhé!");
+            updateBottomBar();
+            alert("Không thể xóa do lỗi kết nối mạng. Vui lòng thử lại.");
           }
         };
 
@@ -2010,19 +2116,20 @@
     }
 
     // =========================================================================
-    // ĐỒNG BỘ GHI CHÚ LÊN GOOGLE DRIVE & BÁO CHO LEO
+    // ĐỒNG BỘ DRIVE & SEND TO LEO (KẾT THÚC ĐỢT KHI USER CHỌN)
     // =========================================================================
     function buildNotesPayload() {
       const lines = [];
-      lines.push(`❤️ GHI CHÚ KỶ NIỆM CỦA MẸ (${notes.length} GHI CHÚ)`);
-      lines.push(`====================================`);
+      lines.push(`LEO-FAMILY ARCHIVE — DANH SÁCH GHI CHÚ (${notes.length})`);
+      lines.push(`==========================================`);
 
       notes.forEach((n, idx) => {
         lines.push("");
-        const childTxt = (n.children && n.children.length) ? ` | ${n.children.join(", ")}` : "";
-        lines.push(`📌 GHI CHÚ #${idx + 1} — ${n.date || todayStr}${childTxt}`);
-        lines.push(`🖼️ Ảnh/Video (${(n.files || []).length}): ${(n.files || []).join(", ")}`);
-        lines.push(`📝 Nội dung: ${n.text}`);
+        const membersStr = formatMemberList(n.children);
+        const metaHead = membersStr ? `${n.date || todayStr} | ${membersStr}` : (n.date || todayStr);
+        lines.push(`[#${idx + 1}] ${metaHead}`);
+        lines.push(`Tệp đính kèm (${(n.files || []).length}): ${(n.files || []).join(", ")}`);
+        lines.push(`Ghi chú: ${n.text}`);
       });
 
       const jsonObj = {
@@ -2049,7 +2156,7 @@
       if (isSavingNotes) return false;
       isSavingNotes = true;
       const syncEl = document.getElementById("syncStatus");
-      syncEl.textContent = notifyLeo ? "⏳ Đang gửi thông báo cho anh Leo..." : "⏳ Đang lưu lên Google Drive...";
+      syncEl.textContent = notifyLeo ? "Đang gửi dữ liệu cho Leo..." : "Đang lưu nháp vào 99 Inbox/Vo...";
 
       const built = buildNotesPayload();
       try {
@@ -2066,56 +2173,72 @@
         const data = await res.json();
         isSavingNotes = false;
         if (data && data.ok) {
-          syncEl.textContent = notifyLeo
-            ? `✅ Đã lưu & báo tin cho anh Leo (${notes.length} ghi chú)!`
-            : `☁️ Đã lưu tự động ${notes.length} ghi chú vào 99 Inbox/Vo`;
+          if (notifyLeo) {
+            syncEl.textContent = `Đã gửi ${notes.length} ghi chú cho Leo thành công`;
+          } else {
+            updateBottomBar();
+          }
           return true;
         }
-        syncEl.textContent = "⚠️ Chưa lưu được lên Drive, vui lòng thử lại";
+        syncEl.textContent = "Lưu lên Drive không thành công. Vui lòng thử lại.";
         return false;
       } catch (err) {
         isSavingNotes = false;
-        syncEl.textContent = "⚠️ Mất kết nối mạng khi lưu lên Drive";
+        syncEl.textContent = "Lỗi kết nối mạng khi lưu lên Drive.";
         return false;
       }
     }
 
-    function updateNotifyBar() {
-      const label = document.getElementById("btnNotifyLabel");
+    function updateBottomBar() {
+      const label = document.getElementById("btnSendLabel");
       const syncEl = document.getElementById("syncStatus");
       if (notes.length > 0) {
-        label.textContent = `📩 Xong — Báo cho anh Leo ❤️ (${notes.length} ghi chú)`;
-        syncEl.textContent = `☁️ Đã lưu sẵn ${notes.length} ghi chú trên Google Drive 99 Inbox/Vo`;
+        label.textContent = `Send to Leo (${notes.length} ghi chú)`;
+        syncEl.textContent = `Đã lưu nháp ${notes.length} ghi chú · Bấm Send to Leo khi hoàn tất`;
       } else {
-        label.textContent = "📩 Báo cho anh Leo ❤️";
-        syncEl.textContent = "Mọi ghi chú đều được tự động lưu thẳng vào Google Drive 99 Inbox/Vo";
+        label.textContent = "Send to Leo";
+        syncEl.textContent = "Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo";
       }
     }
 
-    document.getElementById("btnNotifyLeo").addEventListener("click", async () => {
+    function closeSendConfirmModal() {
+      document.getElementById("sendConfirmModal").classList.remove("show");
+    }
+    document.getElementById("btnSendConfirmClose").addEventListener("click", closeSendConfirmModal);
+    document.getElementById("btnSendConfirmX").addEventListener("click", closeSendConfirmModal);
+    document.getElementById("sendConfirmModal").addEventListener("click", (e) => {
+      if (e.target.id === "sendConfirmModal") closeSendConfirmModal();
+    });
+
+    document.getElementById("btnSendToLeo").addEventListener("click", async () => {
       if (notes.length === 0) {
         if (selectedFileIds.size > 0) {
           document.getElementById("btnWriteNote").click();
           return;
         }
-        alert("Mẹ chạm chọn 1 hoặc nhiều ảnh ở Phần 2 rồi viết ghi chú trước nhé!");
+        alert("Chưa có ghi chú nào. Vui lòng chọn ít nhất 1 ảnh ở Phần 2 và hoàn tất ghi chú trước khi gửi.");
         return;
       }
 
-      const btn = document.getElementById("btnNotifyLeo");
+      const btn = document.getElementById("btnSendToLeo");
       btn.disabled = true;
+      const built = buildNotesPayload();
       const ok = await syncNotesToDrive(true);
       btn.disabled = false;
 
       if (ok) {
-        showToast("❤️ Đã gửi thông báo cho anh Leo rồi nhé!");
+        document.getElementById("sendConfirmTitle").textContent = `Đã gửi cho Leo (${notes.length} ghi chú)`;
+        document.getElementById("sendConfirmSub").textContent =
+          "Toàn bộ ghi chú đã được lưu vào thư mục 99 Inbox/Vo (mom_notes.json) và gửi thông báo qua email.";
+        document.getElementById("sendConfirmSummary").textContent = built.text;
+        document.getElementById("sendConfirmModal").classList.add("show");
       } else {
-        alert("Chưa gửi được do mất kết nối mạng. Mẹ thử bấm lại nhé!");
+        alert("Chưa thể gửi do lỗi kết nối mạng. Toàn bộ ghi chú vẫn đang được lưu an toàn, vui lòng thử lại.");
       }
     });
 
     // =========================================================================
-    // VOICE-TO-TEXT (NÓI THAY VÌ GÕ — TIẾNG VIỆT)
+    // NHẬP GIỌNG NÓI (WEB SPEECH API — TIẾNG VIỆT)
     // =========================================================================
     const SpeechRecClass = window.SpeechRecognition || window.webkitSpeechRecognition;
     let speechRec = null;
@@ -2127,7 +2250,7 @@
     function setMicUI(listening, msg = "", active = false) {
       isListening = listening;
       btnMic.classList.toggle("listening", listening);
-      btnMic.textContent = listening ? "🔴 Dừng nói" : "🎙️ Nói";
+      btnMic.textContent = listening ? "Đang ghi âm · Dừng" : "Nhập giọng nói";
       if (msg) {
         micStatus.textContent = msg;
         micStatus.className = "mic-status show" + (active ? " active" : "");
@@ -2150,7 +2273,7 @@
         return;
       }
       if (!SpeechRecClass) {
-        setMicUI(false, "💡 Trình duyệt này không hỗ trợ nút Micro web — mẹ dùng nút Micro trên bàn phím iPhone nhé!");
+        setMicUI(false, "Trình duyệt không hỗ trợ nhập giọng nói trực tiếp. Có thể sử dụng phím Micro trên bàn phím điện thoại.");
         return;
       }
       try {
@@ -2163,7 +2286,7 @@
         const cur = ta.value;
         baseTextBeforeSpeech = cur && !/\s$/.test(cur) ? cur + " " : cur;
 
-        speechRec.onstart = () => setMicUI(true, "🎙️ Mẹ cứ nói tự nhiên bằng tiếng Việt...", true);
+        speechRec.onstart = () => setMicUI(true, "Đang ghi nhận giọng nói (tiếng Việt)...", true);
         speechRec.onresult = (event) => {
           let spoken = "";
           for (let i = 0; i < event.results.length; i++) {
@@ -2173,17 +2296,17 @@
         };
         speechRec.onerror = (event) => {
           if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-            setMicUI(false, "⚠️ Chưa cấp quyền Micro. Mẹ bấm 'Cho phép' hoặc dùng nút Micro trên bàn phím iPhone nhé.");
+            setMicUI(false, "Chưa cấp quyền Micro cho trình duyệt. Vui lòng cấp quyền hoặc dùng phím Micro trên bàn phím.");
           } else {
-            setMicUI(false, "Chưa nghe rõ giọng nói. Mẹ bấm lại nút 🎙️ Nói nhé.");
+            setMicUI(false, "Không nhận diện được giọng nói. Vui lòng thử lại.");
           }
         };
         speechRec.onend = () => {
-          if (isListening) setMicUI(false, "✅ Đã ghi xong giọng nói!");
+          if (isListening) setMicUI(false, "Đã hoàn tất nhận diện giọng nói.");
         };
         speechRec.start();
       } catch (e) {
-        setMicUI(false, "💡 Mẹ dùng nút Micro trên bàn phím iPhone để đọc chữ nhé!");
+        setMicUI(false, "Không mở được Micro trực tiếp. Có thể sử dụng phím Micro trên bàn phím điện thoại.");
       }
     });
 
