@@ -784,6 +784,50 @@
       padding: 4px 8px;
       line-height: 1.45;
     }
+
+    /* Built-in Voice-to-Text Mic Button */
+    .voice-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .btn-mic {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fde8ea;
+      color: #c82333;
+      border: 1px solid #f5c2c7;
+      border-radius: 18px;
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.16s;
+    }
+    .btn-mic:active { transform: scale(0.96); }
+    .btn-mic.listening {
+      background: #e63946;
+      color: #ffffff;
+      border-color: #c82333;
+      animation: micPulse 1.2s infinite;
+    }
+    @keyframes micPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.45); }
+      50% { box-shadow: 0 0 0 7px rgba(230, 57, 70, 0); }
+    }
+    .mic-status {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      line-height: 1.4;
+      display: none;
+    }
+    .mic-status.show { display: block; }
+    .mic-status.active { color: #c82333; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -954,8 +998,12 @@
       </div>
 
       <div class="form-group">
-        <label>Lời kể của Mẹ</label>
-        <textarea id="stText" placeholder="Bấm nút Micro 🎙️ trên bàn phím iPhone để kể lại khoảnh khắc này cho nhanh mẹ nhé..."></textarea>
+        <div class="voice-label-row">
+          <label style="margin-bottom: 0;">Lời kể của Mẹ</label>
+          <button type="button" class="btn-mic" id="btnMicStory">🎙️ Nói thay vì gõ</button>
+        </div>
+        <textarea id="stText" placeholder="Gõ hoặc bấm nút 🎙️ Nói ở trên để kể lại khoảnh khắc này mẹ nhé..."></textarea>
+        <div class="mic-status" id="micStatus"></div>
       </div>
 
       <label class="star-check">
@@ -1494,6 +1542,7 @@
     }
 
     function openStoryModal({ editId = null, fileNames = [], suggestedDate = todayStr }) {
+      stopDictation();
       editingStoryId = editId;
       modalFileNames = [...fileNames];
 
@@ -1560,12 +1609,97 @@
       openStoryModal({ editId: null, fileNames: [], suggestedDate: todayStr });
     });
 
+    // --- Built-in Voice-to-Text (Web Speech API cho Safari iPhone & Chrome) ---
+    const SpeechRecClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let speechRec = null;
+    let isListening = false;
+    let baseTextBeforeSpeech = "";
+    const btnMicStory = document.getElementById("btnMicStory");
+    const micStatusEl = document.getElementById("micStatus");
+
+    function setMicUI(listening, statusMsg = "", isActiveStyle = false) {
+      isListening = listening;
+      btnMicStory.classList.toggle("listening", listening);
+      btnMicStory.textContent = listening ? "🔴 Đang nghe... (Bấm dừng)" : "🎙️ Nói thay vì gõ";
+      if (statusMsg) {
+        micStatusEl.textContent = statusMsg;
+        micStatusEl.className = "mic-status show" + (isActiveStyle ? " active" : "");
+      } else {
+        micStatusEl.textContent = "";
+        micStatusEl.className = "mic-status";
+      }
+    }
+
+    function stopDictation() {
+      if (speechRec && isListening) {
+        try { speechRec.stop(); } catch (e) {}
+      }
+      setMicUI(false, "");
+    }
+
+    btnMicStory.addEventListener("click", () => {
+      if (isListening) {
+        stopDictation();
+        return;
+      }
+
+      if (!SpeechRecClass) {
+        setMicUI(false, "💡 Trình duyệt này không hỗ trợ nút Micro web. Mẹ bật Micro trên bàn phím iPhone tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+        return;
+      }
+
+      try {
+        speechRec = new SpeechRecClass();
+        speechRec.lang = "vi-VN";
+        speechRec.interimResults = true;
+        speechRec.continuous = true;
+
+        const ta = document.getElementById("stText");
+        const cur = ta.value;
+        baseTextBeforeSpeech = cur && !/\s$/.test(cur) ? cur + " " : cur;
+
+        speechRec.onstart = () => {
+          setMicUI(true, "🎙️ Mẹ cứ nói tự nhiên bằng tiếng Việt, chữ sẽ tự hiện ra...", true);
+        };
+
+        speechRec.onresult = (event) => {
+          let spoken = "";
+          for (let i = 0; i < event.results.length; i++) {
+            spoken += event.results[i][0].transcript;
+          }
+          ta.value = baseTextBeforeSpeech + spoken;
+        };
+
+        speechRec.onerror = (event) => {
+          if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+            setMicUI(false, "⚠️ iPhone chưa cấp quyền Micro cho Safari. Mẹ bấm 'Cho phép' khi được hỏi, hoặc bật tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+          } else if (event.error === "no-speech") {
+            setMicUI(false, "Chưa nghe thấy giọng nói. Mẹ bấm lại nút 🎙️ rồi nói nhé!");
+          } else {
+            setMicUI(false, "💡 Nếu Micro bị gián đoạn, mẹ có thể bật Micro trên bàn phím iPhone tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+          }
+        };
+
+        speechRec.onend = () => {
+          if (isListening) {
+            setMicUI(false, "✅ Đã ghi xong giọng nói! Mẹ có thể bấm 🎙️ để nói tiếp hoặc sửa chữ.");
+          }
+        };
+
+        speechRec.start();
+      } catch (err) {
+        setMicUI(false, "💡 Không mở được Micro trực tiếp. Mẹ bật Micro bàn phím tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+      }
+    });
+
     document.getElementById("btnCancelStory").addEventListener("click", () => {
+      stopDictation();
       storyModal.classList.remove("show");
       editingStoryId = null;
     });
 
     document.getElementById("btnSaveStory").addEventListener("click", () => {
+      stopDictation();
       const title = document.getElementById("stTitle").value.trim();
       const date = document.getElementById("stDate").value || todayStr;
       const children = getModalChildren();
