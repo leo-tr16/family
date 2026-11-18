@@ -3191,7 +3191,7 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
                 if (notes.length === 0) {
                   html += "<div style='padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:12px;'>Hiện chưa có ghi chú mới nào trong <b>mom_notes.json</b>. Trong thư mục đang có <b>" + files.length + " tệp</b> ảnh/video chờ viết ghi chú (lưu giữ 45 ngày).</div>";
                 } else {
-                  html += "<div style='padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;margin-bottom:12px;color:#065f46;'><b>Đã nhận " + notes.length + " câu chuyện từ Vợ!</b><br>Để tự động đổi tên ảnh, tạo file .md và xuất bản lên Web, mở Terminal chạy:<br><code style='display:block;margin-top:6px;padding:8px;background:#0f172a;color:#38bdf8;border-radius:6px;user-select:all;'>python "00 System/scripts/process_mom_intake.py" --execute --cleanup && python "00 System/scripts/build_for_web.py"</code></div>";
+                  html += "<div style='padding:12px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;margin-bottom:12px;color:#065f46;'><b>Đã nhận " + notes.length + " câu chuyện từ Vợ!</b><br>Để tự động đổi tên ảnh, tạo file .md và xuất bản lên Web, mở Terminal chạy:<br><code style='display:block;margin-top:6px;padding:8px;background:#0f172a;color:#38bdf8;border-radius:6px;user-select:all;'>python &quot;00 System/scripts/process_mom_intake.py&quot; --execute --cleanup &amp;&amp; python &quot;00 System/scripts/build_for_web.py&quot;</code></div>";
                   notes.forEach(function(n, idx) {
                     html += "<div style='padding:12px;border:1px solid #e2e8f0;border-left:4px solid #0f766e;border-radius:8px;margin-bottom:10px;background:#f8fafc;'>";
                     html += "<div style='font-weight:700;color:#0f766e;margin-bottom:4px;'>Ghi chú #" + (idx + 1) + " · " + (n.date || "") + " · " + ((n.children || []).join(", ")) + "</div>";
@@ -3199,6 +3199,21 @@ body.edit-mode .app-container { padding-bottom: 96px; }   /* chừa chỗ cho FA
                     html += "<div style='font-size:0.8rem;color:#64748b;'>Tệp đính kèm (" + ((n.files || []).length) + "): " + ((n.files || []).join(", ")) + "</div>";
                     html += "</div>";
                   });
+                }
+                if (files.length > 0) {
+                  html += "<div style='margin-top:14px;font-weight:700;font-size:0.88rem;color:#334155;margin-bottom:6px;'>Danh sách tệp hiện có trong 99 Inbox/Vo (" + files.length + "):</div>";
+                  html += "<div style='display:flex;flex-direction:column;gap:6px;'>";
+                  files.forEach(function(f) {
+                    const mb = f.size ? (f.size / (1024 * 1024)).toFixed(2) + " MB" : "";
+                    const uploadedDate = f.createdAt ? f.createdAt.slice(0, 10) : (f.date || "");
+                    const ageDays = f.createdAt ? Math.max(0, Math.floor((Date.now() - new Date(f.createdAt).getTime()) / 86400000)) : 0;
+                    const daysLeft = Math.max(0, 45 - ageDays);
+                    html += "<div style='display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:0.83rem;'>";
+                    html += "<span><b>" + f.name + "</b> <span style='color:#64748b;'>(" + mb + " · tải lên " + uploadedDate + ")</span></span>";
+                    html += "<span style='color:#0f766e;font-weight:600;'>Còn " + daysLeft + " ngày</span>";
+                    html += "</div>";
+                  });
+                  html += "</div>";
                 }
                 wifeBody.innerHTML = html;
               }
