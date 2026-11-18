@@ -10,27 +10,25 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="shortcut icon" href="favicon.ico">
-  <title>Kỷ Niệm Của Mẹ — Send to Leo</title>
+  <title>Gửi Ảnh &amp; Ghi Chú Cho Leo</title>
   <style>
     :root {
       --bg: #f6f4ef;
-      --card-bg: #ffffff;
-      --text: #1f2421;
-      --text-muted: #626660;
-      --border: #e5e2d9;
+      --card: #ffffff;
+      --text: #1e2421;
+      --muted: #646a64;
+      --border: #e5e2d8;
       --primary: #1f3a5f;
-      --primary-light: #e9eef4;
-      --heart: #e63946;
-      --heart-grad: linear-gradient(135deg, #e63946 0%, #c82333 100%);
-      --green: #2f5d50;
-      --green-light: #e9f0ed;
+      --primary-soft: #eaf0f7;
+      --accent: #d93848;
+      --accent-grad: linear-gradient(135deg, #e04151 0%, #c42737 100%);
+      --green: #24634b;
+      --green-soft: #e7f3ee;
       --warn-bg: #fff8e6;
-      --warn-border: #e6a817;
-      --warn-text: #855800;
-      --danger-bg: #fdecec;
-      --danger-text: #b91c1c;
+      --warn-border: #e8b339;
+      --warn-text: #7c5200;
       --radius: 18px;
-      --shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      --shadow: 0 3px 16px rgba(20, 30, 45, 0.055);
     }
 
     * {
@@ -42,67 +40,90 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       line-height: 1.45;
-      padding: 12px 12px 145px 12px;
-      max-width: 560px;
+      padding: 12px 12px 150px 12px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
-    /* Header */
-    header {
-      text-align: center;
-      padding: 10px 0 10px 0;
+    /* Top Header */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 2px 14px 2px;
     }
-    .badge-sub {
-      display: inline-block;
-      font-size: 10.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-      color: #8c6a22;
-      background: #fdf6e6;
-      padding: 3px 11px;
-      border-radius: 20px;
-      margin-bottom: 5px;
-    }
-    h1 {
-      font-size: 21px;
+    .topbar h1 {
+      font-size: 20px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 3px;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.3px;
     }
-    .subhead {
-      font-size: 13px;
-      color: var(--text-muted);
+    .topbar-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .btn-album-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      background: var(--green-soft);
+      color: var(--green);
+      border: 1px solid #c6dfd4;
+      border-radius: 20px;
+      padding: 7px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Card */
+    /* Section Card */
     .card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 15px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow);
+      background: var(--card);
       border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
     }
-    .step-badge {
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .part-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       padding: 4px 10px;
       border-radius: 8px;
-      margin-bottom: 8px;
     }
-    .badge-1 { background: var(--primary-light); color: var(--primary); }
-    .badge-2 { background: #fde8ea; color: #c82333; }
-    .badge-3 { background: var(--green-light); color: var(--green); }
+    .part-1 { background: var(--primary-soft); color: var(--primary); }
+    .part-2 { background: #fdebed; color: var(--accent); }
+
+    .card-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
 
     /* Buttons */
     .btn {
@@ -118,130 +139,116 @@
       text-decoration: none;
       cursor: pointer;
       border: none;
-      transition: transform 0.14s, opacity 0.2s;
       font-family: inherit;
+      transition: transform 0.12s, opacity 0.18s;
     }
-    .btn:active { transform: scale(0.98); }
-    .btn-drive {
+    .btn:active { transform: scale(0.985); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-upload-primary {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(31, 58, 95, 0.25);
-      margin-bottom: 10px;
-    }
-    .btn-pick {
-      background: #f4f7fb;
-      color: var(--primary);
-      border: 2px dashed #9cb1c9;
-      padding: 16px 14px;
+      box-shadow: 0 4px 14px rgba(31, 58, 95, 0.24);
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
+      padding: 14px 16px;
     }
-    .btn-pick small {
-      font-size: 12px;
+    .btn-upload-primary small {
+      font-size: 11.5px;
       font-weight: 500;
-      color: var(--text-muted);
-    }
-    .btn-viewer {
-      background: var(--green);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(47, 93, 80, 0.22);
-    }
-    .btn-outline-sm {
-      background: #ffffff;
-      color: var(--primary);
-      border: 1px solid #c5d1df;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 12.5px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
+      opacity: 0.85;
     }
 
-    /* Short guide + Warning */
-    .mini-steps {
-      font-size: 13px;
-      color: #333833;
-      background: #faf9f6;
-      padding: 9px 11px;
-      border-radius: 11px;
-      border: 1px solid #eeece4;
-      line-height: 1.5;
-    }
-    .mini-steps b { color: var(--primary); }
-
-    .video-warn {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      background: var(--warn-bg);
-      border: 1px solid #f0cf7a;
-      border-left: 4px solid var(--warn-border);
-      color: var(--warn-text);
-      padding: 9px 11px;
-      border-radius: 10px;
-      font-size: 12.5px;
+    .btn-drive-alt {
       margin-top: 9px;
-      line-height: 1.4;
-    }
-    .video-warn strong { color: #6b4400; }
-
-    /* Segmented Tabs (Photos vs Stories) */
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #efede6;
-      padding: 4px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      gap: 4px;
-    }
-    .tab-btn {
-      border: none;
-      background: transparent;
-      padding: 9px 8px;
-      border-radius: 9px;
+      background: #f8f9fb;
+      color: var(--primary);
+      border: 1.5px solid #cfd9e6;
+      padding: 11px 14px;
       font-size: 13.5px;
+    }
+
+    .btn-refresh {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #cddae8;
+      border-radius: 10px;
+      padding: 6px 11px;
+      font-size: 12.5px;
       font-weight: 700;
-      color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.16s;
       font-family: inherit;
     }
-    .tab-btn.active {
-      background: #ffffff;
-      color: var(--primary);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    .btn-refresh:active { transform: scale(0.96); }
+
+    .hint-line {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Progress Bar when loading 100 photos */
-    .progress-wrap {
+    /* Upload Progress & Alerts */
+    .progress-box {
       display: none;
+      margin-top: 12px;
       background: #f4f7fb;
-      border: 1px solid #d2deec;
+      border: 1px solid #d1deed;
       border-radius: 12px;
-      padding: 10px 12px;
-      margin: 8px 0 10px 0;
+      padding: 11px 12px;
     }
-    .progress-label {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 6px;
+    .progress-box.show { display: block; }
+    .progress-top {
       display: flex;
       justify-content: space-between;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
     }
-    .progress-bar-bg {
-      height: 7px;
-      background: #dce5f0;
-      border-radius: 10px;
+    .progress-track {
+      height: 8px;
+      background: #dde6f0;
+      border-radius: 8px;
       overflow: hidden;
     }
-    .progress-bar-fill {
+    .progress-fill {
       height: 100%;
       width: 0%;
       background: var(--primary);
-      transition: width 0.12s;
+      transition: width 0.2s ease;
+    }
+
+    .notice-box {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 11px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      background: var(--warn-bg);
+      border: 1px solid #efd081;
+      border-left: 4px solid var(--warn-border);
+      color: var(--warn-text);
+    }
+    .notice-box.show { display: block; }
+    .notice-box.error {
+      background: #fef2f2;
+      border-color: #f5c2c7;
+      border-left-color: #c82333;
+      color: #991b1b;
+    }
+    .notice-box.success {
+      background: var(--green-soft);
+      border-color: #b7dccb;
+      border-left-color: var(--green);
+      color: #1c4d3a;
     }
 
     /* Filter Pills */
@@ -250,17 +257,17 @@
       gap: 6px;
       overflow-x: auto;
       padding-bottom: 4px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       -webkit-overflow-scrolling: touch;
     }
     .filter-pill {
       white-space: nowrap;
       border: 1px solid var(--border);
       background: #faf9f6;
-      color: var(--text-muted);
-      border-radius: 16px;
-      padding: 5px 11px;
-      font-size: 12px;
+      color: var(--muted);
+      border-radius: 18px;
+      padding: 6px 12px;
+      font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
@@ -271,48 +278,25 @@
       border-color: var(--primary);
     }
 
-    .toolbar-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 12px;
-      color: var(--text-muted);
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .btn-link {
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-size: 12.5px;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 4px 5px;
-      font-family: inherit;
-    }
-    .btn-link.danger { color: var(--heart); }
-
-    /* 3-Column Apple Photos Style Grid */
+    /* 3-Column Google Drive Grid */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      margin-top: 6px;
+      gap: 5px;
     }
     .photo-tile {
       position: relative;
       aspect-ratio: 1 / 1;
-      background: #232a34;
-      border-radius: 8px;
+      background: #e9e7df;
+      border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
       user-select: none;
       border: 2.5px solid transparent;
-      transition: transform 0.1s, border-color 0.12s;
+      transition: transform 0.1s, border-color 0.14s;
     }
     .photo-tile.selected {
-      border-color: #1f3a5f;
+      border-color: var(--accent);
       transform: scale(0.95);
     }
     .photo-tile img {
@@ -321,96 +305,76 @@
       object-fit: cover;
       display: block;
     }
-    .photo-tile.has-story img {
-      opacity: 0.78;
+    .photo-tile.noted img {
+      opacity: 0.85;
     }
-    .tile-fallback {
+    .tile-skeleton {
       width: 100%;
       height: 100%;
+      background: linear-gradient(110deg, #eceae2 8%, #f7f6f1 18%, #eceae2 33%);
+      background-size: 200% 100%;
+      animation: shimmer 1.3s linear infinite;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      font-size: 10px;
       padding: 6px;
       text-align: center;
-      word-break: break-all;
-      background: #2d3a4b;
-    }
-    .tile-num {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      background: rgba(0, 0, 0, 0.65);
-      color: #ffffff;
+      color: #7d827c;
       font-size: 10px;
-      font-weight: 800;
-      padding: 1px 5px;
-      border-radius: 5px;
-      z-index: 2;
+      word-break: break-all;
     }
+    .tile-fallback {
+      width: 100%;
+      height: 100%;
+      background: #2b3847;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+      font-size: 10px;
+      word-break: break-all;
+      gap: 4px;
+    }
+    @keyframes shimmer {
+      to { background-position-x: -200%; }
+    }
+
     .tile-check {
       position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 22px;
-      height: 22px;
+      top: 5px;
+      right: 5px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       border: 2px solid #8a94a6;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 900;
       color: transparent;
       z-index: 3;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     }
     .photo-tile.selected .tile-check {
-      background: var(--primary);
+      background: var(--accent);
       border-color: #ffffff;
       color: #ffffff;
     }
-    .tile-vid-badge {
-      position: absolute;
-      bottom: 4px;
-      left: 4px;
-      background: rgba(20, 90, 50, 0.88);
-      color: #ffffff;
-      font-size: 9.5px;
-      font-weight: 700;
-      padding: 1px 5px;
-      border-radius: 4px;
-      z-index: 2;
-    }
-    .tile-vid-badge.over {
-      background: #c82333;
-    }
-    .tile-story-tag {
-      position: absolute;
-      bottom: 4px;
-      right: 4px;
-      background: rgba(31, 58, 95, 0.92);
-      color: #ffffff;
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 1px 5px;
-      border-radius: 4px;
-      z-index: 2;
-      max-width: 70%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+
     .tile-zoom {
       position: absolute;
-      bottom: 4px;
-      left: 4px;
-      width: 22px;
-      height: 22px;
+      bottom: 5px;
+      left: 5px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.58);
       color: #ffffff;
       border: none;
       font-size: 11px;
@@ -420,83 +384,151 @@
       z-index: 4;
       cursor: pointer;
     }
+    .tile-vid-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(0, 0, 0, 0.72);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 5px;
+      z-index: 2;
+    }
+    .tile-note-tag {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: rgba(36, 99, 75, 0.94);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 5px;
+      z-index: 3;
+      max-width: 68%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-    /* Stories List Tab */
-    .story-list {
+    .state-box {
+      text-align: center;
+      padding: 28px 16px;
+      background: #faf9f6;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .spinner {
+      width: 26px;
+      height: 26px;
+      border: 3px solid #dce4ee;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 10px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Saved Notes Section inside Part 2 */
+    .notes-divider {
+      margin: 18px 0 12px 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .notes-heading {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .notes-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .story-card {
+    .note-card {
       background: #faf9f6;
       border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid var(--green);
       border-radius: 13px;
       padding: 12px;
     }
-    .story-card.starred {
-      border-left-color: var(--heart);
-    }
-    .story-head {
+    .note-card-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 5px;
-    }
-    .story-num {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--primary);
-      text-transform: uppercase;
-    }
-    .story-meta {
-      font-size: 11.5px;
-      color: var(--text-muted);
+      gap: 8px;
       margin-bottom: 6px;
     }
-    .story-title-txt {
-      font-size: 14.5px;
-      font-weight: 700;
+    .note-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--green);
+    }
+    .note-meta {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .note-body {
+      font-size: 14px;
       color: var(--text);
-      margin-bottom: 4px;
-    }
-    .story-body-txt {
-      font-size: 13.5px;
-      color: #2f3330;
       white-space: pre-wrap;
-      line-height: 1.45;
-      margin-bottom: 8px;
+      line-height: 1.5;
+      margin-bottom: 9px;
     }
-    .story-thumbs {
+    .note-thumbs {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       overflow-x: auto;
       padding-bottom: 2px;
     }
-    .story-thumb-mini {
-      width: 44px;
-      height: 44px;
-      border-radius: 6px;
+    .note-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 7px;
       object-fit: cover;
       border: 1px solid var(--border);
       flex-shrink: 0;
+      background: #2b3847;
     }
-    .story-files-txt {
+    .note-thumb-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: 7px;
+      background: #2b3847;
+      color: #ffffff;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .note-files-caption {
       font-size: 11px;
-      color: var(--text-muted);
+      color: var(--muted);
       margin-top: 5px;
       word-break: break-word;
     }
-    .empty-box {
-      text-align: center;
-      padding: 26px 14px;
-      color: var(--text-muted);
-      font-size: 13.5px;
-      background: #faf9f6;
-      border-radius: 12px;
-      border: 1px dashed var(--border);
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 6px;
+      font-family: inherit;
     }
+    .btn-text.danger { color: var(--accent); }
 
     /* Floating Selection Bar */
     .selection-bar {
@@ -505,7 +537,7 @@
       bottom: 84px;
       left: 12px;
       right: 12px;
-      max-width: 536px;
+      max-width: 576px;
       margin: 0 auto;
       background: var(--primary);
       color: #ffffff;
@@ -514,37 +546,26 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      box-shadow: 0 8px 24px rgba(31, 58, 95, 0.38);
+      box-shadow: 0 8px 26px rgba(20, 40, 70, 0.36);
       z-index: 1050;
     }
     .selection-bar.show { display: flex; }
-    .sel-left {
-      min-width: 0;
-    }
-    .sel-count {
-      font-size: 13px;
+    .sel-info {
+      font-size: 13.5px;
       font-weight: 800;
     }
-    .sel-nums {
-      font-size: 11px;
-      opacity: 0.85;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 165px;
-    }
-    .sel-btns {
+    .sel-actions {
       display: flex;
       gap: 6px;
       flex-shrink: 0;
     }
-    .btn-sel-create {
+    .btn-sel-write {
       background: #ffffff;
       color: var(--primary);
       border: none;
       border-radius: 11px;
-      padding: 9px 13px;
-      font-size: 13px;
+      padding: 9px 14px;
+      font-size: 13.5px;
       font-weight: 800;
       cursor: pointer;
       font-family: inherit;
@@ -555,13 +576,13 @@
       border: none;
       border-radius: 11px;
       padding: 9px 10px;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
     }
 
-    /* Bottom Fixed Send Bar */
+    /* Bottom Notify Bar */
     .bottom-bar {
       position: fixed;
       bottom: 0;
@@ -575,56 +596,32 @@
       z-index: 1000;
     }
     .bottom-inner {
-      max-width: 540px;
+      max-width: 576px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .btn-send {
-      background: var(--heart-grad);
+    .btn-notify {
+      background: var(--accent-grad);
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(230, 57, 70, 0.35);
       border-radius: 26px;
       padding: 13px 18px;
-      font-size: 16px;
+      font-size: 15.5px;
+      box-shadow: 0 4px 14px rgba(217, 56, 72, 0.32);
     }
-    .send-sub {
+    .sync-status {
       font-size: 11.5px;
       text-align: center;
-      color: var(--text-muted);
+      color: var(--muted);
     }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-80px);
-      background: #1f3a5f;
-      color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 24px;
-      font-size: 13px;
-      font-weight: 700;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      z-index: 3000;
-      transition: transform 0.25s ease;
-      white-space: nowrap;
-      max-width: 92vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* Modals */
+    /* Modal / Bottom Sheet */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.58);
+      inset: 0;
+      background: rgba(15, 23, 36, 0.56);
       z-index: 2000;
       align-items: flex-end;
       justify-content: center;
@@ -640,10 +637,10 @@
       border-radius: 22px;
       padding: 18px;
       width: 100%;
-      max-width: 460px;
+      max-width: 500px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
     }
     .modal-title {
       font-size: 17px;
@@ -653,61 +650,118 @@
     }
     .modal-sub {
       font-size: 12.5px;
-      color: var(--text-muted);
+      color: var(--muted);
       margin-bottom: 10px;
-      line-height: 1.4;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 130px;
+    /* Selected thumbs strip inside Note Modal */
+    .picked-strip {
+      display: flex;
       gap: 8px;
-      margin-bottom: 10px;
+      overflow-x: auto;
+      padding: 4px 0 10px 0;
     }
-    .form-group { margin-bottom: 10px; }
-    label {
+    .picked-item {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #2b3847;
+    }
+    .picked-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 4px;
+    }
+    .picked-item-fb {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+    }
+    .picked-remove {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.72);
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Form Controls */
+    .field-group { margin-bottom: 12px; }
+    .field-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .field-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.4px;
     }
-    input[type="text"], input[type="date"], textarea {
+    textarea, input[type="date"] {
       width: 100%;
-      padding: 10px 12px;
-      font-size: 15px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
+      padding: 11px 12px;
+      font-size: 15.5px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
       background: #faf9f6;
       color: var(--text);
       outline: none;
       font-family: inherit;
     }
-    input:focus, textarea:focus {
+    textarea:focus, input[type="date"]:focus {
       border-color: var(--primary);
       background: #ffffff;
     }
     textarea {
-      min-height: 95px;
+      min-height: 115px;
       resize: vertical;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
+    /* Optional Meta Row */
+    .opt-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 6px;
+    }
     .chips-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 5px;
     }
     .chip {
-      padding: 6px 12px;
-      border-radius: 18px;
-      font-size: 13px;
+      padding: 5px 10px;
+      border-radius: 16px;
+      font-size: 12.5px;
       font-weight: 600;
       border: 1px solid var(--border);
       background: #ffffff;
-      color: var(--text-muted);
+      color: var(--muted);
       cursor: pointer;
       user-select: none;
     }
@@ -717,88 +771,13 @@
       border-color: var(--primary);
     }
 
-    .star-check {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 8px 0 4px 0;
-      cursor: pointer;
-    }
-    .star-check input { width: 18px; height: 18px; accent-color: var(--heart); }
-
-    .modal-btn-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .btn-cancel { background: #f0eee6; color: var(--text); }
-    .btn-save { background: var(--primary); color: #ffffff; }
-    .btn-zalo { background: #0068ff; color: #ffffff; margin-bottom: 8px; }
-    .btn-copy { background: #eef2f7; color: var(--primary); margin-bottom: 8px; }
-    .btn-reset { background: #e9f0ed; color: #2f5d50; margin-bottom: 8px; }
-
-    .preview-text-box {
-      background: #f7f6f2;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 11px;
-      font-size: 12px;
-      color: var(--text);
-      white-space: pre-wrap;
-      max-height: 210px;
-      overflow-y: auto;
-      margin-bottom: 12px;
-      text-align: left;
-      line-height: 1.45;
-    }
-    .subtle-json-link {
-      display: block;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-      background: none;
-      border: none;
-      width: 100%;
-      padding: 8px 0 2px 0;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-
-    /* Lightbox Preview */
-    .lightbox-img {
-      width: 100%;
-      max-height: 60vh;
-      object-fit: contain;
-      border-radius: 12px;
-      background: #000;
-      margin-bottom: 10px;
-    }
-
-    .peace-note {
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-      padding: 4px 8px;
-      line-height: 1.45;
-    }
-
-    /* Built-in Voice-to-Text Mic Button */
-    .voice-label-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      gap: 8px;
-    }
+    /* Voice Button */
     .btn-mic {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: #fde8ea;
-      color: #c82333;
+      background: #fdebed;
+      color: var(--accent);
       border: 1px solid #f5c2c7;
       border-radius: 18px;
       padding: 5px 12px;
@@ -806,306 +785,291 @@
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.16s;
     }
-    .btn-mic:active { transform: scale(0.96); }
     .btn-mic.listening {
-      background: #e63946;
+      background: var(--accent);
       color: #ffffff;
-      border-color: #c82333;
+      border-color: #b82332;
       animation: micPulse 1.2s infinite;
     }
     @keyframes micPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.45); }
-      50% { box-shadow: 0 0 0 7px rgba(230, 57, 70, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217, 56, 72, 0.45); }
+      50% { box-shadow: 0 0 0 7px rgba(217, 56, 72, 0); }
     }
     .mic-status {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      margin-top: 5px;
-      line-height: 1.4;
       display: none;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 5px;
     }
     .mic-status.show { display: block; }
-    .mic-status.active { color: #c82333; font-weight: 600; }
+    .mic-status.active { color: var(--accent); font-weight: 600; }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn-cancel { background: #efede6; color: var(--text); }
+    .btn-save { background: var(--primary); color: #ffffff; }
+
+    /* Lightbox */
+    .lightbox-img {
+      width: 100%;
+      max-height: 62vh;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #111;
+      margin-bottom: 10px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: #1f3a5f;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      z-index: 3000;
+      transition: transform 0.24s ease;
+      max-width: 92vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 420px) {
+      .opt-meta-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
   <div class="toast" id="toast"></div>
 
-  <header>
-    <div class="badge-sub">Leo-Family Story</div>
-    <h1>Kỷ Niệm Của Mẹ ❤️</h1>
-    <div class="subhead">1 link duy nhất • Tải ảnh lên Drive ➔ Chọn ảnh tạo Story ➔ Send to Leo</div>
-  </header>
+  <div class="topbar">
+    <div>
+      <h1>Gửi Kỷ Niệm Cho Leo ❤️</h1>
+      <div class="topbar-sub">2 bước gọn nhẹ: Tải lên Drive ➔ Chọn ảnh viết ghi chú</div>
+    </div>
+    <a href="./index.html" class="btn-album-mini">🏠 Album</a>
+  </div>
 
-  <!-- ==================== BƯỚC 1: UPLOAD LÊN DRIVE ==================== -->
-  <div class="card">
-    <span class="step-badge badge-1">Bước 1 • Tải ảnh &amp; video gốc</span>
+  <!-- ======================================================================= -->
+  <!-- PHẦN 1: UPLOAD ẢNH / VIDEO LÊN FOLDER 99 INBOX/VO                       -->
+  <!-- ======================================================================= -->
+  <section class="card">
+    <div class="card-head">
+      <span class="part-badge part-1">Phần 1 • Tải lên Drive</span>
+    </div>
+    <div class="card-title">Upload ảnh / video lên 99 Inbox/Vo</div>
+    <div class="card-desc">Chọn ảnh hoặc video ngắn trên máy để tải thẳng lên thư mục <b>99 Inbox/Vo</b>. Tải xong ảnh sẽ tự hiện ngay ở Phần 2.</div>
 
-    <a href="https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5" class="btn btn-drive" id="btnOpenDrive" target="_blank" rel="noopener">
-      <span>📤 Mở Thư Mục "99 Inbox / Vo" Để Upload</span>
+    <input type="file" id="uploadInput" accept="image/*,video/*" multiple style="display: none;">
+
+    <button type="button" class="btn btn-upload-primary" id="btnDirectUpload">
+      <span>📤 Chọn ảnh / video tải lên ngay</span>
+      <small>Hỗ trợ chọn nhiều ảnh cùng lúc (≤ 25 MB/file)</small>
+    </button>
+
+    <a href="https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5" class="btn btn-drive-alt" id="btnOpenDrive" target="_blank" rel="noopener">
+      <span>📁 Hoặc mở app Google Drive (99 Inbox/Vo)</span>
     </a>
 
-    <div class="mini-steps">
-      Bấm nút trên ➔ vào thẳng thư mục <b>Vo</b> ➔ bấm dấu <b>+</b> ➔ <b>Tải lên</b> ➔ chọn ảnh &amp; video trên iPhone.
+    <div class="hint-line">
+      <span>🎬</span>
+      <span>Video nên ngắn <b>dưới 30 giây</b>. Video nặng (&gt; 25 MB) hoặc gửi rất nhiều ảnh thì mở app Google Drive tải sẽ nhanh hơn.</span>
     </div>
 
-    <div class="video-warn">
-      <span style="font-size: 17px; line-height: 1.2;">🎬</span>
-      <div>
-        <strong>Lưu ý Video:</strong> Được phép tải kèm <strong>video ngắn DƯỚI 30 GIÂY</strong> mẹ nhé!
-        <i>(Video dài hơn 30 giây sẽ làm nặng kho và chậm khi cả nhà mở xem lại).</i>
+    <div class="progress-box" id="uploadProgressBox">
+      <div class="progress-top">
+        <span id="uploadProgressLabel">Đang tải lên...</span>
+        <span id="uploadProgressPct">0%</span>
       </div>
-    </div>
-  </div>
-
-  <!-- ==================== BƯỚC 2: CHỌN ẢNH TẠO NHIỀU STORIES ==================== -->
-  <div class="card">
-    <span class="step-badge badge-2">Bước 2 • Tạo 1 hoặc nhiều Stories rồi gửi 1 lần</span>
-
-    <!-- 2 Tabs -->
-    <div class="tabs">
-      <button type="button" class="tab-btn active" id="tabPhotosBtn">📸 Ảnh &amp; Video (<span id="tabPhotoCount">0</span>)</button>
-      <button type="button" class="tab-btn" id="tabStoriesBtn">📖 Stories đã tạo (<span id="tabStoryCount">0</span>)</button>
-    </div>
-
-    <!-- TAB 1: PHOTOS GRID -->
-    <div id="tabPhotosPanel">
-      <input type="file" id="mediaPicker" accept="image/*,video/*" multiple style="display: none;">
-
-      <div id="emptyPickerArea">
-        <button type="button" class="btn btn-pick" id="btnPickMedia">
-          <span>🖼️ Bấm chọn ảnh &amp; video từ iPhone</span>
-          <small>Cân mượt 100+ ảnh • Tự nén xem trước siêu nhẹ • Không tốn 4G</small>
-        </button>
-        <div style="text-align: center; margin-top: 8px;">
-          <button type="button" class="btn-outline-sm" id="btnNewTextStoryEmpty">+ Hoặc viết Story nhanh không cần chọn ảnh</button>
-        </div>
-      </div>
-
-      <!-- Loading Progress Bar -->
-      <div class="progress-wrap" id="progressWrap">
-        <div class="progress-label">
-          <span id="progressText">Đang chuẩn bị ảnh xem trước...</span>
-          <span id="progressPct">0%</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-      </div>
-
-      <!-- Alert if any video > 30s -->
-      <div id="videoOverAlert" class="video-warn" style="display: none; background: var(--danger-bg); border-color: #f5c2c7; border-left-color: #c82333; color: #991b1b; margin-bottom: 8px;">
-        <span>⚠️</span>
-        <div id="videoOverAlertText">Có video dài quá 30 giây!</div>
-      </div>
-
-      <!-- Active Grid Area -->
-      <div id="gridArea" style="display: none;">
-        <!-- Smart Filters -->
-        <div class="filter-row">
-          <button type="button" class="filter-pill active" data-filter="all" id="pillAll">Tất cả (0)</button>
-          <button type="button" class="filter-pill" data-filter="todo" id="pillTodo">Chưa có Story (0)</button>
-          <button type="button" class="filter-pill" data-filter="done" id="pillDone">Đã làm Story (0)</button>
-        </div>
-
-        <div class="toolbar-row">
-          <span>Chạm chọn 1 hoặc nhiều ảnh ➔ <b>Tạo Story</b></span>
-          <div>
-            <button type="button" class="btn-link" id="btnAddMore">+ Thêm ảnh</button>
-            <button type="button" class="btn-link danger" id="btnClearGrid">Xóa lưới</button>
-          </div>
-        </div>
-
-        <div class="photo-grid" id="photoGrid"></div>
+      <div class="progress-track">
+        <div class="progress-fill" id="uploadProgressFill"></div>
       </div>
     </div>
 
-    <!-- TAB 2: STORIES LIST -->
-    <div id="tabStoriesPanel" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px;">
-        <button type="button" class="btn-outline-sm" id="btnAddNoPhotoStory">+ Thêm Story chữ</button>
-        <button type="button" class="btn-link danger" id="btnClearAllStories" style="display: none;">Xóa hết Stories</button>
-      </div>
-      <div class="story-list" id="storyList"></div>
+    <div class="notice-box" id="uploadNotice"></div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- PHẦN 2: CHỌN ẢNH TỪ GOOGLE DRIVE & VIẾT GHI CHÚ                         -->
+  <!-- ======================================================================= -->
+  <section class="card">
+    <div class="card-head">
+      <span class="part-badge part-2">Phần 2 • Chọn ảnh &amp; Ghi chú</span>
+      <button type="button" class="btn-refresh" id="btnRefreshDrive">🔄 Tải lại</button>
     </div>
-  </div>
+    <div class="card-title">Ảnh / video trong 99 Inbox/Vo</div>
+    <div class="card-desc">Chạm chọn <b>1 ảnh</b> hoặc <b>nhiều ảnh</b> bên dưới rồi bấm <b>Viết ghi chú</b>.</div>
 
-  <!-- ==================== BƯỚC 3: KHO KỶ NIỆM ==================== -->
-  <div class="card">
-    <span class="step-badge badge-3">Thành phẩm gia đình</span>
-    <a href="./index.html" class="btn btn-viewer">
-      <span>🏠 Xem Kho Kỷ Niệm Leo-Family Story</span>
-    </a>
-  </div>
+    <!-- Thông báo nếu backend cần cập nhật hoặc lỗi mạng -->
+    <div class="notice-box error" id="driveErrorBox" style="margin-top: 0; margin-bottom: 12px;"></div>
 
-  <div class="peace-note">
-    💚 Tự động lưu nháp toàn bộ Stories trên máy • Ảnh gốc giữ nguyên 100% trên iPhone • Anh Leo tự dọn sạch ảnh thừa sau khi duyệt.
-  </div>
+    <!-- Bộ lọc -->
+    <div class="filter-row" id="filterRow" style="display: none;">
+      <button type="button" class="filter-pill active" data-filter="all" id="pillAll">Tất cả (0)</button>
+      <button type="button" class="filter-pill" data-filter="todo" id="pillTodo">Chưa ghi chú (0)</button>
+      <button type="button" class="filter-pill" data-filter="done" id="pillDone">Đã ghi chú (0)</button>
+    </div>
+
+    <!-- Trạng thái đang tải / trống -->
+    <div id="driveLoadingState" class="state-box">
+      <div class="spinner"></div>
+      <div>Đang tải ảnh từ Google Drive <b>99 Inbox/Vo</b>...</div>
+    </div>
+
+    <div id="driveEmptyState" class="state-box" style="display: none;">
+      <div style="font-size: 28px; margin-bottom: 6px;">📂</div>
+      <div>Chưa có ảnh/video nào trong <b>99 Inbox/Vo</b>.<br>Hãy tải ảnh lên ở <b>Phần 1</b>, hoặc bấm <b>🔄 Tải lại</b> nếu vừa tải qua app Google Drive nhé!</div>
+    </div>
+
+    <!-- Lưới ảnh 3 cột từ Google Drive -->
+    <div class="photo-grid" id="photoGrid"></div>
+
+    <!-- Danh sách ghi chú đã viết (hiển thị luôn ngay bên dưới lưới) -->
+    <div class="notes-divider" id="notesDivider" style="display: none;">
+      <div class="notes-heading">📝 Ghi chú đã lưu (<span id="notesCount">0</span>)</div>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+  </section>
 
   <!-- ==================== FLOATING SELECTION BAR ==================== -->
   <div class="selection-bar" id="selectionBar">
-    <div class="sel-left">
-      <div class="sel-count" id="selCountText">Đã chọn 0 ảnh</div>
-      <div class="sel-nums" id="selNumsText"></div>
-    </div>
-    <div class="sel-btns">
-      <button type="button" class="btn-sel-create" id="btnCreateStoryFromSel">✍️ Tạo Story</button>
+    <div class="sel-info" id="selInfoText">Đã chọn 0 ảnh</div>
+    <div class="sel-actions">
       <button type="button" class="btn-sel-clear" id="btnClearSel">Bỏ chọn</button>
+      <button type="button" class="btn-sel-write" id="btnWriteNote">✍️ Viết ghi chú</button>
     </div>
   </div>
 
-  <!-- ==================== FIXED BOTTOM SEND BAR ==================== -->
+  <!-- ==================== FIXED BOTTOM NOTIFY BAR ==================== -->
   <div class="bottom-bar">
     <div class="bottom-inner">
-      <button type="button" class="btn btn-send" id="btnSend">
-        <span id="btnSendLabel">Send to Leo ❤️</span>
+      <button type="button" class="btn btn-notify" id="btnNotifyLeo">
+        <span id="btnNotifyLabel">📩 Báo cho anh Leo ❤️</span>
       </button>
-      <div class="send-sub" id="sendSub">Tạo xong bao nhiêu Stories tùy thích rồi bấm gửi 1 lần duy nhất</div>
+      <div class="sync-status" id="syncStatus">Mọi ghi chú đều được tự động lưu thẳng vào Google Drive 99 Inbox/Vo</div>
     </div>
   </div>
 
-  <!-- ==================== MODAL TẠO / SỬA STORY ==================== -->
-  <div class="modal-overlay" id="storyModal">
+  <!-- ==================== MODAL VIẾT / SỬA GHI CHÚ ==================== -->
+  <div class="modal-overlay" id="noteModal">
     <div class="modal-sheet">
-      <div class="modal-title" id="storyModalTitle">✍️ Tạo Story #1</div>
-      <div class="modal-sub" id="storyModalSub">Chọn ảnh nào sẽ gắn trực tiếp tên ảnh đó vào Story</div>
+      <div class="modal-title" id="noteModalTitle">✍️ Viết ghi chú</div>
+      <div class="modal-sub" id="noteModalSub">Ghi chú sẽ được gắn với các ảnh bên dưới</div>
 
-      <div class="story-thumbs" id="modalSelectedThumbs" style="margin-bottom: 10px;"></div>
+      <div class="picked-strip" id="modalPickedStrip"></div>
 
-      <div class="form-row">
-        <div>
-          <label>Tên Story (tùy chọn)</label>
-          <input type="text" id="stTitle" placeholder="VD: Marc ăn kem, Ben bơi...">
+      <div class="field-group">
+        <div class="field-head">
+          <span class="field-label">Nội dung ghi chú</span>
+          <button type="button" class="btn-mic" id="btnMic">🎙️ Nói</button>
         </div>
-        <div>
-          <label>Ngày</label>
-          <input type="date" id="stDate">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Nhân vật chính</label>
-        <div class="chips-group" id="stChildChips">
-          <div class="chip active" data-child="Marc">Marc</div>
-          <div class="chip" data-child="Alex">Alex</div>
-          <div class="chip" data-child="Ben">Ben</div>
-          <div class="chip" data-child="Tomey">Tomey</div>
-          <div class="chip" data-child="Chung">Cả nhà</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="voice-label-row">
-          <label style="margin-bottom: 0;">Lời kể của Mẹ</label>
-          <button type="button" class="btn-mic" id="btnMicStory">🎙️ Nói thay vì gõ</button>
-        </div>
-        <textarea id="stText" placeholder="Gõ hoặc bấm nút 🎙️ Nói ở trên để kể lại khoảnh khắc này mẹ nhé..."></textarea>
+        <textarea id="noteTextarea" placeholder="Viết hoặc bấm 🎙️ Nói để ghi lại chuyện vui, địa điểm, kỷ niệm của các ảnh này..."></textarea>
         <div class="mic-status" id="micStatus"></div>
       </div>
 
-      <label class="star-check">
-        <input type="checkbox" id="stStarred">
-        <span>❤️ Đánh dấu Story / ảnh mẹ thích nhất</span>
-      </label>
+      <div class="opt-meta-grid">
+        <div>
+          <div class="field-label" style="margin-bottom: 5px;">Bé trong ảnh (tùy chọn)</div>
+          <div class="chips-group" id="childChips">
+            <div class="chip" data-child="Marc">Marc</div>
+            <div class="chip" data-child="Alex">Alex</div>
+            <div class="chip" data-child="Ben">Ben</div>
+            <div class="chip" data-child="Tomey">Tomey</div>
+            <div class="chip" data-child="Chung">Cả nhà</div>
+          </div>
+        </div>
+        <div>
+          <div class="field-label" style="margin-bottom: 5px;">Ngày</div>
+          <input type="date" id="noteDateInput" style="padding: 6px 8px; font-size: 13.5px;">
+        </div>
+      </div>
 
-      <div class="modal-btn-row">
-        <button type="button" class="btn btn-cancel" id="btnCancelStory">Hủy</button>
-        <button type="button" class="btn btn-save" id="btnSaveStory">Lưu Story ✓</button>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-cancel" id="btnCancelNote">Hủy</button>
+        <button type="button" class="btn btn-save" id="btnSaveNote">💾 Lưu ghi chú</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL XEM LỚN 1 ẢNH ==================== -->
+  <!-- ==================== MODAL XEM LỚN 1 ẢNH/VIDEO ==================== -->
   <div class="modal-overlay center" id="zoomModal">
     <div class="modal-sheet" style="text-align: center;">
-      <div class="modal-title" id="zoomTitle">Ảnh #1</div>
+      <div class="modal-title" id="zoomTitle" style="word-break: break-word;">Xem ảnh</div>
       <div class="modal-sub" id="zoomSub"></div>
-      <img id="zoomImg" class="lightbox-img" style="display: none;">
-      <div id="zoomFallback" style="display: none; padding: 30px; background: #232a34; color: #fff; border-radius: 12px; margin-bottom: 10px;"></div>
-      <div class="modal-btn-row">
-        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">✓ Chọn ảnh này</button>
-        <button type="button" class="btn btn-cancel" onclick="closeZoomModal()">Đóng</button>
+      <div id="zoomLoading" style="padding: 36px 0; color: var(--muted); font-size: 13px;">
+        <div class="spinner"></div>Đang tải ảnh rõ nét...
       </div>
-    </div>
-  </div>
-
-  <!-- ==================== MODAL SEND TO LEO ==================== -->
-  <div class="modal-overlay center" id="sendModal">
-    <div class="modal-sheet" style="text-align: center;">
-      <div style="font-size: 38px; margin-bottom: 4px;">🎉❤️</div>
-      <div class="modal-title" id="sendModalTitle">Sẵn sàng gửi cho Leo!</div>
-      <div class="modal-sub">Toàn bộ các Stories kèm đúng tên ảnh/video đã đóng gói sẵn bên dưới:</div>
-
-      <div class="preview-text-box" id="finalPreviewText"></div>
-
-      <button type="button" class="btn btn-zalo" id="btnNativeShare">
-        <span>💬 Gửi Ngay Qua Zalo / Tin Nhắn Cho Leo</span>
-      </button>
-      <button type="button" class="btn btn-copy" id="btnCopyAll">
-        <span>📋 Sao Chép Toàn Bộ Nội Dung</span>
-      </button>
-      <button type="button" class="btn btn-reset" id="btnDoneReset">
-        <span>🧹 Đã gửi xong — Dọn trống cho đợt mới</span>
-      </button>
-      <button type="button" class="btn btn-cancel" onclick="closeSendModal()">Đóng lại (giữ nguyên)</button>
-
-      <button type="button" class="subtle-json-link" id="btnDownloadJson">
-        (Tùy chọn cho Leo: Tải file dữ liệu .json)
-      </button>
+      <img id="zoomImg" class="lightbox-img" style="display: none;" alt="">
+      <div id="zoomFallback" style="display: none; padding: 26px 14px; background: #263240; color: #fff; border-radius: 12px; margin-bottom: 10px; font-size: 13px;"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">✓ Chọn ảnh này</button>
+        <button type="button" class="btn btn-cancel" id="btnZoomClose">Đóng</button>
+      </div>
     </div>
   </div>
 
   <script>
     // =========================================================================
-    // LINK TRỰC TIẾP THƯ MỤC 99 INBOX / VO
+    // CẤU HÌNH API GOOGLE APPS SCRIPT & FOLDER 99 INBOX/VO
     // =========================================================================
     const DRIVE_VO_FOLDER_URL = "https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+    const MAX_DIRECT_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB mỗi file
+    const VIDEO_WARN_SEC = 30;
+    const THUMB_BATCH_SIZE = 8;
+    const THUMB_CONCURRENCY = 2;
+
     document.getElementById("btnOpenDrive").href = DRIVE_VO_FOLDER_URL;
 
-    const STORIES_STORAGE_KEY = "leo_mom_v3_stories";
-    const VIDEO_MAX_SEC = 30;
-    const THUMB_SIZE = 240;
-
     // Runtime state
-    let mediaList = [];      // { id, num, name, size, lastModified, isVideo, thumbDataUrl, durationSec, overLimit }
-    let selectedIds = new Set();
-    let stories = [];        // { id, title, date, children: [], text, fileNames: [], starred: bool, createdAt }
+    let driveFiles = [];          // [{ id, name, mimeType, size, isVideo, date, createdAt, updatedAt, folder }]
+    let notes = [];               // [{ id, text, title, date, children, files, fileIds, updatedAt }]
+    let selectedFileIds = new Set();
     let currentFilter = "all";
-    let editingStoryId = null;
-    let modalFileNames = [];
-    let zoomingMediaId = null;
-    let lastPayloadText = "";
-    let lastPayloadJson = null;
+    let thumbCache = new Map();   // fileId -> dataUri | "none"
+    let pendingThumbIds = new Set();
+    let thumbRetryScheduled = false;
+
+    // Modal state
+    let editingNoteId = null;
+    let modalFileIds = [];        // Drive file IDs attached to current modal note
+    let modalFileNames = [];      // Fallback filenames (for notes whose files might have been moved)
+    let zoomingFileId = null;
+    let openedDriveExternally = false;
+    let isSavingNotes = false;
 
     const todayStr = new Date().toISOString().split("T")[0];
 
-    function uid() {
-      return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+    // =========================================================================
+    // UTILITIES
+    // =========================================================================
+    function uid(prefix = "n") {
+      return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
     }
 
-    function formatSec(sec) {
-      if (!sec || isNaN(sec)) return "Video";
-      const s = Math.round(sec);
-      const m = Math.floor(s / 60);
-      const r = s % 60;
-      return m > 0 ? `${m}p${r < 10 ? "0" : ""}${r}s` : `${r}s`;
+    function formatBytes(bytes) {
+      if (!bytes || bytes <= 0) return "";
+      if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(1) + " MB";
     }
 
-    function formatDateFromTs(ts) {
-      if (!ts) return todayStr;
-      try {
-        const d = new Date(ts);
-        if (isNaN(d.getTime())) return todayStr;
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        return `${y}-${m}-${day}`;
-      } catch (e) {
-        return todayStr;
-      }
+    function shortTitleFromText(text) {
+      const clean = String(text || "").trim().replace(/\s+/g, " ");
+      if (!clean) return "";
+      const firstLine = clean.split(/[\n.!?]/)[0].trim();
+      return firstLine.length > 55 ? firstLine.slice(0, 52).trim() + "..." : firstLine;
     }
 
     let toastTimer = null;
@@ -1114,343 +1078,564 @@
       el.textContent = msg;
       el.classList.add("show");
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
     }
 
-    // --- Persist Stories to localStorage (chống mất dữ liệu 100%) ---
-    function saveStoriesStorage() {
-      try {
-        localStorage.setItem(STORIES_STORAGE_KEY, JSON.stringify(stories));
-      } catch (e) {}
-      updateCounts();
+    function setUploadNotice(html, type = "") {
+      const box = document.getElementById("uploadNotice");
+      if (!html) {
+        box.className = "notice-box";
+        box.innerHTML = "";
+        return;
+      }
+      box.className = "notice-box show" + (type ? " " + type : "");
+      box.innerHTML = html;
     }
 
-    function loadStoriesStorage() {
+    function setDriveError(html) {
+      const box = document.getElementById("driveErrorBox");
+      if (!html) {
+        box.className = "notice-box error";
+        box.innerHTML = "";
+        return;
+      }
+      box.className = "notice-box error show";
+      box.innerHTML = html;
+    }
+
+    // Session cache cho thumbnails để đỡ tải lại khi làm mới
+    function getCachedThumb(fileId) {
+      if (thumbCache.has(fileId)) return thumbCache.get(fileId);
       try {
-        const raw = localStorage.getItem(STORIES_STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) stories = parsed;
+        const saved = sessionStorage.getItem("leo_th_" + fileId);
+        if (saved) {
+          thumbCache.set(fileId, saved);
+          return saved;
         }
       } catch (e) {}
-      updateCounts();
-      renderStoriesList();
+      return null;
     }
 
-    // --- Helper: find which stories include a filename ---
-    function getStoryIndicesForFile(fileName) {
-      const res = [];
-      stories.forEach((st, idx) => {
-        if (Array.isArray(st.fileNames) && st.fileNames.includes(fileName)) {
-          res.push(idx + 1);
+    function setCachedThumb(fileId, dataUrl) {
+      thumbCache.set(fileId, dataUrl || "none");
+      if (dataUrl) {
+        try {
+          sessionStorage.setItem("leo_th_" + fileId, dataUrl);
+        } catch (e) {
+          // sessionStorage đầy thì giữ trong RAM Map là đủ
         }
-      });
-      return res;
-    }
-
-    // --- Tabs ---
-    const tabPhotosBtn = document.getElementById("tabPhotosBtn");
-    const tabStoriesBtn = document.getElementById("tabStoriesBtn");
-    const tabPhotosPanel = document.getElementById("tabPhotosPanel");
-    const tabStoriesPanel = document.getElementById("tabStoriesPanel");
-
-    function switchTab(name) {
-      if (name === "photos") {
-        tabPhotosBtn.classList.add("active");
-        tabStoriesBtn.classList.remove("active");
-        tabPhotosPanel.style.display = "block";
-        tabStoriesPanel.style.display = "none";
-        updateSelectionBar();
-      } else {
-        tabStoriesBtn.classList.add("active");
-        tabPhotosBtn.classList.remove("active");
-        tabStoriesPanel.style.display = "block";
-        tabPhotosPanel.style.display = "none";
-        document.getElementById("selectionBar").classList.remove("show");
-        renderStoriesList();
       }
     }
 
-    tabPhotosBtn.addEventListener("click", () => switchTab("photos"));
-    tabStoriesBtn.addEventListener("click", () => switchTab("stories"));
+    function findFileByIdOrName(id, name) {
+      if (id) {
+        const byId = driveFiles.find(f => f.id === id);
+        if (byId) return byId;
+      }
+      if (name) {
+        const low = name.toLowerCase();
+        return driveFiles.find(f => f.name.toLowerCase() === low) || null;
+      }
+      return null;
+    }
+
+    function getNoteNumbersForFile(file) {
+      const nums = [];
+      notes.forEach((n, idx) => {
+        const hitById = Array.isArray(n.fileIds) && n.fileIds.includes(file.id);
+        const hitByName = Array.isArray(n.files) && n.files.some(fn => fn.toLowerCase() === file.name.toLowerCase());
+        if (hitById || hitByName) nums.push(idx + 1);
+      });
+      return nums;
+    }
+
+    // =========================================================================
+    // PHẦN 1: UPLOAD TRỰC TIẾP LÊN GOOGLE DRIVE 99 INBOX/VO
+    // =========================================================================
+    const uploadInput = document.getElementById("uploadInput");
+    const btnDirectUpload = document.getElementById("btnDirectUpload");
+
+    btnDirectUpload.addEventListener("click", () => uploadInput.click());
+
+    document.getElementById("btnOpenDrive").addEventListener("click", () => {
+      openedDriveExternally = true;
+    });
+
+    // Khi quay lại tab sau khi mở app Google Drive -> tự động làm mới danh sách ở Phần 2
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && openedDriveExternally) {
+        openedDriveExternally = false;
+        loadDriveFolder(true);
+      }
+    });
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = String(reader.result || "");
+          const comma = res.indexOf(",");
+          resolve(comma >= 0 ? res.slice(comma + 1) : res);
+        };
+        reader.onerror = () => reject(new Error("Không đọc được file"));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function createLocalThumbDataUrl(file) {
+      return new Promise((resolve) => {
+        const isVid = file.type.startsWith("video/") || /\.(mov|mp4|m4v)$/i.test(file.name);
+        const objUrl = URL.createObjectURL(file);
+        if (isVid) {
+          const v = document.createElement("video");
+          v.muted = true;
+          v.playsInline = true;
+          v.preload = "metadata";
+          let done = false;
+          const finish = (dur, thumb) => {
+            if (done) return;
+            done = true;
+            clearTimeout(t);
+            v.src = "";
+            URL.revokeObjectURL(objUrl);
+            resolve({ durationSec: dur || null, thumb: thumb || null });
+          };
+          const t = setTimeout(() => finish(v.duration || null, null), 2500);
+          v.onloadedmetadata = () => {
+            try { v.currentTime = Math.min(0.2, (v.duration || 1) / 2); } catch (e) { finish(v.duration, null); }
+          };
+          v.onseeked = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = 240; c.height = 240;
+              const vw = v.videoWidth || 240, vh = v.videoHeight || 240;
+              const side = Math.min(vw, vh);
+              c.getContext("2d").drawImage(v, (vw - side) / 2, (vh - side) / 2, side, side, 0, 0, 240, 240);
+              finish(v.duration, c.toDataURL("image/jpeg", 0.7));
+            } catch (e) { finish(v.duration, null); }
+          };
+          v.onerror = () => finish(null, null);
+          v.src = objUrl;
+        } else {
+          const img = new Image();
+          img.onload = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = 240; c.height = 240;
+              const side = Math.min(img.width, img.height);
+              c.getContext("2d").drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, 240, 240);
+              URL.revokeObjectURL(objUrl);
+              resolve({ durationSec: null, thumb: c.toDataURL("image/jpeg", 0.7) });
+            } catch (e) {
+              URL.revokeObjectURL(objUrl);
+              resolve({ durationSec: null, thumb: null });
+            }
+          };
+          img.onerror = () => { URL.revokeObjectURL(objUrl); resolve({ durationSec: null, thumb: null }); };
+          img.src = objUrl;
+        }
+      });
+    }
+
+    function normalizeUploadName(origName, index) {
+      const clean = String(origName || "photo.jpg").trim();
+      // iPhone Safari đôi khi đặt trùng tên "image.jpg" hoặc "video.mov" cho nhiều ảnh cùng chọn
+      if (/^(image|photo)\.(jpe?g|png|heic|webp)$/i.test(clean) || /^video\.(mov|mp4)$/i.test(clean)) {
+        const ext = clean.slice(clean.lastIndexOf("."));
+        const d = new Date();
+        const pad = n => String(n).padStart(2, "0");
+        const stamp = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+        const prefix = /^video/i.test(clean) ? "VID" : "IMG";
+        return `${prefix}_${stamp}_${pad(index + 1)}${ext}`;
+      }
+      return clean;
+    }
+
+    uploadInput.addEventListener("change", async (e) => {
+      const files = Array.from(e.target.files || []);
+      uploadInput.value = "";
+      if (!files.length) return;
+
+      setUploadNotice("");
+      const oversized = [];
+      const uploadable = [];
+
+      files.forEach(f => {
+        if (f.size > MAX_DIRECT_UPLOAD_BYTES) {
+          oversized.push(`${f.name} (${formatBytes(f.size)})`);
+        } else {
+          uploadable.push(f);
+        }
+      });
+
+      if (!uploadable.length && oversized.length) {
+        setUploadNotice(
+          `⚠️ Các file sau nặng quá 25 MB: <b>${oversized.join(", ")}</b>.<br>Hãy bấm nút <b>📁 Hoặc mở app Google Drive</b> ở trên để tải các file nặng này nhé!`,
+          ""
+        );
+        return;
+      }
+
+      const progressBox = document.getElementById("uploadProgressBox");
+      const progressLabel = document.getElementById("uploadProgressLabel");
+      const progressPct = document.getElementById("uploadProgressPct");
+      const progressFill = document.getElementById("uploadProgressFill");
+
+      btnDirectUpload.disabled = true;
+      progressBox.classList.add("show");
+
+      let uploadedCount = 0;
+      let duplicateCount = 0;
+      let failedNames = [];
+      let longVideos = [];
+
+      for (let i = 0; i < uploadable.length; i++) {
+        const file = uploadable[i];
+        const uploadName = normalizeUploadName(file.name, i);
+        const pctBefore = Math.round((i / uploadable.length) * 100);
+        progressLabel.textContent = `Đang tải lên (${i + 1}/${uploadable.length}): ${uploadName}`;
+        progressPct.textContent = `${pctBefore}%`;
+        progressFill.style.width = `${Math.max(pctBefore, 6)}%`;
+
+        try {
+          const [localMeta, base64] = await Promise.all([
+            createLocalThumbDataUrl(file),
+            readFileAsBase64(file)
+          ]);
+
+          if (localMeta.durationSec && localMeta.durationSec > VIDEO_WARN_SEC) {
+            longVideos.push(`${uploadName} (${Math.round(localMeta.durationSec)}s)`);
+          }
+
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "upload",
+              name: uploadName,
+              mimeType: file.type || "",
+              base64: base64
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.ok && data.file) {
+            if (localMeta.thumb) {
+              setCachedThumb(data.file.id, localMeta.thumb);
+            }
+            if (data.duplicate) {
+              duplicateCount++;
+            } else {
+              uploadedCount++;
+            }
+            // Cập nhật ngay vào danh sách driveFiles ở Phần 2
+            if (!driveFiles.some(x => x.id === data.file.id)) {
+              driveFiles.unshift(data.file);
+            }
+          } else {
+            failedNames.push(uploadName);
+          }
+        } catch (err) {
+          failedNames.push(uploadName);
+        }
+
+        const pctAfter = Math.round(((i + 1) / uploadable.length) * 100);
+        progressPct.textContent = `${pctAfter}%`;
+        progressFill.style.width = `${pctAfter}%`;
+      }
+
+      btnDirectUpload.disabled = false;
+      setTimeout(() => progressBox.classList.remove("show"), 900);
+
+      // Render lại Phần 2 ngay lập tức
+      renderDriveGrid();
+
+      const msgs = [];
+      if (uploadedCount > 0) msgs.push(`✅ Đã tải thành công <b>${uploadedCount} file</b> lên 99 Inbox/Vo!`);
+      if (duplicateCount > 0) msgs.push(`ℹ️ Có ${duplicateCount} file đã tồn tại sẵn trong Drive.`);
+      if (longVideos.length) msgs.push(`🎬 Lưu ý video dài hơn 30s: ${longVideos.join(", ")}.`);
+      if (oversized.length) msgs.push(`⚠️ File nặng > 25 MB chưa tải trực tiếp được: <b>${oversized.join(", ")}</b> — hãy tải bằng nút Mở app Google Drive nhé.`);
+      if (failedNames.length) msgs.push(`❌ Không tải được: ${failedNames.join(", ")} (kiểm tra mạng hoặc thử mở app Google Drive).`);
+
+      const noticeType = failedNames.length ? "error" : (oversized.length || longVideos.length ? "" : "success");
+      setUploadNotice(msgs.join("<br>"), noticeType);
+      if (uploadedCount > 0) {
+        showToast(`✅ Đã tải ${uploadedCount} ảnh/video lên Drive!`);
+        loadMissingThumbnails();
+      }
+    });
+
+    // =========================================================================
+    // PHẦN 2: TẢI DANH SÁCH ẢNH/VIDEO & GHI CHÚ TỪ GOOGLE DRIVE 99 INBOX/VO
+    // =========================================================================
+    document.getElementById("btnRefreshDrive").addEventListener("click", () => loadDriveFolder(true));
+
+    async function loadDriveFolder(isManual = false) {
+      const loadingEl = document.getElementById("driveLoadingState");
+      const emptyEl = document.getElementById("driveEmptyState");
+      const refreshBtn = document.getElementById("btnRefreshDrive");
+
+      setDriveError("");
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = "⏳ Đang tải...";
+
+      if (driveFiles.length === 0) {
+        loadingEl.style.display = "block";
+        emptyEl.style.display = "none";
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?action=list&_t=${Date.now()}`, { method: "GET" });
+        const data = await res.json();
+
+        if (!data || !data.ok) {
+          throw new Error((data && data.error) || "Phản hồi không hợp lệ");
+        }
+
+        // Kiểm tra trường hợp Apps Script vẫn đang chạy bản cũ v3 (chưa có data.files)
+        if (!Array.isArray(data.files)) {
+          loadingEl.style.display = "none";
+          setDriveError(
+            `<b>⚠️ Cần cập nhật Google Apps Script lên bản v4.0:</b><br>` +
+            `Anh Leo mở Apps Script ➔ dán code mới từ <code>00 System/scripts/mom_intake_apps_script.gs</code> ➔ bấm <b>Triển khai ➔ Quản lý các bản triển khai ➔ Chỉnh sửa ➔ Phiên bản mới ➔ Triển khai</b> (giữ nguyên link cũ).`
+          );
+          refreshBtn.disabled = false;
+          refreshBtn.textContent = "🔄 Tải lại";
+          return;
+        }
+
+        driveFiles = data.files;
+        if (Array.isArray(data.notes)) {
+          notes = data.notes;
+        }
+
+        // Loại bỏ fileId đang chọn nếu file đó không còn trong Drive
+        const validIds = new Set(driveFiles.map(f => f.id));
+        selectedFileIds.forEach(id => {
+          if (!validIds.has(id)) selectedFileIds.delete(id);
+        });
+
+        loadingEl.style.display = "none";
+        renderDriveGrid();
+        renderNotesList();
+        updateSelectionBar();
+        updateNotifyBar();
+
+        if (isManual) {
+          showToast(`🔄 Đã cập nhật ${driveFiles.length} ảnh/video từ Drive`);
+        }
+
+        loadMissingThumbnails();
+      } catch (err) {
+        loadingEl.style.display = "none";
+        setDriveError(`⚠️ Không kết nối được tới Google Drive (${err.message}). Mẹ kiểm tra Wi-Fi/4G rồi bấm <b>🔄 Tải lại</b> nhé.`);
+      } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = "🔄 Tải lại";
+      }
+    }
+
+    // Kéo thumbnail theo lô 8 ảnh/lần (tối đa 2 lô song song) -> mượt, không chạm giới hạn GAS
+    async function loadMissingThumbnails(forceRetryNone = false) {
+      const needIds = driveFiles
+        .map(f => f.id)
+        .filter(id => {
+          if (pendingThumbIds.has(id)) return false;
+          const cached = getCachedThumb(id);
+          if (!cached) return true;
+          if (forceRetryNone && cached === "none") return true;
+          return false;
+        });
+
+      if (!needIds.length) return;
+
+      const batches = [];
+      for (let i = 0; i < needIds.length; i += THUMB_BATCH_SIZE) {
+        batches.push(needIds.slice(i, i + THUMB_BATCH_SIZE));
+      }
+
+      needIds.forEach(id => pendingThumbIds.add(id));
+      let anyNullReturned = false;
+
+      let cursor = 0;
+      async function worker() {
+        while (cursor < batches.length) {
+          const batch = batches[cursor++];
+          try {
+            const url = `${API_URL}?action=thumbs&ids=${encodeURIComponent(batch.join(","))}`;
+            const res = await fetch(url, { method: "GET" });
+            const data = await res.json();
+            if (data && data.ok && data.thumbs) {
+              batch.forEach(id => {
+                const tUrl = data.thumbs[id] || null;
+                if (!tUrl) anyNullReturned = true;
+                setCachedThumb(id, tUrl);
+                updateTileThumbDOM(id, tUrl);
+              });
+              renderNotesList();
+            }
+          } catch (e) {
+            batch.forEach(id => {
+              if (!getCachedThumb(id)) updateTileThumbDOM(id, null);
+            });
+          } finally {
+            batch.forEach(id => pendingThumbIds.delete(id));
+          }
+        }
+      }
+
+      const workers = [];
+      for (let w = 0; w < Math.min(THUMB_CONCURRENCY, batches.length); w++) {
+        workers.push(worker());
+      }
+      await Promise.all(workers);
+
+      // Nếu có ảnh/video mới tải lên Google Drive chưa kịp tạo thumbnail -> thử kéo lại 1 lần sau 5 giây
+      if (anyNullReturned && !forceRetryNone && !thumbRetryScheduled) {
+        thumbRetryScheduled = true;
+        setTimeout(() => {
+          thumbRetryScheduled = false;
+          loadMissingThumbnails(true);
+        }, 5000);
+      }
+    }
+
+    function updateTileThumbDOM(fileId, dataUrl) {
+      const tile = document.querySelector(`.photo-tile[data-id="${fileId}"]`);
+      if (!tile) return;
+      const oldMedia = tile.querySelector(".tile-media-slot");
+      if (!oldMedia) return;
+
+      const file = driveFiles.find(f => f.id === fileId);
+      if (dataUrl && dataUrl !== "none") {
+        const img = document.createElement("img");
+        img.src = dataUrl;
+        img.alt = file ? file.name : "";
+        img.className = "tile-media-slot";
+        oldMedia.replaceWith(img);
+      } else {
+        const fb = document.createElement("div");
+        fb.className = "tile-fallback tile-media-slot";
+        fb.innerHTML = `<div style="font-size:22px;">${file && file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file ? file.name : "")}</div>`;
+        oldMedia.replaceWith(fb);
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[s]));
+    }
 
     // --- Filter Pills ---
     document.querySelectorAll(".filter-pill").forEach(pill => {
       pill.addEventListener("click", () => {
         currentFilter = pill.getAttribute("data-filter");
         document.querySelectorAll(".filter-pill").forEach(p => p.classList.toggle("active", p === pill));
-        renderPhotoGrid();
+        renderDriveGrid();
       });
     });
 
-    // --- Lightweight Thumbnail Generator (chống crash Safari với 100+ ảnh) ---
-    function createImageThumb(file) {
-      return new Promise((resolve) => {
-        const rawUrl = URL.createObjectURL(file);
-        const img = new Image();
-        img.onload = () => {
-          try {
-            const canvas = document.createElement("canvas");
-            canvas.width = THUMB_SIZE;
-            canvas.height = THUMB_SIZE;
-            const ctx = canvas.getContext("2d");
-            const minSide = Math.min(img.width, img.height);
-            const sx = (img.width - minSide) / 2;
-            const sy = (img.height - minSide) / 2;
-            ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, THUMB_SIZE, THUMB_SIZE);
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.65);
-            URL.revokeObjectURL(rawUrl);
-            resolve({ thumbDataUrl: dataUrl });
-          } catch (e) {
-            URL.revokeObjectURL(rawUrl);
-            resolve({ thumbDataUrl: null });
-          }
-        };
-        img.onerror = () => {
-          URL.revokeObjectURL(rawUrl);
-          resolve({ thumbDataUrl: null });
-        };
-        img.src = rawUrl;
-      });
-    }
-
-    function createVideoThumbAndDuration(file) {
-      return new Promise((resolve) => {
-        const rawUrl = URL.createObjectURL(file);
-        const video = document.createElement("video");
-        video.muted = true;
-        video.playsInline = true;
-        video.preload = "metadata";
-
-        let settled = false;
-        const finish = (durationSec, thumbDataUrl) => {
-          if (settled) return;
-          settled = true;
-          clearTimeout(timer);
-          video.src = "";
-          URL.revokeObjectURL(rawUrl);
-          resolve({
-            durationSec: durationSec || null,
-            overLimit: durationSec ? durationSec > VIDEO_MAX_SEC : false,
-            thumbDataUrl: thumbDataUrl || null
-          });
-        };
-
-        const timer = setTimeout(() => finish(video.duration || null, null), 3500);
-
-        video.onloadedmetadata = () => {
-          const dur = video.duration;
-          try {
-            video.currentTime = Math.min(0.2, (dur || 1) / 2);
-          } catch (e) {
-            finish(dur, null);
-          }
-        };
-
-        video.onseeked = () => {
-          try {
-            const canvas = document.createElement("canvas");
-            canvas.width = THUMB_SIZE;
-            canvas.height = THUMB_SIZE;
-            const ctx = canvas.getContext("2d");
-            const vw = video.videoWidth || THUMB_SIZE;
-            const vh = video.videoHeight || THUMB_SIZE;
-            const minSide = Math.min(vw, vh);
-            const sx = (vw - minSide) / 2;
-            const sy = (vh - minSide) / 2;
-            ctx.drawImage(video, sx, sy, minSide, minSide, 0, 0, THUMB_SIZE, THUMB_SIZE);
-            finish(video.duration, canvas.toDataURL("image/jpeg", 0.65));
-          } catch (e) {
-            finish(video.duration, null);
-          }
-        };
-
-        video.onerror = () => finish(null, null);
-        video.src = rawUrl;
-      });
-    }
-
-    // --- Media Picker (supports 100+ files smoothly in small batches) ---
-    const mediaPicker = document.getElementById("mediaPicker");
-    document.getElementById("btnPickMedia").addEventListener("click", () => mediaPicker.click());
-    document.getElementById("btnAddMore").addEventListener("click", () => mediaPicker.click());
-
-    mediaPicker.addEventListener("change", async (e) => {
-      const files = Array.from(e.target.files || []);
-      mediaPicker.value = "";
-      if (!files.length) return;
-
-      const newFiles = files.filter(f => !mediaList.some(m => m.name === f.name && m.size === f.size));
-      if (!newFiles.length) {
-        showToast("Các ảnh này đã có sẵn trong lưới rồi mẹ nhé!");
-        return;
-      }
-
-      const progressWrap = document.getElementById("progressWrap");
-      const progressFill = document.getElementById("progressFill");
-      const progressText = document.getElementById("progressText");
-      const progressPct = document.getElementById("progressPct");
-
-      progressWrap.style.display = "block";
-      let done = 0;
-      const total = newFiles.length;
-
-      // Xử lý từng nhóm 4 ảnh để Safari iPhone cực mượt, không ngốn RAM
-      const CONCURRENCY = 4;
-      for (let i = 0; i < total; i += CONCURRENCY) {
-        const batch = newFiles.slice(i, i + CONCURRENCY);
-        await Promise.all(batch.map(async (file) => {
-          const isVideo = file.type.startsWith("video/") || /\.(mov|mp4|m4v)$/i.test(file.name);
-          let meta = {};
-          if (isVideo) {
-            meta = await createVideoThumbAndDuration(file);
-          } else {
-            meta = await createImageThumb(file);
-          }
-          mediaList.push({
-            id: uid(),
-            num: 0,
-            name: file.name,
-            size: file.size,
-            lastModified: file.lastModified,
-            isVideo,
-            thumbDataUrl: meta.thumbDataUrl || null,
-            durationSec: meta.durationSec || null,
-            overLimit: Boolean(meta.overLimit)
-          });
-          done++;
-          const pct = Math.round((done / total) * 100);
-          progressText.textContent = `Đang tạo ảnh xem trước: ${done}/${total}`;
-          progressPct.textContent = `${pct}%`;
-          progressFill.style.width = `${pct}%`;
-        }));
-      }
-
-      // Đánh lại số thứ tự #1..#N
-      mediaList.forEach((m, idx) => m.num = idx + 1);
-
-      progressWrap.style.display = "none";
-      renderPhotoGrid();
-      updateCounts();
-      showToast(`Đã nạp xong ${total} ảnh/video cực mượt!`);
-    });
-
-    document.getElementById("btnClearGrid").addEventListener("click", () => {
-      if (!confirm("Bỏ danh sách ảnh khỏi lưới xem trước nhé mẹ?\n(Các Stories mẹ đã tạo vẫn được giữ nguyên!)")) return;
-      mediaList = [];
-      selectedIds.clear();
-      renderPhotoGrid();
-      updateSelectionBar();
-      updateCounts();
-    });
-
-    // --- Render 3-Column Grid ---
-    function renderPhotoGrid() {
-      const emptyArea = document.getElementById("emptyPickerArea");
-      const gridArea = document.getElementById("gridArea");
+    // --- Render 3-Column Photo Grid ---
+    function renderDriveGrid() {
       const grid = document.getElementById("photoGrid");
+      const filterRow = document.getElementById("filterRow");
+      const emptyEl = document.getElementById("driveEmptyState");
+      const loadingEl = document.getElementById("driveLoadingState");
 
-      if (mediaList.length === 0) {
-        emptyArea.style.display = "block";
-        gridArea.style.display = "none";
-        document.getElementById("videoOverAlert").style.display = "none";
+      loadingEl.style.display = "none";
+
+      if (driveFiles.length === 0) {
+        filterRow.style.display = "none";
+        grid.innerHTML = "";
+        emptyEl.style.display = "block";
         return;
       }
 
-      emptyArea.style.display = "none";
-      gridArea.style.display = "block";
+      emptyEl.style.display = "none";
+      filterRow.style.display = "flex";
 
-      // Check video > 30s
-      const overVideos = mediaList.filter(m => m.isVideo && m.overLimit);
-      const alertBox = document.getElementById("videoOverAlert");
-      if (overVideos.length > 0) {
-        const listStr = overVideos.map(v => `#${v.num} (${formatSec(v.durationSec)})`).join(", ");
-        document.getElementById("videoOverAlertText").innerHTML =
-          `<b>Có ${overVideos.length} video dài quá 30 giây:</b> ${listStr}. Mẹ nhớ cắt ngắn dưới 30s khi tải lên Drive nhé!`;
-        alertBox.style.display = "flex";
-      } else {
-        alertBox.style.display = "none";
-      }
-
-      // Filter counts
       let doneCount = 0;
       let todoCount = 0;
       const filtered = [];
 
-      mediaList.forEach(item => {
-        const stNums = getStoryIndicesForFile(item.name);
-        const hasSt = stNums.length > 0;
-        if (hasSt) doneCount++; else todoCount++;
+      driveFiles.forEach(file => {
+        const noteNums = getNoteNumbersForFile(file);
+        const hasNote = noteNums.length > 0;
+        if (hasNote) doneCount++; else todoCount++;
 
-        if (currentFilter === "all" || (currentFilter === "todo" && !hasSt) || (currentFilter === "done" && hasSt)) {
-          filtered.push({ item, stNums });
+        if (currentFilter === "all" || (currentFilter === "todo" && !hasNote) || (currentFilter === "done" && hasNote)) {
+          filtered.push({ file, noteNums });
         }
       });
 
-      document.getElementById("pillAll").textContent = `Tất cả (${mediaList.length})`;
-      document.getElementById("pillTodo").textContent = `Chưa có Story (${todoCount})`;
-      document.getElementById("pillDone").textContent = `Đã làm Story (${doneCount})`;
+      document.getElementById("pillAll").textContent = `Tất cả (${driveFiles.length})`;
+      document.getElementById("pillTodo").textContent = `Chưa ghi chú (${todoCount})`;
+      document.getElementById("pillDone").textContent = `Đã ghi chú (${doneCount})`;
 
       grid.innerHTML = "";
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="empty-box" style="grid-column: 1 / -1;">
-          ${currentFilter === "todo" ? "🎉 Tuyệt vời! Tất cả ảnh đã có Story rồi mẹ ơi!" : "Chưa có ảnh nào trong mục này."}
+        grid.innerHTML = `<div class="state-box" style="grid-column: 1 / -1;">
+          ${currentFilter === "todo" ? "🎉 Tất cả ảnh/video đều đã có ghi chú!" : "Chưa có ảnh nào trong mục này."}
         </div>`;
         return;
       }
 
       const frag = document.createDocumentFragment();
-      filtered.forEach(({ item, stNums }) => {
-        const isSel = selectedIds.has(item.id);
+      filtered.forEach(({ file, noteNums }) => {
+        const isSel = selectedFileIds.has(file.id);
         const tile = document.createElement("div");
-        tile.className = "photo-tile" + (isSel ? " selected" : "") + (stNums.length ? " has-story" : "");
-        tile.onclick = () => toggleSelect(item.id);
+        tile.className = "photo-tile" + (isSel ? " selected" : "") + (noteNums.length ? " noted" : "");
+        tile.setAttribute("data-id", file.id);
+        tile.onclick = () => toggleSelectFile(file.id);
 
-        if (item.thumbDataUrl) {
+        const cached = getCachedThumb(file.id);
+        if (cached && cached !== "none") {
           const img = document.createElement("img");
-          img.src = item.thumbDataUrl;
-          img.alt = item.name;
-          img.loading = "lazy";
+          img.src = cached;
+          img.alt = file.name;
+          img.className = "tile-media-slot";
           tile.appendChild(img);
-        } else {
+        } else if (cached === "none") {
           const fb = document.createElement("div");
-          fb.className = "tile-fallback";
-          fb.innerHTML = `<div style="font-size:20px;margin-bottom:3px;">${item.isVideo ? "🎬" : "🖼️"}</div><div>${item.name}</div>`;
+          fb.className = "tile-fallback tile-media-slot";
+          fb.innerHTML = `<div style="font-size:22px;">${file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file.name)}</div>`;
           tile.appendChild(fb);
-        }
-
-        const numEl = document.createElement("div");
-        numEl.className = "tile-num";
-        numEl.textContent = `#${item.num}`;
-        tile.appendChild(numEl);
-
-        const chkEl = document.createElement("div");
-        chkEl.className = "tile-check";
-        chkEl.textContent = "✓";
-        tile.appendChild(chkEl);
-
-        if (item.isVideo) {
-          const vBadge = document.createElement("div");
-          vBadge.className = "tile-vid-badge" + (item.overLimit ? " over" : "");
-          vBadge.textContent = item.overLimit ? `⚠️ ${formatSec(item.durationSec)}` : `🎬 ${formatSec(item.durationSec)}`;
-          tile.appendChild(vBadge);
         } else {
-          const zoomBtn = document.createElement("button");
-          zoomBtn.type = "button";
-          zoomBtn.className = "tile-zoom";
-          zoomBtn.textContent = "🔍";
-          zoomBtn.onclick = (ev) => {
-            ev.stopPropagation();
-            openZoomModal(item.id);
-          };
-          tile.appendChild(zoomBtn);
+          const sk = document.createElement("div");
+          sk.className = "tile-skeleton tile-media-slot";
+          sk.innerHTML = `<div style="font-size:18px;margin-bottom:3px;">${file.isVideo ? "🎬" : "🖼️"}</div><div>${escapeHtml(file.name.slice(0, 18))}</div>`;
+          tile.appendChild(sk);
         }
 
-        if (stNums.length > 0) {
-          const stTag = document.createElement("div");
-          stTag.className = "tile-story-tag";
-          stTag.textContent = stNums.map(n => `S${n}`).join(",");
-          tile.appendChild(stTag);
+        if (file.isVideo) {
+          const vb = document.createElement("div");
+          vb.className = "tile-vid-badge";
+          vb.textContent = "🎬 Video";
+          tile.appendChild(vb);
+        }
+
+        const chk = document.createElement("div");
+        chk.className = "tile-check";
+        chk.textContent = "✓";
+        tile.appendChild(chk);
+
+        const zoomBtn = document.createElement("button");
+        zoomBtn.type = "button";
+        zoomBtn.className = "tile-zoom";
+        zoomBtn.title = "Xem lớn";
+        zoomBtn.textContent = "🔍";
+        zoomBtn.onclick = (ev) => {
+          ev.stopPropagation();
+          openZoomModal(file.id);
+        };
+        tile.appendChild(zoomBtn);
+
+        if (noteNums.length > 0) {
+          const tag = document.createElement("div");
+          tag.className = "tile-note-tag";
+          tag.textContent = "✓ " + noteNums.map(n => `#${n}`).join(",");
+          tile.appendChild(tag);
         }
 
         frag.appendChild(tile);
@@ -1459,21 +1644,19 @@
       grid.appendChild(frag);
     }
 
-    function toggleSelect(id) {
-      if (selectedIds.has(id)) selectedIds.delete(id);
-      else selectedIds.add(id);
-      renderPhotoGrid();
+    function toggleSelectFile(fileId) {
+      if (selectedFileIds.has(fileId)) selectedFileIds.delete(fileId);
+      else selectedFileIds.add(fileId);
+      renderDriveGrid();
       updateSelectionBar();
     }
 
     function updateSelectionBar() {
       const bar = document.getElementById("selectionBar");
-      const n = selectedIds.size;
-      if (n > 0 && tabPhotosPanel.style.display !== "none") {
-        const picked = mediaList.filter(m => selectedIds.has(m.id));
-        document.getElementById("selCountText").textContent = `Đã chọn ${n} ảnh/video`;
-        document.getElementById("selNumsText").textContent = picked.map(m => `#${m.num}`).join(", ");
-        document.getElementById("btnCreateStoryFromSel").textContent = `✍️ Tạo Story (${n})`;
+      const n = selectedFileIds.size;
+      if (n > 0) {
+        document.getElementById("selInfoText").textContent = n === 1 ? "Đã chọn 1 ảnh/video" : `Đã chọn ${n} ảnh/video`;
+        document.getElementById("btnWriteNote").textContent = n === 1 ? "✍️ Viết ghi chú" : `✍️ Ghi chú (${n} ảnh)`;
         bar.classList.add("show");
       } else {
         bar.classList.remove("show");
@@ -1481,152 +1664,476 @@
     }
 
     document.getElementById("btnClearSel").addEventListener("click", () => {
-      selectedIds.clear();
-      renderPhotoGrid();
+      selectedFileIds.clear();
+      renderDriveGrid();
       updateSelectionBar();
     });
 
-    // --- Lightbox Zoom ---
-    function openZoomModal(id) {
-      const item = mediaList.find(m => m.id === id);
-      if (!item) return;
-      zoomingMediaId = id;
-      document.getElementById("zoomTitle").textContent = `Ảnh #${item.num}`;
-      document.getElementById("zoomSub").textContent = `${item.name} • Ngày file: ${formatDateFromTs(item.lastModified)}`;
+    // =========================================================================
+    // LIGHTBOX XEM LỚN ẢNH/VIDEO
+    // =========================================================================
+    async function openZoomModal(fileId) {
+      const file = driveFiles.find(f => f.id === fileId);
+      if (!file) return;
+      zoomingFileId = fileId;
+
+      document.getElementById("zoomTitle").textContent = file.name;
+      document.getElementById("zoomSub").textContent = `Ngày: ${file.date}${file.size ? " • " + formatBytes(file.size) : ""}`;
+      document.getElementById("btnZoomToggleSelect").textContent =
+        selectedFileIds.has(fileId) ? "✕ Bỏ chọn" : "✓ Chọn ảnh này";
+
       const zImg = document.getElementById("zoomImg");
       const zFb = document.getElementById("zoomFallback");
-      if (item.thumbDataUrl) {
-        zImg.src = item.thumbDataUrl;
+      const zLoad = document.getElementById("zoomLoading");
+
+      // Hiện tạm thumbnail trước trong lúc tải bản nét
+      const cached = getCachedThumb(fileId);
+      if (cached && cached !== "none") {
+        zImg.src = cached;
         zImg.style.display = "block";
-        zFb.style.display = "none";
+        zLoad.style.display = "none";
       } else {
         zImg.style.display = "none";
-        zFb.textContent = item.name;
-        zFb.style.display = "block";
+        zLoad.style.display = "block";
       }
-      document.getElementById("btnZoomToggleSelect").textContent =
-        selectedIds.has(id) ? "✕ Bỏ chọn ảnh này" : "✓ Chọn ảnh này";
+      zFb.style.display = "none";
       document.getElementById("zoomModal").classList.add("show");
+
+      try {
+        const res = await fetch(`${API_URL}?action=preview&id=${encodeURIComponent(fileId)}`);
+        const data = await res.json();
+        if (zoomingFileId !== fileId) return;
+        zLoad.style.display = "none";
+        if (data && data.ok && data.dataUrl) {
+          zImg.src = data.dataUrl;
+          zImg.style.display = "block";
+          zFb.style.display = "none";
+        } else if (!cached || cached === "none") {
+          zImg.style.display = "none";
+          zFb.innerHTML = `${file.isVideo ? "🎬 Video trên Google Drive" : "🖼️ Không xem trước được định dạng này"}<br><br>` +
+            (data && data.viewUrl ? `<a href="${data.viewUrl}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;">Mở xem trên Google Drive ↗</a>` : "");
+          zFb.style.display = "block";
+        }
+      } catch (e) {
+        if (zoomingFileId !== fileId) return;
+        zLoad.style.display = "none";
+      }
     }
 
     function closeZoomModal() {
       document.getElementById("zoomModal").classList.remove("show");
-      zoomingMediaId = null;
+      zoomingFileId = null;
     }
 
+    document.getElementById("btnZoomClose").addEventListener("click", closeZoomModal);
+    document.getElementById("zoomModal").addEventListener("click", (e) => {
+      if (e.target.id === "zoomModal") closeZoomModal();
+    });
     document.getElementById("btnZoomToggleSelect").addEventListener("click", () => {
-      if (zoomingMediaId) toggleSelect(zoomingMediaId);
+      if (zoomingFileId) toggleSelectFile(zoomingFileId);
       closeZoomModal();
     });
 
-    // --- Story Modal (Create / Edit) ---
-    const storyModal = document.getElementById("storyModal");
+    // =========================================================================
+    // MODAL VIẾT / SỬA GHI CHÚ (1 ẢNH HOẶC NHIỀU ẢNH)
+    // =========================================================================
+    const noteModal = document.getElementById("noteModal");
 
-    document.querySelectorAll("#stChildChips .chip").forEach(chip => {
+    document.querySelectorAll("#childChips .chip").forEach(chip => {
       chip.addEventListener("click", () => chip.classList.toggle("active"));
     });
 
-    function setModalChildren(list) {
-      const arr = Array.isArray(list) && list.length ? list : ["Marc"];
-      document.querySelectorAll("#stChildChips .chip").forEach(c => {
+    function setChipSelection(list) {
+      const arr = Array.isArray(list) ? list : [];
+      document.querySelectorAll("#childChips .chip").forEach(c => {
         c.classList.toggle("active", arr.includes(c.getAttribute("data-child")));
       });
     }
 
-    function getModalChildren() {
+    function getChipSelection() {
       const res = [];
-      document.querySelectorAll("#stChildChips .chip.active").forEach(c => {
+      document.querySelectorAll("#childChips .chip.active").forEach(c => {
         res.push(c.getAttribute("data-child"));
       });
-      return res.length ? res : ["Marc"];
+      return res;
     }
 
-    function openStoryModal({ editId = null, fileNames = [], suggestedDate = todayStr }) {
+    function renderModalPickedStrip() {
+      const strip = document.getElementById("modalPickedStrip");
+      strip.innerHTML = "";
+
+      const count = modalFileNames.length;
+      document.getElementById("noteModalSub").textContent = count === 1
+        ? `Ghi chú cho 1 ảnh/video: ${modalFileNames[0]}`
+        : `Ghi chú chung cho ${count} ảnh/video (bấm × để bỏ bớt ảnh nếu cần)`;
+
+      modalFileNames.forEach((fn, idx) => {
+        const fid = modalFileIds[idx] || "";
+        const fileObj = findFileByIdOrName(fid, fn);
+        const realId = fileObj ? fileObj.id : fid;
+        const thumb = realId ? getCachedThumb(realId) : null;
+
+        const wrap = document.createElement("div");
+        wrap.className = "picked-item";
+
+        if (thumb && thumb !== "none") {
+          const img = document.createElement("img");
+          img.src = thumb;
+          img.alt = fn;
+          wrap.appendChild(img);
+        } else {
+          const fb = document.createElement("div");
+          fb.className = "picked-item-fb";
+          fb.textContent = (fileObj && fileObj.isVideo) ? "🎬" : "🖼️";
+          wrap.appendChild(fb);
+        }
+
+        if (modalFileNames.length > 1) {
+          const rm = document.createElement("button");
+          rm.type = "button";
+          rm.className = "picked-remove";
+          rm.textContent = "×";
+          rm.title = "Bỏ ảnh này khỏi ghi chú";
+          rm.onclick = () => {
+            modalFileNames.splice(idx, 1);
+            modalFileIds.splice(idx, 1);
+            renderModalPickedStrip();
+          };
+          wrap.appendChild(rm);
+        }
+
+        strip.appendChild(wrap);
+      });
+    }
+
+    function openNoteModal({ editId = null, fileIds = [], fileNames = [], suggestedDate = todayStr }) {
       stopDictation();
-      editingStoryId = editId;
+      editingNoteId = editId;
+      modalFileIds = [...fileIds];
       modalFileNames = [...fileNames];
 
-      const thumbsWrap = document.getElementById("modalSelectedThumbs");
-      thumbsWrap.innerHTML = "";
-      modalFileNames.forEach(fn => {
-        const m = mediaList.find(x => x.name === fn);
-        if (m && m.thumbDataUrl) {
-          const img = document.createElement("img");
-          img.src = m.thumbDataUrl;
-          img.className = "story-thumb-mini";
-          thumbsWrap.appendChild(img);
-        }
-      });
-
       if (editId) {
-        const idx = stories.findIndex(s => s.id === editId);
-        const st = stories[idx];
-        document.getElementById("storyModalTitle").textContent = `✍️ Sửa Story #${idx + 1}`;
-        document.getElementById("storyModalSub").textContent = modalFileNames.length
-          ? `Gắn với ${modalFileNames.length} ảnh/video: ${modalFileNames.join(", ")}`
-          : "Story bằng chữ (chưa gắn ảnh cụ thể)";
-        document.getElementById("stTitle").value = st.title || "";
-        document.getElementById("stDate").value = st.date || todayStr;
-        setModalChildren(st.children);
-        document.getElementById("stText").value = st.text || "";
-        document.getElementById("stStarred").checked = Boolean(st.starred);
-        document.getElementById("btnSaveStory").textContent = "Cập nhật ✓";
+        const idx = notes.findIndex(n => n.id === editId);
+        const note = notes[idx];
+        document.getElementById("noteModalTitle").textContent = `✍️ Sửa ghi chú #${idx + 1}`;
+        document.getElementById("noteTextarea").value = note.text || "";
+        document.getElementById("noteDateInput").value = note.date || suggestedDate || todayStr;
+        setChipSelection(note.children || []);
+        document.getElementById("btnSaveNote").textContent = "💾 Cập nhật ghi chú";
       } else {
-        const nextNum = stories.length + 1;
-        document.getElementById("storyModalTitle").textContent = `✍️ Tạo Story #${nextNum}`;
-        document.getElementById("storyModalSub").textContent = modalFileNames.length
-          ? `Gắn với ${modalFileNames.length} ảnh/video: ${modalFileNames.join(", ")}`
-          : "Viết lời kể nhanh (không gắn ảnh cụ thể)";
-        document.getElementById("stTitle").value = "";
-        document.getElementById("stDate").value = suggestedDate || todayStr;
-        // Giữ lại nhân vật của Story vừa tạo trước đó để đỡ bấm lại
-        const prevChildren = stories.length ? stories[stories.length - 1].children : ["Marc"];
-        setModalChildren(prevChildren);
-        document.getElementById("stText").value = "";
-        document.getElementById("stStarred").checked = false;
-        document.getElementById("btnSaveStory").textContent = `Lưu Story #${nextNum} ✓`;
+        const count = modalFileNames.length;
+        document.getElementById("noteModalTitle").textContent = count === 1
+          ? "✍️ Viết ghi chú cho 1 ảnh"
+          : `✍️ Viết ghi chú cho ${count} ảnh`;
+        document.getElementById("noteTextarea").value = "";
+        document.getElementById("noteDateInput").value = suggestedDate || todayStr;
+        setChipSelection([]);
+        document.getElementById("btnSaveNote").textContent = "💾 Lưu ghi chú";
       }
 
-      storyModal.classList.add("show");
-      setTimeout(() => document.getElementById("stText").focus(), 140);
+      renderModalPickedStrip();
+      noteModal.classList.add("show");
+      setTimeout(() => document.getElementById("noteTextarea").focus(), 140);
     }
 
-    document.getElementById("btnCreateStoryFromSel").addEventListener("click", () => {
-      const picked = mediaList.filter(m => selectedIds.has(m.id));
+    document.getElementById("btnWriteNote").addEventListener("click", () => {
+      const picked = driveFiles.filter(f => selectedFileIds.has(f.id));
       if (!picked.length) return;
-      const suggestedDate = formatDateFromTs(picked[0].lastModified);
-      openStoryModal({
+      openNoteModal({
         editId: null,
-        fileNames: picked.map(m => m.name),
-        suggestedDate
+        fileIds: picked.map(f => f.id),
+        fileNames: picked.map(f => f.name),
+        suggestedDate: picked[0].date || todayStr
       });
     });
 
-    document.getElementById("btnNewTextStoryEmpty").addEventListener("click", () => {
-      openStoryModal({ editId: null, fileNames: [], suggestedDate: todayStr });
-    });
-    document.getElementById("btnAddNoPhotoStory").addEventListener("click", () => {
-      openStoryModal({ editId: null, fileNames: [], suggestedDate: todayStr });
+    document.getElementById("btnCancelNote").addEventListener("click", () => {
+      stopDictation();
+      noteModal.classList.remove("show");
+      editingNoteId = null;
     });
 
-    // --- Built-in Voice-to-Text (Web Speech API cho Safari iPhone & Chrome) ---
+    document.getElementById("btnSaveNote").addEventListener("click", async () => {
+      stopDictation();
+      const text = document.getElementById("noteTextarea").value.trim();
+      const date = document.getElementById("noteDateInput").value || todayStr;
+      const children = getChipSelection();
+
+      if (!text) {
+        alert("Mẹ gõ hoặc bấm nút 🎙️ Nói để viết ghi chú nhé!");
+        document.getElementById("noteTextarea").focus();
+        return;
+      }
+      if (!modalFileNames.length) {
+        alert("Ghi chú cần gắn với ít nhất 1 ảnh/video!");
+        return;
+      }
+
+      const saveBtn = document.getElementById("btnSaveNote");
+      const oldText = saveBtn.textContent;
+      saveBtn.disabled = true;
+      saveBtn.textContent = "⏳ Đang lưu lên Drive...";
+
+      const prevNotesSnapshot = JSON.stringify(notes);
+
+      if (editingNoteId) {
+        const n = notes.find(x => x.id === editingNoteId);
+        if (n) {
+          n.text = text;
+          n.title = shortTitleFromText(text);
+          n.date = date;
+          n.children = children;
+          n.files = [...modalFileNames];
+          n.fileIds = [...modalFileIds];
+          n.updatedAt = new Date().toISOString();
+        }
+      } else {
+        notes.push({
+          id: uid("n"),
+          text: text,
+          title: shortTitleFromText(text),
+          date: date,
+          children: children,
+          files: [...modalFileNames],
+          fileIds: [...modalFileIds],
+          updatedAt: new Date().toISOString()
+        });
+      }
+
+      const ok = await syncNotesToDrive(false);
+      saveBtn.disabled = false;
+      saveBtn.textContent = oldText;
+
+      if (ok) {
+        if (!editingNoteId) selectedFileIds.clear();
+        editingNoteId = null;
+        noteModal.classList.remove("show");
+        renderDriveGrid();
+        renderNotesList();
+        updateSelectionBar();
+        updateNotifyBar();
+        showToast("☁️ Đã lưu ghi chú thẳng lên Google Drive!");
+      } else {
+        notes = JSON.parse(prevNotesSnapshot);
+        alert("Chưa lưu được do mất kết nối mạng. Mẹ thử bấm Lưu lại nhé!");
+      }
+    });
+
+    // =========================================================================
+    // DANH SÁCH GHI CHÚ ĐÃ LƯU (NGAY DƯỚI LƯỚI ẢNH)
+    // =========================================================================
+    function renderNotesList() {
+      const divider = document.getElementById("notesDivider");
+      const listEl = document.getElementById("notesList");
+      document.getElementById("notesCount").textContent = notes.length;
+
+      if (notes.length === 0) {
+        divider.style.display = "none";
+        listEl.innerHTML = "";
+        return;
+      }
+
+      divider.style.display = "flex";
+      listEl.innerHTML = "";
+
+      notes.forEach((n, idx) => {
+        const card = document.createElement("div");
+        card.className = "note-card";
+
+        const metaParts = [];
+        if (n.date) metaParts.push(`📅 ${n.date}`);
+        if (n.children && n.children.length) metaParts.push(`👦 ${n.children.join(", ")}`);
+        metaParts.push(`🖼️ ${(n.files || []).length} ảnh/video`);
+
+        let thumbsHtml = "";
+        (n.files || []).forEach((fn, fIdx) => {
+          const fid = (n.fileIds && n.fileIds[fIdx]) || "";
+          const fObj = findFileByIdOrName(fid, fn);
+          const realId = fObj ? fObj.id : fid;
+          const tUrl = realId ? getCachedThumb(realId) : null;
+          if (tUrl && tUrl !== "none") {
+            thumbsHtml += `<img src="${tUrl}" class="note-thumb" alt="">`;
+          } else {
+            thumbsHtml += `<div class="note-thumb-placeholder">${fObj && fObj.isVideo ? "🎬" : "🖼️"}</div>`;
+          }
+        });
+
+        card.innerHTML = `
+          <div class="note-card-head">
+            <span class="note-num">Ghi chú #${idx + 1}</span>
+            <div>
+              <button type="button" class="btn-text" data-edit="${n.id}">Sửa</button>
+              <button type="button" class="btn-text danger" data-del="${n.id}">Xóa</button>
+            </div>
+          </div>
+          <div class="note-meta">${escapeHtml(metaParts.join(" • "))}</div>
+          <div class="note-body"></div>
+          ${thumbsHtml ? `<div class="note-thumbs">${thumbsHtml}</div>` : ""}
+          <div class="note-files-caption">${escapeHtml((n.files || []).join(", "))}</div>
+        `;
+
+        card.querySelector(".note-body").textContent = n.text || "";
+
+        card.querySelector(`[data-edit="${n.id}"]`).onclick = () => {
+          openNoteModal({
+            editId: n.id,
+            fileIds: n.fileIds || (n.files || []).map(fn => {
+              const found = findFileByIdOrName("", fn);
+              return found ? found.id : "";
+            }),
+            fileNames: n.files || [],
+            suggestedDate: n.date || todayStr
+          });
+        };
+
+        card.querySelector(`[data-del="${n.id}"]`).onclick = async () => {
+          if (!confirm(`Xóa ghi chú #${idx + 1} nhé mẹ? (Ảnh gốc trên Drive vẫn giữ nguyên)`)) return;
+          const prev = JSON.stringify(notes);
+          notes = notes.filter(x => x.id !== n.id);
+          renderDriveGrid();
+          renderNotesList();
+          updateNotifyBar();
+          const ok = await syncNotesToDrive(false);
+          if (ok) {
+            showToast("🗑️ Đã xóa ghi chú trên Drive");
+          } else {
+            notes = JSON.parse(prev);
+            renderDriveGrid();
+            renderNotesList();
+            updateNotifyBar();
+            alert("Chưa xóa được do mất mạng, mẹ thử lại nhé!");
+          }
+        };
+
+        listEl.appendChild(card);
+      });
+    }
+
+    // =========================================================================
+    // ĐỒNG BỘ GHI CHÚ LÊN GOOGLE DRIVE & BÁO CHO LEO
+    // =========================================================================
+    function buildNotesPayload() {
+      const lines = [];
+      lines.push(`❤️ GHI CHÚ KỶ NIỆM CỦA MẸ (${notes.length} GHI CHÚ)`);
+      lines.push(`====================================`);
+
+      notes.forEach((n, idx) => {
+        lines.push("");
+        const childTxt = (n.children && n.children.length) ? ` | ${n.children.join(", ")}` : "";
+        lines.push(`📌 GHI CHÚ #${idx + 1} — ${n.date || todayStr}${childTxt}`);
+        lines.push(`🖼️ Ảnh/Video (${(n.files || []).length}): ${(n.files || []).join(", ")}`);
+        lines.push(`📝 Nội dung: ${n.text}`);
+      });
+
+      const jsonObj = {
+        version: "4.0",
+        total_stories: notes.length,
+        stories: notes.map((n, idx) => ({
+          id: n.id,
+          story_index: idx + 1,
+          event_title: n.title || shortTitleFromText(n.text),
+          event_date: n.date || todayStr,
+          children: (n.children && n.children.length) ? n.children : ["Chung"],
+          story: n.text || "",
+          files: n.files || [],
+          file_ids: n.fileIds || [],
+          updated_at: n.updatedAt || new Date().toISOString()
+        })),
+        submitted_at: new Date().toISOString()
+      };
+
+      return { text: lines.join("\n"), json: jsonObj };
+    }
+
+    async function syncNotesToDrive(notifyLeo = false) {
+      if (isSavingNotes) return false;
+      isSavingNotes = true;
+      const syncEl = document.getElementById("syncStatus");
+      syncEl.textContent = notifyLeo ? "⏳ Đang gửi thông báo cho anh Leo..." : "⏳ Đang lưu lên Google Drive...";
+
+      const built = buildNotesPayload();
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "save_notes",
+            notify: Boolean(notifyLeo),
+            text: built.text,
+            json: built.json
+          })
+        });
+        const data = await res.json();
+        isSavingNotes = false;
+        if (data && data.ok) {
+          syncEl.textContent = notifyLeo
+            ? `✅ Đã lưu & báo tin cho anh Leo (${notes.length} ghi chú)!`
+            : `☁️ Đã lưu tự động ${notes.length} ghi chú vào 99 Inbox/Vo`;
+          return true;
+        }
+        syncEl.textContent = "⚠️ Chưa lưu được lên Drive, vui lòng thử lại";
+        return false;
+      } catch (err) {
+        isSavingNotes = false;
+        syncEl.textContent = "⚠️ Mất kết nối mạng khi lưu lên Drive";
+        return false;
+      }
+    }
+
+    function updateNotifyBar() {
+      const label = document.getElementById("btnNotifyLabel");
+      const syncEl = document.getElementById("syncStatus");
+      if (notes.length > 0) {
+        label.textContent = `📩 Xong — Báo cho anh Leo ❤️ (${notes.length} ghi chú)`;
+        syncEl.textContent = `☁️ Đã lưu sẵn ${notes.length} ghi chú trên Google Drive 99 Inbox/Vo`;
+      } else {
+        label.textContent = "📩 Báo cho anh Leo ❤️";
+        syncEl.textContent = "Mọi ghi chú đều được tự động lưu thẳng vào Google Drive 99 Inbox/Vo";
+      }
+    }
+
+    document.getElementById("btnNotifyLeo").addEventListener("click", async () => {
+      if (notes.length === 0) {
+        if (selectedFileIds.size > 0) {
+          document.getElementById("btnWriteNote").click();
+          return;
+        }
+        alert("Mẹ chạm chọn 1 hoặc nhiều ảnh ở Phần 2 rồi viết ghi chú trước nhé!");
+        return;
+      }
+
+      const btn = document.getElementById("btnNotifyLeo");
+      btn.disabled = true;
+      const ok = await syncNotesToDrive(true);
+      btn.disabled = false;
+
+      if (ok) {
+        showToast("❤️ Đã gửi thông báo cho anh Leo rồi nhé!");
+      } else {
+        alert("Chưa gửi được do mất kết nối mạng. Mẹ thử bấm lại nhé!");
+      }
+    });
+
+    // =========================================================================
+    // VOICE-TO-TEXT (NÓI THAY VÌ GÕ — TIẾNG VIỆT)
+    // =========================================================================
     const SpeechRecClass = window.SpeechRecognition || window.webkitSpeechRecognition;
     let speechRec = null;
     let isListening = false;
     let baseTextBeforeSpeech = "";
-    const btnMicStory = document.getElementById("btnMicStory");
-    const micStatusEl = document.getElementById("micStatus");
+    const btnMic = document.getElementById("btnMic");
+    const micStatus = document.getElementById("micStatus");
 
-    function setMicUI(listening, statusMsg = "", isActiveStyle = false) {
+    function setMicUI(listening, msg = "", active = false) {
       isListening = listening;
-      btnMicStory.classList.toggle("listening", listening);
-      btnMicStory.textContent = listening ? "🔴 Đang nghe... (Bấm dừng)" : "🎙️ Nói thay vì gõ";
-      if (statusMsg) {
-        micStatusEl.textContent = statusMsg;
-        micStatusEl.className = "mic-status show" + (isActiveStyle ? " active" : "");
+      btnMic.classList.toggle("listening", listening);
+      btnMic.textContent = listening ? "🔴 Dừng nói" : "🎙️ Nói";
+      if (msg) {
+        micStatus.textContent = msg;
+        micStatus.className = "mic-status show" + (active ? " active" : "");
       } else {
-        micStatusEl.textContent = "";
-        micStatusEl.className = "mic-status";
+        micStatus.textContent = "";
+        micStatus.className = "mic-status";
       }
     }
 
@@ -1637,31 +2144,26 @@
       setMicUI(false, "");
     }
 
-    btnMicStory.addEventListener("click", () => {
+    btnMic.addEventListener("click", () => {
       if (isListening) {
         stopDictation();
         return;
       }
-
       if (!SpeechRecClass) {
-        setMicUI(false, "💡 Trình duyệt này không hỗ trợ nút Micro web. Mẹ bật Micro trên bàn phím iPhone tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+        setMicUI(false, "💡 Trình duyệt này không hỗ trợ nút Micro web — mẹ dùng nút Micro trên bàn phím iPhone nhé!");
         return;
       }
-
       try {
         speechRec = new SpeechRecClass();
         speechRec.lang = "vi-VN";
         speechRec.interimResults = true;
         speechRec.continuous = true;
 
-        const ta = document.getElementById("stText");
+        const ta = document.getElementById("noteTextarea");
         const cur = ta.value;
         baseTextBeforeSpeech = cur && !/\s$/.test(cur) ? cur + " " : cur;
 
-        speechRec.onstart = () => {
-          setMicUI(true, "🎙️ Mẹ cứ nói tự nhiên bằng tiếng Việt, chữ sẽ tự hiện ra...", true);
-        };
-
+        speechRec.onstart = () => setMicUI(true, "🎙️ Mẹ cứ nói tự nhiên bằng tiếng Việt...", true);
         speechRec.onresult = (event) => {
           let spoken = "";
           for (let i = 0; i < event.results.length; i++) {
@@ -1669,299 +2171,28 @@
           }
           ta.value = baseTextBeforeSpeech + spoken;
         };
-
         speechRec.onerror = (event) => {
           if (event.error === "not-allowed" || event.error === "service-not-allowed") {
-            setMicUI(false, "⚠️ iPhone chưa cấp quyền Micro cho Safari. Mẹ bấm 'Cho phép' khi được hỏi, hoặc bật tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
-          } else if (event.error === "no-speech") {
-            setMicUI(false, "Chưa nghe thấy giọng nói. Mẹ bấm lại nút 🎙️ rồi nói nhé!");
+            setMicUI(false, "⚠️ Chưa cấp quyền Micro. Mẹ bấm 'Cho phép' hoặc dùng nút Micro trên bàn phím iPhone nhé.");
           } else {
-            setMicUI(false, "💡 Nếu Micro bị gián đoạn, mẹ có thể bật Micro trên bàn phím iPhone tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
+            setMicUI(false, "Chưa nghe rõ giọng nói. Mẹ bấm lại nút 🎙️ Nói nhé.");
           }
         };
-
         speechRec.onend = () => {
-          if (isListening) {
-            setMicUI(false, "✅ Đã ghi xong giọng nói! Mẹ có thể bấm 🎙️ để nói tiếp hoặc sửa chữ.");
-          }
+          if (isListening) setMicUI(false, "✅ Đã ghi xong giọng nói!");
         };
-
         speechRec.start();
-      } catch (err) {
-        setMicUI(false, "💡 Không mở được Micro trực tiếp. Mẹ bật Micro bàn phím tại: Cài đặt ➔ Cài đặt chung ➔ Bàn phím ➔ Bật Đọc chính tả.");
-      }
-    });
-
-    document.getElementById("btnCancelStory").addEventListener("click", () => {
-      stopDictation();
-      storyModal.classList.remove("show");
-      editingStoryId = null;
-    });
-
-    document.getElementById("btnSaveStory").addEventListener("click", () => {
-      stopDictation();
-      const title = document.getElementById("stTitle").value.trim();
-      const date = document.getElementById("stDate").value || todayStr;
-      const children = getModalChildren();
-      const text = document.getElementById("stText").value.trim();
-      const starred = document.getElementById("stStarred").checked;
-
-      if (!title && !text) {
-        alert("Mẹ nhập tên hoặc bấm micro nói vài câu cho Story này nhé!");
-        document.getElementById("stText").focus();
-        return;
-      }
-
-      if (editingStoryId) {
-        const st = stories.find(s => s.id === editingStoryId);
-        if (st) {
-          st.title = title;
-          st.date = date;
-          st.children = children;
-          st.text = text;
-          st.starred = starred;
-        }
-        showToast("✅ Đã cập nhật Story!");
-      } else {
-        stories.push({
-          id: uid(),
-          title,
-          date,
-          children,
-          text,
-          fileNames: [...modalFileNames],
-          starred,
-          createdAt: new Date().toISOString()
-        });
-        selectedIds.clear();
-        showToast(`✅ Đã lưu Story #${stories.length}! Chọn tiếp ảnh cho Story #${stories.length + 1} nhé.`);
-      }
-
-      editingStoryId = null;
-      storyModal.classList.remove("show");
-      saveStoriesStorage();
-      renderPhotoGrid();
-      renderStoriesList();
-      updateSelectionBar();
-    });
-
-    // --- Render Stories List ---
-    function renderStoriesList() {
-      const listEl = document.getElementById("storyList");
-      const clearBtn = document.getElementById("btnClearAllStories");
-      clearBtn.style.display = stories.length ? "inline-block" : "none";
-
-      if (stories.length === 0) {
-        listEl.innerHTML = `<div class="empty-box">
-          Chưa có Story nào.<br>Mẹ sang tab <b>📸 Ảnh &amp; Video</b>, chạm chọn ảnh rồi bấm <b>✍️ Tạo Story</b> nhé!
-        </div>`;
-        return;
-      }
-
-      listEl.innerHTML = "";
-      stories.forEach((st, idx) => {
-        const card = document.createElement("div");
-        card.className = "story-card" + (st.starred ? " starred" : "");
-
-        // Render mini thumbs if photos currently loaded
-        let thumbsHtml = "";
-        if (st.fileNames && st.fileNames.length) {
-          const imgs = st.fileNames.map(fn => {
-            const m = mediaList.find(x => x.name === fn);
-            return m && m.thumbDataUrl ? `<img src="${m.thumbDataUrl}" class="story-thumb-mini">` : "";
-          }).filter(Boolean).join("");
-          if (imgs) thumbsHtml = `<div class="story-thumbs">${imgs}</div>`;
-        }
-
-        const fileNumsLabel = (st.fileNames || []).map(fn => {
-          const m = mediaList.find(x => x.name === fn);
-          return m ? `#${m.num} (${fn})` : fn;
-        }).join(", ");
-
-        card.innerHTML = `
-          <div class="story-head">
-            <span class="story-num">${st.starred ? "❤️ " : ""}Story #${idx + 1}</span>
-            <div>
-              <button type="button" class="btn-link" data-edit="${st.id}">Sửa</button>
-              <button type="button" class="btn-link danger" data-del="${st.id}">Xóa</button>
-            </div>
-          </div>
-          <div class="story-meta">📅 ${st.date} • 👦 ${(st.children || []).join(", ")}</div>
-          ${st.title ? `<div class="story-title-txt"></div>` : ""}
-          ${st.text ? `<div class="story-body-txt"></div>` : ""}
-          ${thumbsHtml}
-          <div class="story-files-txt">${st.fileNames && st.fileNames.length ? `🖼️ ${st.fileNames.length} ảnh/video: ${fileNumsLabel}` : "📝 Story chỉ có chữ"}</div>
-        `;
-
-        if (st.title) card.querySelector(".story-title-txt").textContent = st.title;
-        if (st.text) card.querySelector(".story-body-txt").textContent = st.text;
-
-        card.querySelector(`[data-edit="${st.id}"]`).onclick = () => {
-          openStoryModal({ editId: st.id, fileNames: st.fileNames || [], suggestedDate: st.date });
-        };
-        card.querySelector(`[data-del="${st.id}"]`).onclick = () => {
-          if (!confirm(`Xóa Story #${idx + 1} nhé mẹ?`)) return;
-          stories = stories.filter(s => s.id !== st.id);
-          saveStoriesStorage();
-          renderPhotoGrid();
-          renderStoriesList();
-        };
-
-        listEl.appendChild(card);
-      });
-    }
-
-    document.getElementById("btnClearAllStories").addEventListener("click", () => {
-      if (!confirm(`Xóa sạch toàn bộ ${stories.length} Stories đã tạo để làm đợt mới?`)) return;
-      stories = [];
-      saveStoriesStorage();
-      renderPhotoGrid();
-      renderStoriesList();
-      showToast("Đã dọn trống danh sách Stories!");
-    });
-
-    function updateCounts() {
-      document.getElementById("tabPhotoCount").textContent = mediaList.length;
-      document.getElementById("tabStoryCount").textContent = stories.length;
-      document.getElementById("btnSendLabel").textContent = stories.length > 0
-        ? `Send to Leo ❤️ (${stories.length} Stories)`
-        : "Send to Leo ❤️";
-      document.getElementById("sendSub").textContent = stories.length > 0
-        ? `Đã lưu tự động ${stories.length} Stories • Bấm gửi 1 lần cho anh Leo`
-        : "Tạo xong bao nhiêu Stories tùy thích rồi bấm gửi 1 lần duy nhất";
-    }
-
-    // --- Build Final Payload (All 20+ Stories at once) ---
-    function buildFinalPayload() {
-      const lines = [];
-      lines.push(`❤️ KỶ NIỆM CỦA MẸ — SEND TO LEO (${stories.length} STORIES)`);
-      lines.push(`====================================`);
-
-      stories.forEach((st, idx) => {
-        lines.push("");
-        const starMark = st.starred ? " ❤️" : "";
-        lines.push(`📌 STORY #${idx + 1}${starMark} — ${st.date} | ${(st.children || []).join(", ")}`);
-        if (st.title) lines.push(`✨ Tiêu đề: ${st.title}`);
-        if (st.fileNames && st.fileNames.length) {
-          lines.push(`🖼️ Ảnh/Video (${st.fileNames.length}): ${st.fileNames.join(", ")}`);
-        }
-        if (st.text) {
-          lines.push(`📝 Lời kể: ${st.text}`);
-        }
-      });
-
-      const jsonObj = {
-        version: "3.0",
-        total_stories: stories.length,
-        stories: stories.map((st, idx) => ({
-          story_index: idx + 1,
-          event_title: st.title,
-          event_date: st.date,
-          children: st.children,
-          story: st.text,
-          files: st.fileNames || [],
-          starred: Boolean(st.starred)
-        })),
-        submitted_at: new Date().toISOString()
-      };
-
-      return { text: lines.join("\n"), json: jsonObj };
-    }
-
-    // --- Send to Leo ---
-    document.getElementById("btnSend").addEventListener("click", async () => {
-      if (stories.length === 0) {
-        if (selectedIds.size > 0) {
-          document.getElementById("btnCreateStoryFromSel").click();
-          return;
-        }
-        alert("Mẹ chưa tạo Story nào! Hãy chọn ảnh rồi bấm '✍️ Tạo Story' trước khi bấm Send to Leo nhé.");
-        return;
-      }
-
-      const payload = buildFinalPayload();
-      lastPayloadText = payload.text;
-      lastPayloadJson = payload.json;
-
-      if (navigator.clipboard) {
-        try { await navigator.clipboard.writeText(lastPayloadText); } catch (e) {}
-      }
-
-      document.getElementById("sendModalTitle").textContent = `Sẵn sàng gửi ${stories.length} Stories cho Leo!`;
-      document.getElementById("finalPreviewText").textContent = lastPayloadText;
-
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: `Kỷ niệm của Mẹ (${stories.length} Stories)`,
-            text: lastPayloadText
-          });
-          document.getElementById("sendModal").classList.add("show");
-          return;
-        } catch (err) {}
-      }
-
-      document.getElementById("sendModal").classList.add("show");
-    });
-
-    document.getElementById("btnNativeShare").addEventListener("click", async () => {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: `Kỷ niệm của Mẹ (${stories.length} Stories)`,
-            text: lastPayloadText
-          });
-          return;
-        } catch (e) {}
-      }
-      if (navigator.clipboard) {
-        try { await navigator.clipboard.writeText(lastPayloadText); } catch (e) {}
-      }
-      window.open("https://zalo.me/", "_blank");
-    });
-
-    document.getElementById("btnCopyAll").addEventListener("click", async () => {
-      const btn = document.getElementById("btnCopyAll");
-      try {
-        await navigator.clipboard.writeText(lastPayloadText);
-        btn.innerHTML = "<span>✅ Đã sao chép! Mẹ dán vào Zalo cho Leo nhé</span>";
-        setTimeout(() => { btn.innerHTML = "<span>📋 Sao Chép Toàn Bộ Nội Dung</span>"; }, 2500);
       } catch (e) {
-        alert("Mẹ bôi đen khung chữ bên trên để sao chép nhé!");
+        setMicUI(false, "💡 Mẹ dùng nút Micro trên bàn phím iPhone để đọc chữ nhé!");
       }
     });
 
-    document.getElementById("btnDoneReset").addEventListener("click", () => {
-      if (!confirm("Mẹ đã gửi thành công cho anh Leo rồi và muốn dọn trống danh sách để chuẩn bị cho đợt sau nhé?")) return;
-      stories = [];
-      mediaList = [];
-      selectedIds.clear();
-      saveStoriesStorage();
-      renderPhotoGrid();
-      renderStoriesList();
-      updateSelectionBar();
-      closeSendModal();
-      switchTab("photos");
-      showToast("✨ Đã dọn trống sẵn sàng cho đợt kỷ niệm mới!");
+    // =========================================================================
+    // INIT
+    // =========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      loadDriveFolder(false);
     });
-
-    document.getElementById("btnDownloadJson").addEventListener("click", () => {
-      if (!lastPayloadJson) return;
-      const blob = new Blob([JSON.stringify(lastPayloadJson, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `mom_stories_${todayStr}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    function closeSendModal() {
-      document.getElementById("sendModal").classList.remove("show");
-    }
-
-    // Init
-    window.addEventListener("DOMContentLoaded", loadStoriesStorage);
   </script>
 </body>
 </html>
