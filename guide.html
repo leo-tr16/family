@@ -387,13 +387,13 @@
       position: absolute;
       bottom: 4px;
       left: 4px;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(15, 23, 42, 0.64);
+      background: rgba(15, 23, 42, 0.68);
       color: #ffffff;
       border: none;
-      font-size: 13px;
+      font-size: 13.5px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -411,6 +411,21 @@
       padding: 2px 6px;
       border-radius: 4px;
       z-index: 2;
+    }
+    .tile-exp-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(217, 119, 6, 0.92);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 3;
+    }
+    .tile-exp-badge.expired {
+      background: rgba(185, 28, 28, 0.94);
     }
     .tile-note-tag {
       position: absolute;
@@ -539,13 +554,14 @@
       background: none;
       border: none;
       color: var(--primary);
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      padding: 5px 7px;
+      padding: 7px 11px;
+      min-height: 36px;
       font-family: inherit;
     }
-    .btn-text.danger { color: var(--danger); }
+    .btn-text.danger { color: var(--danger); margin-left: 4px; }
 
     /* Floating Selection Bar (clear separation above bottom-bar) */
     .selection-bar {
@@ -971,7 +987,7 @@
       </div>
     </div>
     <div class="card-title">Chọn ảnh từ Drive và viết ghi chú</div>
-    <div class="card-desc">Chọn 1 hoặc nhiều ảnh/video để tạo một ghi chú. Hoàn tất từng ghi chú một, sau khi xong toàn bộ mới bấm <b>Send to Leo</b>.</div>
+    <div class="card-desc">Chọn 1 hoặc nhiều ảnh/video để tạo một ghi chú. Hoàn tất từng ghi chú một, sau khi xong toàn bộ mới bấm <b>Send to Admin</b>.</div>
 
     <div class="notice-box error" id="driveErrorBox" style="margin-top: 0; margin-bottom: 12px;"></div>
 
@@ -1012,7 +1028,7 @@
   <div class="bottom-bar">
     <div class="bottom-inner">
       <button type="button" class="btn btn-send" id="btnSendToLeo">
-        <span id="btnSendLabel">Send to Leo</span>
+        <span id="btnSendLabel">Send to Admin</span>
       </button>
       <div class="sync-status" id="syncStatus">Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo</div>
     </div>
@@ -1082,16 +1098,34 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL XÁC NHẬN SEND TO LEO ==================== -->
+  <!-- ==================== MODAL XÁC NHẬN SEND TO ADMIN ==================== -->
   <div class="modal-overlay center" id="sendConfirmModal" role="dialog" aria-modal="true" aria-labelledby="sendConfirmTitle">
     <div class="modal-sheet">
       <div class="modal-header-row">
-        <div class="modal-title" id="sendConfirmTitle">Đã gửi cho Leo</div>
+        <div class="modal-title" id="sendConfirmTitle">Đã gửi cho Admin</div>
         <button type="button" class="modal-close-x" id="btnSendConfirmX" aria-label="Đóng">&times;</button>
       </div>
       <div class="modal-sub" id="sendConfirmSub"></div>
       <div class="summary-box" id="sendConfirmSummary"></div>
       <button type="button" class="btn btn-save" id="btnSendConfirmClose">Đóng</button>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL NHẮC NHỞ ẢNH CHƯA GHI CHÚ (45 NGÀY) ==================== -->
+  <div class="modal-overlay center" id="retentionModal" role="dialog" aria-modal="true" aria-labelledby="retentionTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="retentionTitle">Nhắc nhở ảnh chưa ghi chú</div>
+        <button type="button" class="modal-close-x" id="btnRetentionCloseX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="retentionSub" style="line-height: 1.5; color: var(--text);"></div>
+      <div class="notice-box show" id="retentionWarnBox" style="display: none; margin-top: 0; margin-bottom: 10px;"></div>
+      <div class="picked-strip" id="retentionThumbStrip" style="margin-bottom: 6px;"></div>
+      <div class="modal-actions" style="flex-direction: column; gap: 8px;">
+        <button type="button" class="btn btn-save" id="btnRetentionFilterTodo">Xem ảnh chưa ghi chú</button>
+        <button type="button" class="btn" id="btnRetentionDeleteExpired" style="display: none; background: var(--danger); color: #ffffff;">Xóa các tệp đã quá hạn 45 ngày</button>
+        <button type="button" class="btn btn-cancel" id="btnRetentionLater">Để sau</button>
+      </div>
     </div>
   </div>
 
@@ -1103,6 +1137,8 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
     const MAX_DIRECT_UPLOAD_BYTES = 25 * 1024 * 1024;
     const VIDEO_WARN_SEC = 30;
+    const RETENTION_DAYS = 45;
+    const WARN_BEFORE_DAYS = 7;
     const THUMB_BATCH_SIZE = 8;
     const THUMB_CONCURRENCY = 2;
 
@@ -1238,6 +1274,21 @@
         if (hitById || hitByName) nums.push(idx + 1);
       });
       return nums;
+    }
+
+    function getFileRetentionInfo(file) {
+      const refIso = file.createdAt || file.updatedAt || "";
+      const uploadedMs = refIso ? new Date(refIso).getTime() : Date.now();
+      const ageMs = Math.max(0, Date.now() - (isNaN(uploadedMs) ? Date.now() : uploadedMs));
+      const ageDays = Math.floor(ageMs / 86400000);
+      const daysLeft = RETENTION_DAYS - ageDays;
+      return {
+        ageMs,
+        ageDays,
+        daysLeft,
+        isExpired: daysLeft <= 0,
+        isExpiringSoon: daysLeft > 0 && daysLeft <= WARN_BEFORE_DAYS
+      };
     }
 
     // =========================================================================
@@ -1511,9 +1562,12 @@
 
         if (isManual) {
           showToast(`Đã cập nhật ${driveFiles.length} tệp từ Drive`);
+        } else {
+          checkRetentionReminder();
         }
 
-        loadMissingThumbnails();
+        await loadMissingThumbnails();
+        renderRetentionThumbStrip();
       } catch (err) {
         loadingEl.style.display = "none";
         setDriveError(`Không thể kết nối tới Google Drive (${escapeHtml(err.message)}). Vui lòng kiểm tra kết nối mạng và bấm <b>Tải lại</b>.`);
@@ -1696,6 +1750,21 @@
           vb.className = "tile-vid-badge";
           vb.textContent = "Video";
           tile.appendChild(vb);
+        }
+
+        if (noteNums.length === 0) {
+          const ret = getFileRetentionInfo(file);
+          if (ret.isExpired) {
+            const eb = document.createElement("div");
+            eb.className = "tile-exp-badge expired";
+            eb.textContent = "Quá 45 ngày";
+            tile.appendChild(eb);
+          } else if (ret.daysLeft <= 14) {
+            const eb = document.createElement("div");
+            eb.className = "tile-exp-badge";
+            eb.textContent = `Còn ${ret.daysLeft} ngày`;
+            tile.appendChild(eb);
+          }
         }
 
         const chk = document.createElement("div");
@@ -2010,7 +2079,7 @@
         if (wasEditing) {
           showToast(`Đã cập nhật Ghi chú #${editedIdx + 1}`);
         } else {
-          showToast(`Đã hoàn tất Ghi chú #${notes.length}. Tiếp tục chọn ảnh hoặc bấm Send to Leo.`);
+          showToast(`Đã hoàn tất Ghi chú #${notes.length}. Tiếp tục chọn ảnh hoặc bấm Send to Admin.`);
         }
       } else {
         notes = JSON.parse(prevNotesSnapshot);
@@ -2116,7 +2185,7 @@
     }
 
     // =========================================================================
-    // ĐỒNG BỘ DRIVE & SEND TO LEO (KẾT THÚC ĐỢT KHI USER CHỌN)
+    // ĐỒNG BỘ DRIVE & SEND TO ADMIN (KẾT THÚC ĐỢT KHI USER CHỌN)
     // =========================================================================
     function buildNotesPayload() {
       const lines = [];
@@ -2156,7 +2225,7 @@
       if (isSavingNotes) return false;
       isSavingNotes = true;
       const syncEl = document.getElementById("syncStatus");
-      syncEl.textContent = notifyLeo ? "Đang gửi dữ liệu cho Leo..." : "Đang lưu nháp vào 99 Inbox/Vo...";
+      syncEl.textContent = notifyLeo ? "Đang gửi dữ liệu cho Admin..." : "Đang lưu nháp vào 99 Inbox/Vo...";
 
       const built = buildNotesPayload();
       try {
@@ -2174,7 +2243,7 @@
         isSavingNotes = false;
         if (data && data.ok) {
           if (notifyLeo) {
-            syncEl.textContent = `Đã gửi ${notes.length} ghi chú cho Leo thành công`;
+            syncEl.textContent = `Đã gửi ${notes.length} ghi chú cho Admin thành công`;
           } else {
             updateBottomBar();
           }
@@ -2193,10 +2262,10 @@
       const label = document.getElementById("btnSendLabel");
       const syncEl = document.getElementById("syncStatus");
       if (notes.length > 0) {
-        label.textContent = `Send to Leo (${notes.length} ghi chú)`;
-        syncEl.textContent = `Đã lưu nháp ${notes.length} ghi chú · Bấm Send to Leo khi hoàn tất`;
+        label.textContent = `Send to Admin (${notes.length} ghi chú)`;
+        syncEl.textContent = `Đã lưu nháp ${notes.length} ghi chú · Bấm Send to Admin khi hoàn tất`;
       } else {
-        label.textContent = "Send to Leo";
+        label.textContent = "Send to Admin";
         syncEl.textContent = "Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo";
       }
     }
@@ -2210,6 +2279,162 @@
       if (e.target.id === "sendConfirmModal") closeSendConfirmModal();
     });
 
+    // =========================================================================
+    // POP-UP NHẮC NHỞ ẢNH CHƯA GHI CHÚ & CẢNH BÁO TRƯỚC KHI XÓA (MỐC 45 NGÀY)
+    // =========================================================================
+    let retentionModalChecked = false;
+    let currentUnnotedForModal = [];
+    let currentExpiredForModal = [];
+
+    function renderRetentionThumbStrip() {
+      const strip = document.getElementById("retentionThumbStrip");
+      if (!strip || !currentUnnotedForModal.length) return;
+      strip.innerHTML = "";
+      currentUnnotedForModal.slice(0, 12).forEach(file => {
+        const ret = getFileRetentionInfo(file);
+        const wrap = document.createElement("div");
+        wrap.className = "picked-item";
+        const thumb = getCachedThumb(file.id);
+        if (thumb && thumb !== "none") {
+          const img = document.createElement("img");
+          img.src = thumb;
+          img.alt = file.name;
+          wrap.appendChild(img);
+        } else {
+          const fb = document.createElement("div");
+          fb.className = "picked-item-fb";
+          fb.textContent = file.isVideo ? "VID" : "IMG";
+          wrap.appendChild(fb);
+        }
+        const badge = document.createElement("div");
+        badge.style.cssText = "position:absolute;bottom:0;left:0;right:0;background:rgba(15,23,42,0.82);color:#fff;font-size:9.5px;font-weight:700;text-align:center;padding:2px 0;";
+        badge.textContent = ret.isExpired ? "Quá hạn" : `${ret.daysLeft} ngày`;
+        if (ret.isExpired) badge.style.background = "rgba(185,28,28,0.92)";
+        else if (ret.isExpiringSoon) badge.style.background = "rgba(217,119,6,0.92)";
+        wrap.appendChild(badge);
+        strip.appendChild(wrap);
+      });
+    }
+
+    function checkRetentionReminder() {
+      if (retentionModalChecked) return;
+      retentionModalChecked = true;
+
+      const unnoted = driveFiles.filter(f => getNoteNumbersForFile(f).length === 0);
+      if (!unnoted.length) return;
+
+      const expired = [];
+      const expiringSoon = [];
+      let hasPreviousSessionFiles = false;
+      const lastSubmitTs = Number(localStorage.getItem("leo_last_submit_ts") || "0");
+
+      unnoted.forEach(f => {
+        const ret = getFileRetentionInfo(f);
+        if (ret.isExpired) expired.push(f);
+        else if (ret.isExpiringSoon) expiringSoon.push(f);
+        // Ảnh đã tải lên cách đây >= 30 phút hoặc tồn tại từ đợt trước
+        if (ret.ageMs >= 30 * 60 * 1000 || lastSubmitTs > 0) {
+          hasPreviousSessionFiles = true;
+        }
+      });
+
+      if (!hasPreviousSessionFiles && !expired.length && !expiringSoon.length) return;
+
+      currentUnnotedForModal = unnoted;
+      currentExpiredForModal = expired;
+
+      const titleEl = document.getElementById("retentionTitle");
+      const subEl = document.getElementById("retentionSub");
+      const warnBox = document.getElementById("retentionWarnBox");
+      const btnFilter = document.getElementById("btnRetentionFilterTodo");
+      const btnDelExp = document.getElementById("btnRetentionDeleteExpired");
+
+      titleEl.textContent = expired.length > 0
+        ? `Cảnh báo: ${expired.length} tệp đã đến hạn ${RETENTION_DAYS} ngày`
+        : `Nhắc nhở: Còn ${unnoted.length} ảnh/video chưa viết ghi chú`;
+
+      subEl.innerHTML =
+        `Trong thư mục <b>99 Inbox/Vo</b> hiện có <b>${unnoted.length} tệp</b> từ lần trước chưa được gắn ghi chú.<br>` +
+        `Các tệp chưa ghi chú sẽ được giữ lại trong <b>${RETENTION_DAYS} ngày</b> kể từ ngày tải lên để bạn viết tiếp.`;
+
+      if (expired.length > 0 || expiringSoon.length > 0) {
+        const parts = [];
+        if (expired.length > 0) {
+          parts.push(`• Có <b>${expired.length} tệp</b> đã lưu quá <b>${RETENTION_DAYS} ngày</b>. Bạn có thể chọn viết ghi chú ngay để lưu vào Album hoặc bấm xác nhận xóa khỏi 99 Inbox/Vo.`);
+        }
+        if (expiringSoon.length > 0) {
+          const minDays = Math.min(...expiringSoon.map(f => getFileRetentionInfo(f).daysLeft));
+          parts.push(`• Có <b>${expiringSoon.length} tệp</b> sắp đến hạn ${RETENTION_DAYS} ngày (còn <b>${minDays} ngày</b>).`);
+        }
+        warnBox.className = "notice-box show" + (expired.length > 0 ? " error" : "");
+        warnBox.style.display = "block";
+        warnBox.innerHTML = parts.join("<br>");
+      } else {
+        warnBox.style.display = "none";
+      }
+
+      btnFilter.textContent = `Xem & viết ghi chú ngay (${unnoted.length})`;
+      if (expired.length > 0) {
+        btnDelExp.style.display = "flex";
+        btnDelExp.textContent = `Xóa ${expired.length} tệp đã quá hạn ${RETENTION_DAYS} ngày`;
+      } else {
+        btnDelExp.style.display = "none";
+      }
+
+      renderRetentionThumbStrip();
+      document.getElementById("retentionModal").classList.add("show");
+    }
+
+    function closeRetentionModal() {
+      document.getElementById("retentionModal").classList.remove("show");
+    }
+    document.getElementById("btnRetentionCloseX").addEventListener("click", closeRetentionModal);
+    document.getElementById("btnRetentionLater").addEventListener("click", closeRetentionModal);
+    document.getElementById("retentionModal").addEventListener("click", (e) => {
+      if (e.target.id === "retentionModal") closeRetentionModal();
+    });
+
+    document.getElementById("btnRetentionFilterTodo").addEventListener("click", () => {
+      closeRetentionModal();
+      const pillTodo = document.getElementById("pillTodo");
+      if (pillTodo) pillTodo.click();
+      const grid = document.getElementById("photoGrid");
+      if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("btnRetentionDeleteExpired").addEventListener("click", async () => {
+      if (!currentExpiredForModal.length) return;
+      const names = currentExpiredForModal.map(f => f.name).join(", ");
+      if (!confirm(`Xác nhận xóa ${currentExpiredForModal.length} tệp chưa ghi chú đã quá hạn ${RETENTION_DAYS} ngày (${names}) khỏi 99 Inbox/Vo?`)) {
+        return;
+      }
+      const btn = document.getElementById("btnRetentionDeleteExpired");
+      btn.disabled = true;
+      btn.textContent = "Đang xóa...";
+      try {
+        const ids = currentExpiredForModal.map(f => f.id);
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "delete_files", ids })
+        });
+        const data = await res.json();
+        if (data && data.ok) {
+          const delSet = new Set(ids);
+          driveFiles = driveFiles.filter(f => !delSet.has(f.id));
+          closeRetentionModal();
+          renderDriveGrid();
+          showToast(`Đã dọn dẹp ${ids.length} tệp quá hạn ${RETENTION_DAYS} ngày`);
+        } else {
+          alert("Không thể xóa tệp lúc này. Vui lòng thử lại sau.");
+        }
+      } catch (e) {
+        alert("Lỗi kết nối mạng khi xóa tệp quá hạn.");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
     document.getElementById("btnSendToLeo").addEventListener("click", async () => {
       if (notes.length === 0) {
         if (selectedFileIds.size > 0) {
@@ -2220,6 +2445,13 @@
         return;
       }
 
+      const unnotedCount = driveFiles.filter(f => getNoteNumbersForFile(f).length === 0).length;
+      const confirmMsg = unnotedCount > 0
+        ? `Xác nhận gửi ${notes.length} ghi chú cho Admin?\n\n(Còn ${unnotedCount} ảnh/video chưa viết ghi chú sẽ được giữ lại trong 99 Inbox/Vo trong ${RETENTION_DAYS} ngày và nhắc bạn vào lần truy cập tới).`
+        : `Xác nhận gửi toàn bộ ${notes.length} ghi chú cho Admin?`;
+
+      if (!confirm(confirmMsg)) return;
+
       const btn = document.getElementById("btnSendToLeo");
       btn.disabled = true;
       const built = buildNotesPayload();
@@ -2227,9 +2459,14 @@
       btn.disabled = false;
 
       if (ok) {
-        document.getElementById("sendConfirmTitle").textContent = `Đã gửi cho Leo (${notes.length} ghi chú)`;
-        document.getElementById("sendConfirmSub").textContent =
-          "Toàn bộ ghi chú đã được lưu vào thư mục 99 Inbox/Vo (mom_notes.json) và gửi thông báo qua email.";
+        try {
+          localStorage.setItem("leo_last_submit_ts", String(Date.now()));
+          localStorage.setItem("leo_last_submitted_batch", JSON.stringify(built.json));
+        } catch (e) {}
+        document.getElementById("sendConfirmTitle").textContent = `Đã gửi cho Admin (${notes.length} ghi chú)`;
+        document.getElementById("sendConfirmSub").textContent = unnotedCount > 0
+          ? `Toàn bộ ${notes.length} ghi chú đã được lưu vào 99 Inbox/Vo và báo cho Admin. ${unnotedCount} ảnh chưa viết ghi chú vẫn được giữ lại an toàn (${RETENTION_DAYS} ngày).`
+          : "Toàn bộ ghi chú đã được lưu vào thư mục 99 Inbox/Vo (mom_notes.json) và gửi thông báo cho Admin.";
         document.getElementById("sendConfirmSummary").textContent = built.text;
         document.getElementById("sendConfirmModal").classList.add("show");
       } else {
