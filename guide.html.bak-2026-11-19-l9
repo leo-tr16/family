@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Leo Family Story">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <title>Leo Family Story — Tải ảnh &amp; Ghi chú</title>
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --card: #ffffff;
+      --text: #182026;
+      --muted: #5c6670;
+      --border: #e3e5e8;
+      --primary: #1b365d;
+      --primary-soft: #ebf0f6;
+      --accent: #0f766e;
+      --accent-dark: #0d5e58;
+      --accent-soft: #e6f4f1;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --warn-bg: #fffbeb;
+      --warn-border: #d97706;
+      --warn-text: #78350f;
+      --radius: 16px;
+      --shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 14px 12px 176px 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Top Header */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 4px 2px 14px 2px;
+    }
+    .topbar h1 {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.3px;
+    }
+    .topbar-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .btn-album-mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 0 12px;
+      min-height: 36px;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Section Card */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .card-head-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .part-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .part-1 { background: var(--primary-soft); color: var(--primary); }
+    .part-2 { background: var(--accent-soft); color: var(--accent-dark); }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: transform 0.12s, opacity 0.18s, background-color 0.15s;
+    }
+    .btn:active { transform: scale(0.985); }
+    .btn:disabled { opacity: 0.58; cursor: not-allowed; }
+
+    .btn-upload-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(27, 54, 93, 0.2);
+      flex-direction: column;
+      gap: 2px;
+      padding: 13px 16px;
+    }
+    .btn-upload-primary small {
+      font-size: 11.5px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    .btn-drive-alt {
+      margin-top: 9px;
+      background: #f8fafc;
+      color: var(--primary);
+      border: 1px solid #cbd5e1;
+      padding: 11px 14px;
+      font-size: 13.5px;
+    }
+
+    .btn-compact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #cfd9e6;
+      border-radius: 9px;
+      padding: 0 11px;
+      min-height: 36px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn-compact.accent {
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      border-color: #b7ded7;
+    }
+    .btn-compact:active { transform: scale(0.97); }
+    .btn-compact:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .hint-line {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.45;
+    }
+
+    /* Upload Progress & Notices */
+    .progress-box {
+      display: none;
+      margin-top: 12px;
+      background: #f4f7fb;
+      border: 1px solid #d1deed;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .progress-box.show { display: block; }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .progress-track {
+      height: 7px;
+      background: #dde6f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width 0.2s ease;
+    }
+
+    .notice-box {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      background: var(--warn-bg);
+      border: 1px solid #f3d08a;
+      border-left: 4px solid var(--warn-border);
+      color: var(--warn-text);
+    }
+    .notice-box.show { display: block; }
+    .notice-box.error {
+      background: var(--danger-soft);
+      border-color: #f5c2c7;
+      border-left-color: var(--danger);
+      color: #991b1b;
+    }
+    .notice-box.success {
+      background: var(--accent-soft);
+      border-color: #b7ded7;
+      border-left-color: var(--accent);
+      color: #115e59;
+    }
+
+    /* Filter Pills */
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-pill {
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      border-radius: 18px;
+      padding: 0 11px;
+      min-height: 36px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .filter-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* 3-Column Google Drive Grid */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .photo-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #e9ecee;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      border: 2.5px solid transparent;
+      transition: transform 0.1s, border-color 0.14s;
+    }
+    .photo-tile.selected {
+      border-color: var(--primary);
+      transform: scale(0.95);
+    }
+    .photo-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-tile.noted img {
+      opacity: 0.82;
+    }
+    .tile-skeleton {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(110deg, #eceef0 8%, #f8f9fa 18%, #eceef0 33%);
+      background-size: 200% 100%;
+      animation: shimmer 1.3s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 10px;
+      word-break: break-all;
+    }
+    .tile-fallback {
+      width: 100%;
+      height: 100%;
+      background: #2b3847;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      text-align: center;
+      font-size: 10px;
+      word-break: break-all;
+      gap: 4px;
+    }
+    @keyframes shimmer {
+      to { background-position-x: -200%; }
+    }
+
+    .tile-check {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      color: transparent;
+      z-index: 3;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+    }
+    .photo-tile.selected .tile-check {
+      background: var(--primary);
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    .tile-zoom {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.68);
+      color: #ffffff;
+      border: none;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      cursor: pointer;
+    }
+    .tile-vid-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(15, 23, 42, 0.78);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+    .tile-exp-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(217, 119, 6, 0.92);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 3;
+    }
+    .tile-exp-badge.expired {
+      background: rgba(185, 28, 28, 0.94);
+    }
+    .tile-note-tag {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: rgba(15, 118, 110, 0.94);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 5px;
+      z-index: 3;
+      max-width: 58%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .state-box {
+      text-align: center;
+      padding: 26px 16px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #dce4ee;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 10px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Completed Notes List inside Part 2 */
+    .notes-divider {
+      margin: 18px 0 12px 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .notes-heading {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .note-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .note-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .note-num {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+    .note-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .note-body {
+      font-size: 14px;
+      color: var(--text);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      margin-bottom: 9px;
+    }
+    .note-thumbs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .note-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 7px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      background: #2b3847;
+    }
+    .note-thumb-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: 7px;
+      background: #2b3847;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .note-files-caption {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 5px;
+      word-break: break-word;
+    }
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 7px 11px;
+      min-height: 36px;
+      font-family: inherit;
+    }
+    .btn-text.danger { color: var(--danger); margin-left: 4px; }
+
+    /* Floating Selection Bar (clear separation above bottom-bar) */
+    .selection-bar {
+      display: none;
+      position: fixed;
+      bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+      left: 12px;
+      right: 12px;
+      max-width: 576px;
+      margin: 0 auto;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 10px 12px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+      z-index: 1050;
+    }
+    .selection-bar.show { display: flex; }
+    .sel-info {
+      font-size: 13.5px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .sel-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-sel-write {
+      background: #ffffff;
+      color: var(--primary);
+      border: none;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn-sel-clear {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 11px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    /* Fixed Bottom Submit Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) 12px;
+      z-index: 1000;
+    }
+    .bottom-inner {
+      max-width: 576px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .btn-send {
+      background: var(--accent);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 15.5px;
+      box-shadow: 0 3px 12px rgba(15, 118, 110, 0.28);
+    }
+    .btn-send:hover { background: var(--accent-dark); }
+    .sync-status {
+      font-size: 11.5px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Modal / Bottom Sheet */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 36, 0.56);
+      z-index: 2000;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .modal-overlay.center { align-items: center; }
+    .modal-overlay.show { display: flex; }
+
+    .modal-sheet {
+      position: relative;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 18px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+    }
+    .modal-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .modal-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .modal-close-x {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f5f9;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .modal-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    /* Selected thumbs strip inside Note Modal */
+    .picked-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0 10px 0;
+    }
+    .picked-item {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border-radius: 9px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #2b3847;
+    }
+    .picked-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .picked-item-fb {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .picked-remove {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.78);
+      color: #fff;
+      border: none;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Form Controls (>= 16px to prevent iOS Safari auto-zoom) */
+    .field-group { margin-bottom: 12px; }
+    .field-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .field-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    textarea, input[type="date"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: var(--text);
+      outline: none;
+      font-family: inherit;
+    }
+    textarea:focus, input[type="date"]:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+    textarea {
+      min-height: 112px;
+      resize: none;
+      line-height: 1.5;
+    }
+
+    /* Optional Meta Row */
+    .opt-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 155px;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 6px;
+    }
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      padding: 6px 11px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      font-family: inherit;
+    }
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Voice Button */
+    .btn-mic {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-mic.listening {
+      background: var(--danger);
+      color: #ffffff;
+      border-color: var(--danger);
+      animation: micPulse 1.2s infinite;
+    }
+    @keyframes micPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(185, 28, 28, 0.4); }
+      50% { box-shadow: 0 0 0 7px rgba(185, 28, 28, 0); }
+    }
+    .mic-status {
+      display: none;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+    .mic-status.show { display: block; }
+    .mic-status.active { color: var(--danger); font-weight: 600; }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn-cancel { background: #eef0f3; color: var(--text); flex: 1; }
+    .btn-save { background: var(--primary); color: #ffffff; flex: 1.75; }
+
+    /* Lightbox & Send Summary */
+    .lightbox-img {
+      width: 100%;
+      max-height: 60dvh;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #111827;
+      margin-bottom: 10px;
+    }
+    .summary-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 12.5px;
+      color: var(--text);
+      white-space: pre-wrap;
+      max-height: 220px;
+      overflow-y: auto;
+      text-align: left;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: #182026;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+      z-index: 3000;
+      transition: transform 0.22s ease;
+      max-width: 92vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 440px) {
+      .opt-meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <header class="topbar">
+    <div>
+      <h1>Leo Family Story</h1>
+      <div class="topbar-sub">Tải tệp lên Drive và thêm ghi chú</div>
+    </div>
+    <a href="./index.html" class="btn-album-mini">Xem Album</a>
+  </header>
+
+  <!-- ======================================================================= -->
+  <!-- PHẦN 1: UPLOAD ẢNH / VIDEO LÊN FOLDER 99 INBOX/VO                       -->
+  <!-- ======================================================================= -->
+  <section class="card">
+    <div class="card-head">
+      <span class="part-badge part-1">Phần 1</span>
+    </div>
+    <div class="card-title">Tải ảnh / video lên 99 Inbox/Vo</div>
+    <div class="card-desc">Chọn ảnh hoặc video để tải trực tiếp lên thư mục <b>99 Inbox/Vo</b>. Tệp sau khi tải sẽ hiển thị ở Phần 2.</div>
+
+    <input type="file" id="uploadInput" accept="image/*,video/*" multiple style="display: none;">
+
+    <button type="button" class="btn btn-upload-primary" id="btnDirectUpload">
+      <span>Tải ảnh / video lên</span>
+      <small>Chọn một hoặc nhiều tệp (tối đa 25 MB/tệp)</small>
+    </button>
+
+    <a href="https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5" class="btn btn-drive-alt" id="btnOpenDrive" target="_blank" rel="noopener">
+      <span>Mở thư mục Google Drive (99 Inbox/Vo)</span>
+    </a>
+
+    <div class="hint-line">
+      Khuyến nghị video dưới 30 giây. Tệp trên 25 MB hoặc tải số lượng lớn nên tải qua ứng dụng Google Drive.
+    </div>
+
+    <div class="progress-box" id="uploadProgressBox">
+      <div class="progress-top">
+        <span id="uploadProgressLabel">Đang tải lên...</span>
+        <span id="uploadProgressPct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="uploadProgressFill"></div>
+      </div>
+    </div>
+
+    <div class="notice-box" id="uploadNotice"></div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- PHẦN 2: CHỌN ẢNH TỪ GOOGLE DRIVE & VIẾT GHI CHÚ                         -->
+  <!-- ======================================================================= -->
+  <section class="card">
+    <div class="card-head">
+      <span class="part-badge part-2">Phần 2</span>
+      <div class="card-head-actions">
+        <button type="button" class="btn-compact accent" id="btnJumpNotes" style="display: none;">Ghi chú (0) ↓</button>
+        <button type="button" class="btn-compact" id="btnRefreshDrive">Tải lại</button>
+      </div>
+    </div>
+    <div class="card-title">Chọn ảnh từ Drive và viết ghi chú</div>
+    <div class="card-desc">Chọn 1 hoặc nhiều ảnh/video để tạo một ghi chú. Hoàn tất từng ghi chú một, sau khi xong toàn bộ mới bấm <b>Send to Admin</b>.</div>
+
+    <div class="notice-box error" id="driveErrorBox" style="margin-top: 0; margin-bottom: 12px;"></div>
+
+    <div class="filter-row" id="filterRow" style="display: none;">
+      <button type="button" class="filter-pill active" data-filter="all" id="pillAll">Tất cả (0)</button>
+      <button type="button" class="filter-pill" data-filter="todo" id="pillTodo">Chưa ghi chú (0)</button>
+      <button type="button" class="filter-pill" data-filter="done" id="pillDone">Đã ghi chú (0)</button>
+    </div>
+
+    <div id="driveLoadingState" class="state-box">
+      <div class="spinner"></div>
+      <div>Đang tải danh sách tệp từ <b>99 Inbox/Vo</b>...</div>
+    </div>
+
+    <div id="driveEmptyState" class="state-box" style="display: none;">
+      Chưa có ảnh hoặc video nào trong <b>99 Inbox/Vo</b>.<br>
+      Tải tệp ở Phần 1 hoặc bấm <b>Tải lại</b> để cập nhật.
+    </div>
+
+    <div class="photo-grid" id="photoGrid"></div>
+
+    <div class="notes-divider" id="notesDivider" style="display: none;">
+      <div class="notes-heading">Ghi chú đã hoàn tất (<span id="notesCount">0</span>)</div>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+  </section>
+
+  <!-- ==================== FLOATING SELECTION BAR ==================== -->
+  <div class="selection-bar" id="selectionBar">
+    <div class="sel-info" id="selInfoText">Đã chọn 0</div>
+    <div class="sel-actions">
+      <button type="button" class="btn-sel-clear" id="btnClearSel">Bỏ chọn</button>
+      <button type="button" class="btn-sel-write" id="btnWriteNote">Viết ghi chú</button>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED BOTTOM SUBMIT BAR ==================== -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <button type="button" class="btn btn-send" id="btnSendToLeo">
+        <span id="btnSendLabel">Send to Admin</span>
+      </button>
+      <div class="sync-status" id="syncStatus">Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo</div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL VIẾT / SỬA GHI CHÚ ==================== -->
+  <div class="modal-overlay" id="noteModal" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="noteModalTitle">Ghi chú #1</div>
+        <button type="button" class="modal-close-x" id="btnCloseNoteX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="noteModalSub">Gắn với 1 tệp</div>
+
+      <div class="picked-strip" id="modalPickedStrip"></div>
+
+      <div class="field-group">
+        <div class="field-head">
+          <span class="field-label">Nội dung ghi chú</span>
+          <button type="button" class="btn-mic" id="btnMic">Nhập giọng nói</button>
+        </div>
+        <textarea id="noteTextarea" placeholder="Nhập nội dung ghi chú cho các ảnh/video đã chọn..."></textarea>
+        <div class="mic-status" id="micStatus"></div>
+      </div>
+
+      <div class="opt-meta-grid">
+        <div>
+          <div class="field-label" style="margin-bottom: 6px;">Thành viên (tùy chọn)</div>
+          <div class="chips-group" id="childChips">
+            <button type="button" class="chip" data-child="Marc" aria-pressed="false">Marc</button>
+            <button type="button" class="chip" data-child="Alex" aria-pressed="false">Alex</button>
+            <button type="button" class="chip" data-child="Ben" aria-pressed="false">Ben</button>
+            <button type="button" class="chip" data-child="Tomey" aria-pressed="false">Tomey</button>
+            <button type="button" class="chip" data-child="Chung" aria-pressed="false">Cả nhà</button>
+          </div>
+        </div>
+        <div>
+          <div class="field-label" style="margin-bottom: 6px;">Ngày</div>
+          <input type="date" id="noteDateInput">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-cancel" id="btnCancelNote">Hủy</button>
+        <button type="button" class="btn btn-save" id="btnSaveNote">Hoàn tất ghi chú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL XEM LỚN 1 ẢNH/VIDEO ==================== -->
+  <div class="modal-overlay center" id="zoomModal" role="dialog" aria-modal="true" aria-labelledby="zoomTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="zoomTitle" style="word-break: break-word;">Xem tệp</div>
+        <button type="button" class="modal-close-x" id="btnZoomCloseX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="zoomSub"></div>
+      <div id="zoomLoading" style="padding: 32px 0; text-align: center; color: var(--muted); font-size: 13px;">
+        <div class="spinner"></div>Đang tải ảnh xem trước...
+      </div>
+      <img id="zoomImg" class="lightbox-img" style="display: none;" alt="Xem trước ảnh">
+      <div id="zoomFallback" style="display: none; padding: 24px 14px; background: #263240; color: #fff; border-radius: 10px; margin-bottom: 10px; font-size: 13px; text-align: center;"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-save" id="btnZoomToggleSelect">Chọn ảnh này</button>
+        <button type="button" class="btn btn-cancel" id="btnZoomClose">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL XÁC NHẬN SEND TO ADMIN ==================== -->
+  <div class="modal-overlay center" id="sendConfirmModal" role="dialog" aria-modal="true" aria-labelledby="sendConfirmTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="sendConfirmTitle">Đã gửi cho Admin</div>
+        <button type="button" class="modal-close-x" id="btnSendConfirmX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="sendConfirmSub"></div>
+      <div class="summary-box" id="sendConfirmSummary"></div>
+      <button type="button" class="btn btn-save" id="btnSendConfirmClose">Đóng</button>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL NHẮC NHỞ ẢNH CHƯA GHI CHÚ (45 NGÀY) ==================== -->
+  <div class="modal-overlay center" id="retentionModal" role="dialog" aria-modal="true" aria-labelledby="retentionTitle">
+    <div class="modal-sheet">
+      <div class="modal-header-row">
+        <div class="modal-title" id="retentionTitle">Nhắc nhở ảnh chưa ghi chú</div>
+        <button type="button" class="modal-close-x" id="btnRetentionCloseX" aria-label="Đóng">&times;</button>
+      </div>
+      <div class="modal-sub" id="retentionSub" style="line-height: 1.5; color: var(--text);"></div>
+      <div class="notice-box show" id="retentionWarnBox" style="display: none; margin-top: 0; margin-bottom: 10px;"></div>
+      <div class="picked-strip" id="retentionThumbStrip" style="margin-bottom: 6px;"></div>
+      <div class="modal-actions" style="flex-direction: column; gap: 8px;">
+        <button type="button" class="btn btn-save" id="btnRetentionFilterTodo">Xem ảnh chưa ghi chú</button>
+        <button type="button" class="btn" id="btnRetentionDeleteExpired" style="display: none; background: var(--danger); color: #ffffff;">Xóa các tệp đã quá hạn 45 ngày</button>
+        <button type="button" class="btn btn-cancel" id="btnRetentionLater">Để sau</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CẤU HÌNH GOOGLE DRIVE & APPS SCRIPT API
+    // =========================================================================
+    const DRIVE_VO_FOLDER_URL = "https://drive.google.com/drive/folders/1urN5d_pl460KQUXG-NTL-z8HPQu4JNS5";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+    const MAX_DIRECT_UPLOAD_BYTES = 25 * 1024 * 1024;
+    const VIDEO_WARN_SEC = 30;
+    const RETENTION_DAYS = 45;
+    const WARN_BEFORE_DAYS = 7;
+    const THUMB_BATCH_SIZE = 8;
+    const THUMB_CONCURRENCY = 2;
+
+    const MEMBER_LABELS = {
+      Marc: "Marc",
+      Alex: "Alex",
+      Ben: "Ben",
+      Tomey: "Tomey",
+      Chung: "Cả nhà"
+    };
+
+    document.getElementById("btnOpenDrive").href = DRIVE_VO_FOLDER_URL;
+
+    // Runtime state
+    let driveFiles = [];          // [{ id, name, mimeType, size, isVideo, date, createdAt, updatedAt, folder }]
+    let notes = [];               // [{ id, text, title, date, children, files, fileIds, updatedAt }] (active/pending)
+    let approvedNotes = [];       // Ghi chú đã được Admin phê duyệt trên Cloud (giữ nguyên khi lưu, ẩn khỏi màn hình Vợ)
+    let selectedFileIds = new Set();
+    let currentFilter = "all";
+    let thumbCache = new Map();   // fileId -> dataUri | "none"
+    let pendingThumbIds = new Set();
+    let thumbRetryScheduled = false;
+
+    // Modal state
+    let editingNoteId = null;
+    let modalFileIds = [];
+    let modalFileNames = [];
+    let zoomingFileId = null;
+    let openedDriveExternally = false;
+    let isSavingNotes = false;
+
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    // =========================================================================
+    // UTILITIES
+    // =========================================================================
+    function uid(prefix = "n") {
+      return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 6);
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes || bytes <= 0) return "";
+      if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    }
+
+    function formatMemberList(list) {
+      if (!Array.isArray(list) || !list.length) return "";
+      return list.map(c => MEMBER_LABELS[c] || c).join(", ");
+    }
+
+    function shortTitleFromText(text) {
+      const clean = String(text || "").trim().replace(/\s+/g, " ");
+      if (!clean) return "";
+      const firstLine = clean.split(/[\n.!?]/)[0].trim();
+      return firstLine.length > 55 ? firstLine.slice(0, 52).trim() + "..." : firstLine;
+    }
+
+    function escapeHtml(str) {
+      return String(str || "").replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[s]));
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+    }
+
+    function setUploadNotice(html, type = "") {
+      const box = document.getElementById("uploadNotice");
+      if (!html) {
+        box.className = "notice-box";
+        box.innerHTML = "";
+        return;
+      }
+      box.className = "notice-box show" + (type ? " " + type : "");
+      box.innerHTML = html;
+    }
+
+    function setDriveError(html) {
+      const box = document.getElementById("driveErrorBox");
+      if (!html) {
+        box.className = "notice-box error";
+        box.innerHTML = "";
+        return;
+      }
+      box.className = "notice-box error show";
+      box.innerHTML = html;
+    }
+
+    function getCachedThumb(fileId) {
+      if (thumbCache.has(fileId)) return thumbCache.get(fileId);
+      try {
+        const saved = sessionStorage.getItem("leo_th_" + fileId);
+        if (saved) {
+          thumbCache.set(fileId, saved);
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function setCachedThumb(fileId, dataUrl) {
+      thumbCache.set(fileId, dataUrl || "none");
+      if (dataUrl) {
+        try {
+          sessionStorage.setItem("leo_th_" + fileId, dataUrl);
+        } catch (e) {}
+      }
+    }
+
+    function findFileByIdOrName(id, name) {
+      if (id) {
+        const byId = driveFiles.find(f => f.id === id);
+        if (byId) return byId;
+      }
+      if (name) {
+        const low = name.toLowerCase();
+        return driveFiles.find(f => f.name.toLowerCase() === low) || null;
+      }
+      return null;
+    }
+
+    function getNoteNumbersForFile(file) {
+      const nums = [];
+      notes.forEach((n, idx) => {
+        const hitById = Array.isArray(n.fileIds) && n.fileIds.includes(file.id);
+        const hitByName = Array.isArray(n.files) && n.files.some(fn => fn.toLowerCase() === file.name.toLowerCase());
+        if (hitById || hitByName) nums.push(idx + 1);
+      });
+      return nums;
+    }
+
+    function getFileRetentionInfo(file) {
+      const refIso = file.createdAt || file.updatedAt || "";
+      const uploadedMs = refIso ? new Date(refIso).getTime() : Date.now();
+      const ageMs = Math.max(0, Date.now() - (isNaN(uploadedMs) ? Date.now() : uploadedMs));
+      const ageDays = Math.floor(ageMs / 86400000);
+      const daysLeft = RETENTION_DAYS - ageDays;
+      return {
+        ageMs,
+        ageDays,
+        daysLeft,
+        isExpired: daysLeft <= 0,
+        isExpiringSoon: daysLeft > 0 && daysLeft <= WARN_BEFORE_DAYS
+      };
+    }
+
+    // =========================================================================
+    // PHẦN 1: UPLOAD TRỰC TIẾP LÊN GOOGLE DRIVE 99 INBOX/VO
+    // =========================================================================
+    const uploadInput = document.getElementById("uploadInput");
+    const btnDirectUpload = document.getElementById("btnDirectUpload");
+
+    btnDirectUpload.addEventListener("click", () => uploadInput.click());
+
+    document.getElementById("btnOpenDrive").addEventListener("click", () => {
+      openedDriveExternally = true;
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && openedDriveExternally) {
+        openedDriveExternally = false;
+        loadDriveFolder(true);
+      }
+    });
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = String(reader.result || "");
+          const comma = res.indexOf(",");
+          resolve(comma >= 0 ? res.slice(comma + 1) : res);
+        };
+        reader.onerror = () => reject(new Error("Không đọc được tệp"));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function createLocalThumbDataUrl(file) {
+      return new Promise((resolve) => {
+        const isVid = file.type.startsWith("video/") || /\.(mov|mp4|m4v)$/i.test(file.name);
+        const objUrl = URL.createObjectURL(file);
+        if (isVid) {
+          const v = document.createElement("video");
+          v.muted = true;
+          v.playsInline = true;
+          v.preload = "metadata";
+          let done = false;
+          const finish = (dur, thumb) => {
+            if (done) return;
+            done = true;
+            clearTimeout(t);
+            v.src = "";
+            URL.revokeObjectURL(objUrl);
+            resolve({ durationSec: dur || null, thumb: thumb || null });
+          };
+          const t = setTimeout(() => finish(v.duration || null, null), 2500);
+          v.onloadedmetadata = () => {
+            try { v.currentTime = Math.min(0.2, (v.duration || 1) / 2); } catch (e) { finish(v.duration, null); }
+          };
+          v.onseeked = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = 240; c.height = 240;
+              const vw = v.videoWidth || 240, vh = v.videoHeight || 240;
+              const side = Math.min(vw, vh);
+              c.getContext("2d").drawImage(v, (vw - side) / 2, (vh - side) / 2, side, side, 0, 0, 240, 240);
+              finish(v.duration, c.toDataURL("image/jpeg", 0.7));
+            } catch (e) { finish(v.duration, null); }
+          };
+          v.onerror = () => finish(null, null);
+          v.src = objUrl;
+        } else {
+          const img = new Image();
+          img.onload = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = 240; c.height = 240;
+              const side = Math.min(img.width, img.height);
+              c.getContext("2d").drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, 240, 240);
+              URL.revokeObjectURL(objUrl);
+              resolve({ durationSec: null, thumb: c.toDataURL("image/jpeg", 0.7) });
+            } catch (e) {
+              URL.revokeObjectURL(objUrl);
+              resolve({ durationSec: null, thumb: null });
+            }
+          };
+          img.onerror = () => { URL.revokeObjectURL(objUrl); resolve({ durationSec: null, thumb: null }); };
+          img.src = objUrl;
+        }
+      });
+    }
+
+    function normalizeUploadName(origName, index) {
+      const clean = String(origName || "photo.jpg").trim();
+      if (/^(image|photo)\.(jpe?g|png|heic|webp)$/i.test(clean) || /^video\.(mov|mp4)$/i.test(clean)) {
+        const ext = clean.slice(clean.lastIndexOf("."));
+        const d = new Date();
+        const pad = n => String(n).padStart(2, "0");
+        const stamp = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+        const prefix = /^video/i.test(clean) ? "VID" : "IMG";
+        return `${prefix}_${stamp}_${pad(index + 1)}${ext}`;
+      }
+      return clean;
+    }
+
+    uploadInput.addEventListener("change", async (e) => {
+      const files = Array.from(e.target.files || []);
+      uploadInput.value = "";
+      if (!files.length) return;
+
+      setUploadNotice("");
+      const oversized = [];
+      const uploadable = [];
+
+      files.forEach(f => {
+        if (f.size > MAX_DIRECT_UPLOAD_BYTES) {
+          oversized.push(`${f.name} (${formatBytes(f.size)})`);
+        } else {
+          uploadable.push(f);
+        }
+      });
+
+      if (!uploadable.length && oversized.length) {
+        setUploadNotice(
+          `Các tệp vượt quá giới hạn 25 MB: <b>${escapeHtml(oversized.join(", "))}</b>.<br>Vui lòng dùng nút <b>Mở thư mục Google Drive</b> ở trên để tải các tệp dung lượng lớn.`,
+          ""
+        );
+        return;
+      }
+
+      const progressBox = document.getElementById("uploadProgressBox");
+      const progressLabel = document.getElementById("uploadProgressLabel");
+      const progressPct = document.getElementById("uploadProgressPct");
+      const progressFill = document.getElementById("uploadProgressFill");
+
+      btnDirectUpload.disabled = true;
+      progressBox.classList.add("show");
+
+      let uploadedCount = 0;
+      let duplicateCount = 0;
+      let failedNames = [];
+      let longVideos = [];
+
+      for (let i = 0; i < uploadable.length; i++) {
+        const file = uploadable[i];
+        const uploadName = normalizeUploadName(file.name, i);
+        const pctBefore = Math.round((i / uploadable.length) * 100);
+        progressLabel.textContent = `Đang tải lên (${i + 1}/${uploadable.length}): ${uploadName}`;
+        progressPct.textContent = `${pctBefore}%`;
+        progressFill.style.width = `${Math.max(pctBefore, 6)}%`;
+
+        try {
+          const [localMeta, base64] = await Promise.all([
+            createLocalThumbDataUrl(file),
+            readFileAsBase64(file)
+          ]);
+
+          if (localMeta.durationSec && localMeta.durationSec > VIDEO_WARN_SEC) {
+            longVideos.push(`${uploadName} (${Math.round(localMeta.durationSec)}s)`);
+          }
+
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "upload",
+              name: uploadName,
+              mimeType: file.type || "",
+              base64: base64
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.ok && data.file) {
+            if (localMeta.thumb) {
+              setCachedThumb(data.file.id, localMeta.thumb);
+            }
+            if (data.duplicate) duplicateCount++;
+            else uploadedCount++;
+
+            if (!driveFiles.some(x => x.id === data.file.id)) {
+              driveFiles.unshift(data.file);
+            }
+          } else {
+            failedNames.push(uploadName);
+          }
+        } catch (err) {
+          failedNames.push(uploadName);
+        }
+
+        const pctAfter = Math.round(((i + 1) / uploadable.length) * 100);
+        progressPct.textContent = `${pctAfter}%`;
+        progressFill.style.width = `${pctAfter}%`;
+      }
+
+      btnDirectUpload.disabled = false;
+      setTimeout(() => progressBox.classList.remove("show"), 900);
+
+      renderDriveGrid();
+
+      const msgs = [];
+      if (uploadedCount > 0) msgs.push(`Đã tải lên thành công <b>${uploadedCount} tệp</b> vào 99 Inbox/Vo.`);
+      if (duplicateCount > 0) msgs.push(`${duplicateCount} tệp đã tồn tại sẵn trong thư mục.`);
+      if (longVideos.length) msgs.push(`Lưu ý video dài hơn 30 giây: ${escapeHtml(longVideos.join(", "))}.`);
+      if (oversized.length) msgs.push(`Tệp vượt quá 25 MB chưa thể tải trực tiếp: <b>${escapeHtml(oversized.join(", "))}</b>. Vui lòng tải qua ứng dụng Google Drive.`);
+      if (failedNames.length) msgs.push(`Không thể tải lên: ${escapeHtml(failedNames.join(", "))}. Vui lòng kiểm tra kết nối mạng hoặc thử lại.`);
+
+      const noticeType = failedNames.length ? "error" : (oversized.length || longVideos.length ? "" : "success");
+      setUploadNotice(msgs.join("<br>"), noticeType);
+      if (uploadedCount > 0) {
+        showToast(`Đã tải lên ${uploadedCount} tệp vào 99 Inbox/Vo`);
+        loadMissingThumbnails();
+      }
+    });
+
+    // =========================================================================
+    // PHẦN 2: ĐỌC DANH SÁCH TỆP & GHI CHÚ TỪ GOOGLE DRIVE 99 INBOX/VO
+    // =========================================================================
+    document.getElementById("btnRefreshDrive").addEventListener("click", () => loadDriveFolder(true));
+
+    document.getElementById("btnJumpNotes").addEventListener("click", () => {
+      const target = document.getElementById("notesDivider");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    async function loadDriveFolder(isManual = false) {
+      const loadingEl = document.getElementById("driveLoadingState");
+      const emptyEl = document.getElementById("driveEmptyState");
+      const refreshBtn = document.getElementById("btnRefreshDrive");
+
+      setDriveError("");
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = "Đang tải...";
+
+      if (driveFiles.length === 0) {
+        loadingEl.style.display = "block";
+        emptyEl.style.display = "none";
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?action=list&_t=${Date.now()}`, { method: "GET" });
+        const data = await res.json();
+
+        if (!data || !data.ok) {
+          throw new Error((data && data.error) || "Phản hồi không hợp lệ");
+        }
+
+        if (!Array.isArray(data.files)) {
+          loadingEl.style.display = "none";
+          setDriveError(
+            `<b>Cần cập nhật Google Apps Script lên phiên bản v4.0:</b><br>` +
+            `Cập nhật code từ <code>00 System/scripts/mom_intake_apps_script.gs</code> và triển khai phiên bản mới.`
+          );
+          refreshBtn.disabled = false;
+          refreshBtn.textContent = "Tải lại";
+          return;
+        }
+
+        if (Array.isArray(data.notes)) {
+          approvedNotes = data.notes.filter(n => n && String(n.id || "").indexOf("approved_") === 0);
+          notes = data.notes.filter(n => !n || String(n.id || "").indexOf("approved_") !== 0);
+        }
+
+        // Ẩn các ảnh đã thuộc câu chuyện được Admin phê duyệt khỏi lưới chờ của Vợ
+        const approvedFileIds = new Set();
+        const approvedFileNames = new Set();
+        approvedNotes.forEach(n => {
+          (n.fileIds || []).forEach(fid => { if (fid) approvedFileIds.add(fid); });
+          (n.files || []).forEach(fn => { if (fn) approvedFileNames.add(String(fn).toLowerCase()); });
+        });
+        driveFiles = data.files.filter(f => !approvedFileIds.has(f.id) && !approvedFileNames.has(String(f.name || "").toLowerCase()));
+
+        const validIds = new Set(driveFiles.map(f => f.id));
+        selectedFileIds.forEach(id => {
+          if (!validIds.has(id)) selectedFileIds.delete(id);
+        });
+
+        loadingEl.style.display = "none";
+        renderDriveGrid();
+        renderNotesList();
+        updateSelectionBar();
+        updateBottomBar();
+
+        if (isManual) {
+          showToast(`Đã cập nhật ${driveFiles.length} tệp từ Drive`);
+        } else {
+          checkRetentionReminder();
+        }
+
+        await loadMissingThumbnails();
+        renderRetentionThumbStrip();
+      } catch (err) {
+        loadingEl.style.display = "none";
+        setDriveError(`Không thể kết nối tới Google Drive (${escapeHtml(err.message)}). Vui lòng kiểm tra kết nối mạng và bấm <b>Tải lại</b>.`);
+      } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = "Tải lại";
+      }
+    }
+
+    async function loadMissingThumbnails(forceRetryNone = false) {
+      const needIds = driveFiles
+        .map(f => f.id)
+        .filter(id => {
+          if (pendingThumbIds.has(id)) return false;
+          const cached = getCachedThumb(id);
+          if (!cached) return true;
+          if (forceRetryNone && cached === "none") return true;
+          return false;
+        });
+
+      if (!needIds.length) return;
+
+      const batches = [];
+      for (let i = 0; i < needIds.length; i += THUMB_BATCH_SIZE) {
+        batches.push(needIds.slice(i, i + THUMB_BATCH_SIZE));
+      }
+
+      needIds.forEach(id => pendingThumbIds.add(id));
+      let anyNullReturned = false;
+
+      let cursor = 0;
+      async function worker() {
+        while (cursor < batches.length) {
+          const batch = batches[cursor++];
+          try {
+            const url = `${API_URL}?action=thumbs&ids=${encodeURIComponent(batch.join(","))}`;
+            const res = await fetch(url, { method: "GET" });
+            const data = await res.json();
+            if (data && data.ok && data.thumbs) {
+              batch.forEach(id => {
+                const tUrl = data.thumbs[id] || null;
+                if (!tUrl) anyNullReturned = true;
+                setCachedThumb(id, tUrl);
+                updateTileThumbDOM(id, tUrl);
+              });
+              renderNotesList();
+            }
+          } catch (e) {
+            batch.forEach(id => {
+              if (!getCachedThumb(id)) updateTileThumbDOM(id, null);
+            });
+          } finally {
+            batch.forEach(id => pendingThumbIds.delete(id));
+          }
+        }
+      }
+
+      const workers = [];
+      for (let w = 0; w < Math.min(THUMB_CONCURRENCY, batches.length); w++) {
+        workers.push(worker());
+      }
+      await Promise.all(workers);
+
+      if (anyNullReturned && !forceRetryNone && !thumbRetryScheduled) {
+        thumbRetryScheduled = true;
+        setTimeout(() => {
+          thumbRetryScheduled = false;
+          loadMissingThumbnails(true);
+        }, 5000);
+      }
+    }
+
+    function updateTileThumbDOM(fileId, dataUrl) {
+      const tile = document.querySelector(`.photo-tile[data-id="${fileId}"]`);
+      if (!tile) return;
+      const oldMedia = tile.querySelector(".tile-media-slot");
+      if (!oldMedia) return;
+
+      const file = driveFiles.find(f => f.id === fileId);
+      if (dataUrl && dataUrl !== "none") {
+        const img = document.createElement("img");
+        img.src = dataUrl;
+        img.alt = file ? file.name : "";
+        img.className = "tile-media-slot";
+        oldMedia.replaceWith(img);
+      } else {
+        const fb = document.createElement("div");
+        fb.className = "tile-fallback tile-media-slot";
+        fb.innerHTML = `<div style="font-weight:700;font-size:11px;">${file && file.isVideo ? "VIDEO" : "IMAGE"}</div><div>${escapeHtml(file ? file.name : "")}</div>`;
+        oldMedia.replaceWith(fb);
+      }
+    }
+
+    // --- Filter Pills ---
+    document.querySelectorAll(".filter-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        currentFilter = pill.getAttribute("data-filter");
+        document.querySelectorAll(".filter-pill").forEach(p => p.classList.toggle("active", p === pill));
+        renderDriveGrid();
+      });
+    });
+
+    // --- Render 3-Column Photo Grid ---
+    function renderDriveGrid() {
+      const grid = document.getElementById("photoGrid");
+      const filterRow = document.getElementById("filterRow");
+      const emptyEl = document.getElementById("driveEmptyState");
+      const loadingEl = document.getElementById("driveLoadingState");
+
+      loadingEl.style.display = "none";
+
+      if (driveFiles.length === 0) {
+        filterRow.style.display = "none";
+        grid.innerHTML = "";
+        emptyEl.style.display = "block";
+        return;
+      }
+
+      emptyEl.style.display = "none";
+      filterRow.style.display = "flex";
+
+      let doneCount = 0;
+      let todoCount = 0;
+      const filtered = [];
+
+      driveFiles.forEach(file => {
+        const noteNums = getNoteNumbersForFile(file);
+        const hasNote = noteNums.length > 0;
+        if (hasNote) doneCount++; else todoCount++;
+
+        if (currentFilter === "all" || (currentFilter === "todo" && !hasNote) || (currentFilter === "done" && hasNote)) {
+          filtered.push({ file, noteNums });
+        }
+      });
+
+      document.getElementById("pillAll").textContent = `Tất cả (${driveFiles.length})`;
+      document.getElementById("pillTodo").textContent = `Chưa ghi chú (${todoCount})`;
+      document.getElementById("pillDone").textContent = `Đã ghi chú (${doneCount})`;
+
+      grid.innerHTML = "";
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="state-box" style="grid-column: 1 / -1;">
+          ${currentFilter === "todo" ? "Toàn bộ ảnh/video hiện tại đều đã được gắn ghi chú." : "Chưa có ảnh/video nào được gắn ghi chú."}
+        </div>`;
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      filtered.forEach(({ file, noteNums }) => {
+        const isSel = selectedFileIds.has(file.id);
+        const tile = document.createElement("div");
+        tile.className = "photo-tile" + (isSel ? " selected" : "") + (noteNums.length ? " noted" : "");
+        tile.setAttribute("data-id", file.id);
+        tile.setAttribute("role", "button");
+        tile.setAttribute("aria-pressed", String(isSel));
+        tile.setAttribute("aria-label", file.name);
+        tile.onclick = () => toggleSelectFile(file.id);
+
+        const cached = getCachedThumb(file.id);
+        if (cached && cached !== "none") {
+          const img = document.createElement("img");
+          img.src = cached;
+          img.alt = file.name;
+          img.className = "tile-media-slot";
+          tile.appendChild(img);
+        } else if (cached === "none") {
+          const fb = document.createElement("div");
+          fb.className = "tile-fallback tile-media-slot";
+          fb.innerHTML = `<div style="font-weight:700;font-size:11px;">${file.isVideo ? "VIDEO" : "IMAGE"}</div><div>${escapeHtml(file.name)}</div>`;
+          tile.appendChild(fb);
+        } else {
+          const sk = document.createElement("div");
+          sk.className = "tile-skeleton tile-media-slot";
+          sk.innerHTML = `<div style="font-weight:700;margin-bottom:2px;">${file.isVideo ? "VIDEO" : "..."}</div><div>${escapeHtml(file.name.slice(0, 18))}</div>`;
+          tile.appendChild(sk);
+        }
+
+        if (file.isVideo) {
+          const vb = document.createElement("div");
+          vb.className = "tile-vid-badge";
+          vb.textContent = "Video";
+          tile.appendChild(vb);
+        }
+
+        if (noteNums.length === 0) {
+          const ret = getFileRetentionInfo(file);
+          if (ret.isExpired) {
+            const eb = document.createElement("div");
+            eb.className = "tile-exp-badge expired";
+            eb.textContent = "Quá 45 ngày";
+            tile.appendChild(eb);
+          } else if (ret.daysLeft <= 14) {
+            const eb = document.createElement("div");
+            eb.className = "tile-exp-badge";
+            eb.textContent = `Còn ${ret.daysLeft} ngày`;
+            tile.appendChild(eb);
+          }
+        }
+
+        const chk = document.createElement("div");
+        chk.className = "tile-check";
+        chk.setAttribute("aria-hidden", "true");
+        chk.textContent = "✓";
+        tile.appendChild(chk);
+
+        const zoomBtn = document.createElement("button");
+        zoomBtn.type = "button";
+        zoomBtn.className = "tile-zoom";
+        zoomBtn.title = "Xem lớn";
+        zoomBtn.setAttribute("aria-label", `Xem lớn ${file.name}`);
+        zoomBtn.textContent = "🔍";
+        zoomBtn.onclick = (ev) => {
+          ev.stopPropagation();
+          openZoomModal(file.id);
+        };
+        tile.appendChild(zoomBtn);
+
+        if (noteNums.length > 0) {
+          const tag = document.createElement("div");
+          tag.className = "tile-note-tag";
+          tag.textContent = noteNums.map(n => `#${n}`).join(", ");
+          tile.appendChild(tag);
+        }
+
+        frag.appendChild(tile);
+      });
+
+      grid.appendChild(frag);
+    }
+
+    function toggleSelectFile(fileId) {
+      if (selectedFileIds.has(fileId)) selectedFileIds.delete(fileId);
+      else selectedFileIds.add(fileId);
+      renderDriveGrid();
+      updateSelectionBar();
+    }
+
+    function updateSelectionBar() {
+      const bar = document.getElementById("selectionBar");
+      const n = selectedFileIds.size;
+      if (n > 0) {
+        document.getElementById("selInfoText").textContent = `Đã chọn ${n}`;
+        document.getElementById("btnWriteNote").textContent = n === 1 ? "Viết ghi chú" : `Viết ghi chú (${n})`;
+        bar.classList.add("show");
+      } else {
+        bar.classList.remove("show");
+      }
+    }
+
+    document.getElementById("btnClearSel").addEventListener("click", () => {
+      selectedFileIds.clear();
+      renderDriveGrid();
+      updateSelectionBar();
+    });
+
+    // =========================================================================
+    // LIGHTBOX XEM LỚN ẢNH/VIDEO
+    // =========================================================================
+    async function openZoomModal(fileId) {
+      const file = driveFiles.find(f => f.id === fileId);
+      if (!file) return;
+      zoomingFileId = fileId;
+
+      document.getElementById("zoomTitle").textContent = file.name;
+      document.getElementById("zoomSub").textContent = `Ngày: ${file.date}${file.size ? " · " + formatBytes(file.size) : ""}`;
+      document.getElementById("btnZoomToggleSelect").textContent =
+        selectedFileIds.has(fileId) ? "Bỏ chọn" : "Chọn tệp này";
+
+      const zImg = document.getElementById("zoomImg");
+      const zFb = document.getElementById("zoomFallback");
+      const zLoad = document.getElementById("zoomLoading");
+
+      zImg.alt = file.name;
+
+      const cached = getCachedThumb(fileId);
+      if (cached && cached !== "none") {
+        zImg.src = cached;
+        zImg.style.display = "block";
+        zLoad.style.display = "none";
+      } else {
+        zImg.style.display = "none";
+        zLoad.style.display = "block";
+      }
+      zFb.style.display = "none";
+      document.getElementById("zoomModal").classList.add("show");
+
+      try {
+        const res = await fetch(`${API_URL}?action=preview&id=${encodeURIComponent(fileId)}`);
+        const data = await res.json();
+        if (zoomingFileId !== fileId) return;
+        zLoad.style.display = "none";
+        if (data && data.ok && data.dataUrl) {
+          zImg.src = data.dataUrl;
+          zImg.style.display = "block";
+          zFb.style.display = "none";
+        } else if (!cached || cached === "none") {
+          zImg.style.display = "none";
+          zFb.innerHTML = `${file.isVideo ? "Video lưu trên Google Drive" : "Không hiển thị được bản xem trước cho định dạng này"}<br><br>` +
+            (data && data.viewUrl ? `<a href="${data.viewUrl}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;">Mở tệp trên Google Drive ↗</a>` : "");
+          zFb.style.display = "block";
+        }
+      } catch (e) {
+        if (zoomingFileId !== fileId) return;
+        zLoad.style.display = "none";
+      }
+    }
+
+    function closeZoomModal() {
+      document.getElementById("zoomModal").classList.remove("show");
+      zoomingFileId = null;
+    }
+
+    document.getElementById("btnZoomClose").addEventListener("click", closeZoomModal);
+    document.getElementById("btnZoomCloseX").addEventListener("click", closeZoomModal);
+    document.getElementById("zoomModal").addEventListener("click", (e) => {
+      if (e.target.id === "zoomModal") closeZoomModal();
+    });
+    document.getElementById("btnZoomToggleSelect").addEventListener("click", () => {
+      if (zoomingFileId) toggleSelectFile(zoomingFileId);
+      closeZoomModal();
+    });
+
+    // =========================================================================
+    // MODAL VIẾT / SỬA GHI CHÚ (HOÀN TẤT TỪNG STORY i, TIẾP TỤC STORY i+1)
+    // =========================================================================
+    const noteModal = document.getElementById("noteModal");
+
+    document.querySelectorAll("#childChips .chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const next = !chip.classList.contains("active");
+        chip.classList.toggle("active", next);
+        chip.setAttribute("aria-pressed", String(next));
+      });
+    });
+
+    function setChipSelection(list) {
+      const arr = Array.isArray(list) ? list : [];
+      document.querySelectorAll("#childChips .chip").forEach(c => {
+        const active = arr.includes(c.getAttribute("data-child"));
+        c.classList.toggle("active", active);
+        c.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function getChipSelection() {
+      const res = [];
+      document.querySelectorAll("#childChips .chip.active").forEach(c => {
+        res.push(c.getAttribute("data-child"));
+      });
+      return res;
+    }
+
+    function renderModalPickedStrip() {
+      const strip = document.getElementById("modalPickedStrip");
+      strip.innerHTML = "";
+
+      const count = modalFileNames.length;
+      document.getElementById("noteModalSub").textContent = count === 1
+        ? `Gắn với 1 tệp: ${modalFileNames[0]}`
+        : `Gắn với ${count} tệp (bấm × để bỏ bớt nếu cần)`;
+
+      modalFileNames.forEach((fn, idx) => {
+        const fid = modalFileIds[idx] || "";
+        const fileObj = findFileByIdOrName(fid, fn);
+        const realId = fileObj ? fileObj.id : fid;
+        const thumb = realId ? getCachedThumb(realId) : null;
+
+        const wrap = document.createElement("div");
+        wrap.className = "picked-item";
+
+        if (thumb && thumb !== "none") {
+          const img = document.createElement("img");
+          img.src = thumb;
+          img.alt = fn;
+          wrap.appendChild(img);
+        } else {
+          const fb = document.createElement("div");
+          fb.className = "picked-item-fb";
+          fb.textContent = (fileObj && fileObj.isVideo) ? "VID" : "IMG";
+          wrap.appendChild(fb);
+        }
+
+        if (modalFileNames.length > 1) {
+          const rm = document.createElement("button");
+          rm.type = "button";
+          rm.className = "picked-remove";
+          rm.textContent = "×";
+          rm.setAttribute("aria-label", `Bỏ ${fn} khỏi ghi chú`);
+          rm.onclick = () => {
+            modalFileNames.splice(idx, 1);
+            modalFileIds.splice(idx, 1);
+            renderModalPickedStrip();
+          };
+          wrap.appendChild(rm);
+        }
+
+        strip.appendChild(wrap);
+      });
+    }
+
+    function openNoteModal({ editId = null, fileIds = [], fileNames = [], suggestedDate = todayStr }) {
+      stopDictation();
+      editingNoteId = editId;
+      modalFileIds = [...fileIds];
+      modalFileNames = [...fileNames];
+
+      if (editId) {
+        const idx = notes.findIndex(n => n.id === editId);
+        const note = notes[idx];
+        document.getElementById("noteModalTitle").textContent = `Sửa ghi chú #${idx + 1}`;
+        document.getElementById("noteTextarea").value = note.text || "";
+        document.getElementById("noteDateInput").value = note.date || suggestedDate || todayStr;
+        setChipSelection(note.children || []);
+        document.getElementById("btnSaveNote").textContent = "Lưu thay đổi";
+      } else {
+        const nextNum = notes.length + 1;
+        document.getElementById("noteModalTitle").textContent = `Ghi chú #${nextNum}`;
+        document.getElementById("noteTextarea").value = "";
+        document.getElementById("noteDateInput").value = suggestedDate || todayStr;
+        setChipSelection([]);
+        document.getElementById("btnSaveNote").textContent = `Hoàn tất ghi chú #${nextNum}`;
+      }
+
+      renderModalPickedStrip();
+      noteModal.classList.add("show");
+    }
+
+    function closeNoteModal() {
+      stopDictation();
+      noteModal.classList.remove("show");
+      editingNoteId = null;
+    }
+
+    document.getElementById("btnWriteNote").addEventListener("click", () => {
+      const picked = driveFiles.filter(f => selectedFileIds.has(f.id));
+      if (!picked.length) return;
+      openNoteModal({
+        editId: null,
+        fileIds: picked.map(f => f.id),
+        fileNames: picked.map(f => f.name),
+        suggestedDate: picked[0].date || todayStr
+      });
+    });
+
+    document.getElementById("btnCancelNote").addEventListener("click", closeNoteModal);
+    document.getElementById("btnCloseNoteX").addEventListener("click", closeNoteModal);
+
+    document.getElementById("btnSaveNote").addEventListener("click", async () => {
+      stopDictation();
+      const text = document.getElementById("noteTextarea").value.trim();
+      const date = document.getElementById("noteDateInput").value || todayStr;
+      const children = getChipSelection();
+
+      if (!text) {
+        alert("Vui lòng nhập nội dung ghi chú.");
+        document.getElementById("noteTextarea").focus();
+        return;
+      }
+      if (!modalFileNames.length) {
+        alert("Mỗi ghi chú cần gắn với ít nhất 1 ảnh hoặc video.");
+        return;
+      }
+
+      const saveBtn = document.getElementById("btnSaveNote");
+      const oldText = saveBtn.textContent;
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Đang lưu...";
+
+      const prevNotesSnapshot = JSON.stringify(notes);
+      const wasEditing = Boolean(editingNoteId);
+      let editedIdx = -1;
+
+      if (editingNoteId) {
+        editedIdx = notes.findIndex(x => x.id === editingNoteId);
+        if (editedIdx >= 0) {
+          const n = notes[editedIdx];
+          n.text = text;
+          n.title = shortTitleFromText(text);
+          n.date = date;
+          n.children = children;
+          n.files = [...modalFileNames];
+          n.fileIds = [...modalFileIds];
+          n.updatedAt = new Date().toISOString();
+        }
+      } else {
+        notes.push({
+          id: uid("n"),
+          text: text,
+          title: shortTitleFromText(text),
+          date: date,
+          children: children,
+          files: [...modalFileNames],
+          fileIds: [...modalFileIds],
+          updatedAt: new Date().toISOString()
+        });
+      }
+
+      const ok = await syncNotesToDrive(false);
+      saveBtn.disabled = false;
+      saveBtn.textContent = oldText;
+
+      if (ok) {
+        if (!wasEditing) selectedFileIds.clear();
+        closeNoteModal();
+        renderDriveGrid();
+        renderNotesList();
+        updateSelectionBar();
+        updateBottomBar();
+        if (wasEditing) {
+          showToast(`Đã cập nhật Ghi chú #${editedIdx + 1}`);
+        } else {
+          showToast(`Đã hoàn tất Ghi chú #${notes.length}. Tiếp tục chọn ảnh hoặc bấm Send to Admin.`);
+        }
+      } else {
+        notes = JSON.parse(prevNotesSnapshot);
+        alert("Không thể lưu do lỗi kết nối mạng. Vui lòng thử lại.");
+      }
+    });
+
+    // =========================================================================
+    // DANH SÁCH GHI CHÚ ĐÃ HOÀN TẤT
+    // =========================================================================
+    function renderNotesList() {
+      const divider = document.getElementById("notesDivider");
+      const listEl = document.getElementById("notesList");
+      const jumpBtn = document.getElementById("btnJumpNotes");
+
+      document.getElementById("notesCount").textContent = notes.length;
+
+      if (notes.length === 0) {
+        divider.style.display = "none";
+        jumpBtn.style.display = "none";
+        listEl.innerHTML = "";
+        return;
+      }
+
+      divider.style.display = "flex";
+      jumpBtn.style.display = "inline-flex";
+      jumpBtn.textContent = `Ghi chú (${notes.length}) ↓`;
+      listEl.innerHTML = "";
+
+      notes.forEach((n, idx) => {
+        const card = document.createElement("div");
+        card.className = "note-card";
+
+        const metaParts = [];
+        if (n.date) metaParts.push(n.date);
+        const membersStr = formatMemberList(n.children);
+        if (membersStr) metaParts.push(membersStr);
+        metaParts.push(`${(n.files || []).length} tệp`);
+
+        let thumbsHtml = "";
+        (n.files || []).forEach((fn, fIdx) => {
+          const fid = (n.fileIds && n.fileIds[fIdx]) || "";
+          const fObj = findFileByIdOrName(fid, fn);
+          const realId = fObj ? fObj.id : fid;
+          const tUrl = realId ? getCachedThumb(realId) : null;
+          if (tUrl && tUrl !== "none") {
+            thumbsHtml += `<img src="${tUrl}" class="note-thumb" alt="${escapeHtml(fn)}">`;
+          } else {
+            thumbsHtml += `<div class="note-thumb-placeholder">${fObj && fObj.isVideo ? "VID" : "IMG"}</div>`;
+          }
+        });
+
+        card.innerHTML = `
+          <div class="note-card-head">
+            <span class="note-num">Ghi chú #${idx + 1}</span>
+            <div>
+              <button type="button" class="btn-text" data-edit="${n.id}">Sửa</button>
+              <button type="button" class="btn-text danger" data-del="${n.id}">Xóa</button>
+            </div>
+          </div>
+          <div class="note-meta">${escapeHtml(metaParts.join(" · "))}</div>
+          <div class="note-body"></div>
+          ${thumbsHtml ? `<div class="note-thumbs">${thumbsHtml}</div>` : ""}
+          <div class="note-files-caption">${escapeHtml((n.files || []).join(", "))}</div>
+        `;
+
+        card.querySelector(".note-body").textContent = n.text || "";
+
+        card.querySelector(`[data-edit="${n.id}"]`).onclick = () => {
+          openNoteModal({
+            editId: n.id,
+            fileIds: n.fileIds || (n.files || []).map(fn => {
+              const found = findFileByIdOrName("", fn);
+              return found ? found.id : "";
+            }),
+            fileNames: n.files || [],
+            suggestedDate: n.date || todayStr
+          });
+        };
+
+        card.querySelector(`[data-del="${n.id}"]`).onclick = async () => {
+          if (!confirm(`Xóa Ghi chú #${idx + 1}? Ảnh và video gốc trên Google Drive sẽ không bị ảnh hưởng.`)) return;
+          const prev = JSON.stringify(notes);
+          notes = notes.filter(x => x.id !== n.id);
+          renderDriveGrid();
+          renderNotesList();
+          updateBottomBar();
+          const ok = await syncNotesToDrive(false);
+          if (ok) {
+            updateBottomBar();
+            showToast(`Đã xóa Ghi chú #${idx + 1}`);
+          } else {
+            notes = JSON.parse(prev);
+            renderDriveGrid();
+            renderNotesList();
+            updateBottomBar();
+            alert("Không thể xóa do lỗi kết nối mạng. Vui lòng thử lại.");
+          }
+        };
+
+        listEl.appendChild(card);
+      });
+    }
+
+    // =========================================================================
+    // ĐỒNG BỘ DRIVE & SEND TO ADMIN (KẾT THÚC ĐỢT KHI USER CHỌN)
+    // =========================================================================
+    function buildNotesPayload() {
+      const combinedNotes = [...approvedNotes, ...notes];
+      const lines = [];
+      lines.push(`LEO FAMILY STORY — DANH SÁCH GHI CHÚ (${combinedNotes.length})`);
+      lines.push(`========================================`);
+
+      combinedNotes.forEach((n, idx) => {
+        lines.push("");
+        const membersStr = formatMemberList(n.children);
+        const metaHead = membersStr ? `${n.date || todayStr} | ${membersStr}` : (n.date || todayStr);
+        lines.push(`[#${idx + 1}] ${metaHead}`);
+        lines.push(`Tệp đính kèm (${(n.files || []).length}): ${(n.files || []).join(", ")}`);
+        lines.push(`Ghi chú: ${n.text}`);
+      });
+
+      const jsonObj = {
+        version: "4.0",
+        total_stories: combinedNotes.length,
+        stories: combinedNotes.map((n, idx) => ({
+          id: n.id,
+          story_index: idx + 1,
+          event_title: n.title || shortTitleFromText(n.text),
+          event_date: n.date || todayStr,
+          children: (n.children && n.children.length) ? n.children : ["Chung"],
+          story: n.text || "",
+          files: n.files || [],
+          file_ids: n.fileIds || [],
+          updated_at: n.updatedAt || new Date().toISOString()
+        })),
+        submitted_at: new Date().toISOString()
+      };
+
+      return { text: lines.join("\n"), json: jsonObj };
+    }
+
+    async function syncNotesToDrive(notifyLeo = false) {
+      if (isSavingNotes) return false;
+      isSavingNotes = true;
+      const syncEl = document.getElementById("syncStatus");
+      syncEl.textContent = notifyLeo ? "Đang gửi dữ liệu cho Admin..." : "Đang lưu nháp vào 99 Inbox/Vo...";
+
+      const built = buildNotesPayload();
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "save_notes",
+            notify: Boolean(notifyLeo),
+            text: built.text,
+            json: built.json
+          })
+        });
+        const data = await res.json();
+        isSavingNotes = false;
+        if (data && data.ok) {
+          if (notifyLeo) {
+            syncEl.textContent = `Đã gửi ${notes.length} ghi chú cho Admin thành công`;
+          } else {
+            updateBottomBar();
+          }
+          return true;
+        }
+        syncEl.textContent = "Lưu lên Drive không thành công. Vui lòng thử lại.";
+        return false;
+      } catch (err) {
+        isSavingNotes = false;
+        syncEl.textContent = "Lỗi kết nối mạng khi lưu lên Drive.";
+        return false;
+      }
+    }
+
+    function updateBottomBar() {
+      const label = document.getElementById("btnSendLabel");
+      const syncEl = document.getElementById("syncStatus");
+      if (notes.length > 0) {
+        label.textContent = `Send to Admin (${notes.length} ghi chú)`;
+        syncEl.textContent = `Đã lưu nháp ${notes.length} ghi chú · Bấm Send to Admin khi hoàn tất`;
+      } else {
+        label.textContent = "Send to Admin";
+        syncEl.textContent = "Các ghi chú hoàn tất sẽ tự động lưu nháp vào 99 Inbox/Vo";
+      }
+    }
+
+    function closeSendConfirmModal() {
+      document.getElementById("sendConfirmModal").classList.remove("show");
+    }
+    document.getElementById("btnSendConfirmClose").addEventListener("click", closeSendConfirmModal);
+    document.getElementById("btnSendConfirmX").addEventListener("click", closeSendConfirmModal);
+    document.getElementById("sendConfirmModal").addEventListener("click", (e) => {
+      if (e.target.id === "sendConfirmModal") closeSendConfirmModal();
+    });
+
+    // =========================================================================
+    // POP-UP NHẮC NHỞ ẢNH CHƯA GHI CHÚ & CẢNH BÁO TRƯỚC KHI XÓA (MỐC 45 NGÀY)
+    // =========================================================================
+    let retentionModalChecked = false;
+    let currentUnnotedForModal = [];
+    let currentExpiredForModal = [];
+
+    function renderRetentionThumbStrip() {
+      const strip = document.getElementById("retentionThumbStrip");
+      if (!strip || !currentUnnotedForModal.length) return;
+      strip.innerHTML = "";
+      currentUnnotedForModal.slice(0, 12).forEach(file => {
+        const ret = getFileRetentionInfo(file);
+        const wrap = document.createElement("div");
+        wrap.className = "picked-item";
+        const thumb = getCachedThumb(file.id);
+        if (thumb && thumb !== "none") {
+          const img = document.createElement("img");
+          img.src = thumb;
+          img.alt = file.name;
+          wrap.appendChild(img);
+        } else {
+          const fb = document.createElement("div");
+          fb.className = "picked-item-fb";
+          fb.textContent = file.isVideo ? "VID" : "IMG";
+          wrap.appendChild(fb);
+        }
+        const badge = document.createElement("div");
+        badge.style.cssText = "position:absolute;bottom:0;left:0;right:0;background:rgba(15,23,42,0.82);color:#fff;font-size:9.5px;font-weight:700;text-align:center;padding:2px 0;";
+        badge.textContent = ret.isExpired ? "Quá hạn" : `${ret.daysLeft} ngày`;
+        if (ret.isExpired) badge.style.background = "rgba(185,28,28,0.92)";
+        else if (ret.isExpiringSoon) badge.style.background = "rgba(217,119,6,0.92)";
+        wrap.appendChild(badge);
+        strip.appendChild(wrap);
+      });
+    }
+
+    function checkRetentionReminder() {
+      if (retentionModalChecked) return;
+      retentionModalChecked = true;
+
+      const unnoted = driveFiles.filter(f => getNoteNumbersForFile(f).length === 0);
+      if (!unnoted.length) return;
+
+      const expired = [];
+      const expiringSoon = [];
+      let hasPreviousSessionFiles = false;
+      const lastSubmitTs = Number(localStorage.getItem("leo_last_submit_ts") || "0");
+
+      unnoted.forEach(f => {
+        const ret = getFileRetentionInfo(f);
+        if (ret.isExpired) expired.push(f);
+        else if (ret.isExpiringSoon) expiringSoon.push(f);
+        // Ảnh đã tải lên cách đây >= 30 phút hoặc tồn tại từ đợt trước
+        if (ret.ageMs >= 30 * 60 * 1000 || lastSubmitTs > 0) {
+          hasPreviousSessionFiles = true;
+        }
+      });
+
+      if (!hasPreviousSessionFiles && !expired.length && !expiringSoon.length) return;
+
+      currentUnnotedForModal = unnoted;
+      currentExpiredForModal = expired;
+
+      const titleEl = document.getElementById("retentionTitle");
+      const subEl = document.getElementById("retentionSub");
+      const warnBox = document.getElementById("retentionWarnBox");
+      const btnFilter = document.getElementById("btnRetentionFilterTodo");
+      const btnDelExp = document.getElementById("btnRetentionDeleteExpired");
+
+      titleEl.textContent = expired.length > 0
+        ? `Cảnh báo: ${expired.length} tệp đã đến hạn ${RETENTION_DAYS} ngày`
+        : `Nhắc nhở: Còn ${unnoted.length} ảnh/video chưa viết ghi chú`;
+
+      subEl.innerHTML =
+        `Trong thư mục <b>99 Inbox/Vo</b> hiện có <b>${unnoted.length} tệp</b> từ lần trước chưa được gắn ghi chú.<br>` +
+        `Các tệp chưa ghi chú sẽ được giữ lại trong <b>${RETENTION_DAYS} ngày</b> kể từ ngày tải lên để bạn viết tiếp.`;
+
+      if (expired.length > 0 || expiringSoon.length > 0) {
+        const parts = [];
+        if (expired.length > 0) {
+          parts.push(`• Có <b>${expired.length} tệp</b> đã lưu quá <b>${RETENTION_DAYS} ngày</b>. Bạn có thể chọn viết ghi chú ngay để lưu vào Album hoặc bấm xác nhận xóa khỏi 99 Inbox/Vo.`);
+        }
+        if (expiringSoon.length > 0) {
+          const minDays = Math.min(...expiringSoon.map(f => getFileRetentionInfo(f).daysLeft));
+          parts.push(`• Có <b>${expiringSoon.length} tệp</b> sắp đến hạn ${RETENTION_DAYS} ngày (còn <b>${minDays} ngày</b>).`);
+        }
+        warnBox.className = "notice-box show" + (expired.length > 0 ? " error" : "");
+        warnBox.style.display = "block";
+        warnBox.innerHTML = parts.join("<br>");
+      } else {
+        warnBox.style.display = "none";
+      }
+
+      btnFilter.textContent = `Xem & viết ghi chú ngay (${unnoted.length})`;
+      if (expired.length > 0) {
+        btnDelExp.style.display = "flex";
+        btnDelExp.textContent = `Xóa ${expired.length} tệp đã quá hạn ${RETENTION_DAYS} ngày`;
+      } else {
+        btnDelExp.style.display = "none";
+      }
+
+      renderRetentionThumbStrip();
+      document.getElementById("retentionModal").classList.add("show");
+    }
+
+    function closeRetentionModal() {
+      document.getElementById("retentionModal").classList.remove("show");
+    }
+    document.getElementById("btnRetentionCloseX").addEventListener("click", closeRetentionModal);
+    document.getElementById("btnRetentionLater").addEventListener("click", closeRetentionModal);
+    document.getElementById("retentionModal").addEventListener("click", (e) => {
+      if (e.target.id === "retentionModal") closeRetentionModal();
+    });
+
+    document.getElementById("btnRetentionFilterTodo").addEventListener("click", () => {
+      closeRetentionModal();
+      const pillTodo = document.getElementById("pillTodo");
+      if (pillTodo) pillTodo.click();
+      const grid = document.getElementById("photoGrid");
+      if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("btnRetentionDeleteExpired").addEventListener("click", async () => {
+      if (!currentExpiredForModal.length) return;
+      const names = currentExpiredForModal.map(f => f.name).join(", ");
+      if (!confirm(`Xác nhận xóa ${currentExpiredForModal.length} tệp chưa ghi chú đã quá hạn ${RETENTION_DAYS} ngày (${names}) khỏi 99 Inbox/Vo?`)) {
+        return;
+      }
+      const btn = document.getElementById("btnRetentionDeleteExpired");
+      btn.disabled = true;
+      btn.textContent = "Đang xóa...";
+      try {
+        const ids = currentExpiredForModal.map(f => f.id);
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "delete_files", ids })
+        });
+        const data = await res.json();
+        if (data && data.ok) {
+          const delSet = new Set(ids);
+          driveFiles = driveFiles.filter(f => !delSet.has(f.id));
+          closeRetentionModal();
+          renderDriveGrid();
+          showToast(`Đã dọn dẹp ${ids.length} tệp quá hạn ${RETENTION_DAYS} ngày`);
+        } else {
+          alert("Không thể xóa tệp lúc này. Vui lòng thử lại sau.");
+        }
+      } catch (e) {
+        alert("Lỗi kết nối mạng khi xóa tệp quá hạn.");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById("btnSendToLeo").addEventListener("click", async () => {
+      if (notes.length === 0) {
+        if (selectedFileIds.size > 0) {
+          document.getElementById("btnWriteNote").click();
+          return;
+        }
+        alert("Chưa có ghi chú nào. Vui lòng chọn ít nhất 1 ảnh ở Phần 2 và hoàn tất ghi chú trước khi gửi.");
+        return;
+      }
+
+      const unnotedCount = driveFiles.filter(f => getNoteNumbersForFile(f).length === 0).length;
+      const confirmMsg = unnotedCount > 0
+        ? `Xác nhận gửi ${notes.length} ghi chú cho Admin?\n\n(Còn ${unnotedCount} ảnh/video chưa viết ghi chú sẽ được giữ lại trong 99 Inbox/Vo trong ${RETENTION_DAYS} ngày và nhắc bạn vào lần truy cập tới).`
+        : `Xác nhận gửi toàn bộ ${notes.length} ghi chú cho Admin?`;
+
+      if (!confirm(confirmMsg)) return;
+
+      const btn = document.getElementById("btnSendToLeo");
+      btn.disabled = true;
+      const built = buildNotesPayload();
+      const ok = await syncNotesToDrive(true);
+      btn.disabled = false;
+
+      if (ok) {
+        try {
+          localStorage.setItem("leo_last_submit_ts", String(Date.now()));
+          localStorage.setItem("leo_last_submitted_batch", JSON.stringify(built.json));
+        } catch (e) {}
+        document.getElementById("sendConfirmTitle").textContent = `Đã gửi cho Admin (${notes.length} ghi chú)`;
+        document.getElementById("sendConfirmSub").textContent = unnotedCount > 0
+          ? `Toàn bộ ${notes.length} ghi chú đã được lưu vào 99 Inbox/Vo và báo cho Admin. ${unnotedCount} ảnh chưa viết ghi chú vẫn được giữ lại an toàn (${RETENTION_DAYS} ngày).`
+          : "Toàn bộ ghi chú đã được lưu vào thư mục 99 Inbox/Vo (mom_notes.json) và gửi thông báo cho Admin.";
+        document.getElementById("sendConfirmSummary").textContent = built.text;
+        document.getElementById("sendConfirmModal").classList.add("show");
+      } else {
+        alert("Chưa thể gửi do lỗi kết nối mạng. Toàn bộ ghi chú vẫn đang được lưu an toàn, vui lòng thử lại.");
+      }
+    });
+
+    // =========================================================================
+    // NHẬP GIỌNG NÓI (WEB SPEECH API — TIẾNG VIỆT)
+    // =========================================================================
+    const SpeechRecClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let speechRec = null;
+    let isListening = false;
+    let baseTextBeforeSpeech = "";
+    const btnMic = document.getElementById("btnMic");
+    const micStatus = document.getElementById("micStatus");
+
+    function setMicUI(listening, msg = "", active = false) {
+      isListening = listening;
+      btnMic.classList.toggle("listening", listening);
+      btnMic.textContent = listening ? "Đang ghi âm · Dừng" : "Nhập giọng nói";
+      if (msg) {
+        micStatus.textContent = msg;
+        micStatus.className = "mic-status show" + (active ? " active" : "");
+      } else {
+        micStatus.textContent = "";
+        micStatus.className = "mic-status";
+      }
+    }
+
+    function stopDictation() {
+      if (speechRec && isListening) {
+        try { speechRec.stop(); } catch (e) {}
+      }
+      setMicUI(false, "");
+    }
+
+    btnMic.addEventListener("click", () => {
+      if (isListening) {
+        stopDictation();
+        return;
+      }
+      if (!SpeechRecClass) {
+        setMicUI(false, "Trình duyệt không hỗ trợ nhập giọng nói trực tiếp. Có thể sử dụng phím Micro trên bàn phím điện thoại.");
+        return;
+      }
+      try {
+        speechRec = new SpeechRecClass();
+        speechRec.lang = "vi-VN";
+        speechRec.interimResults = true;
+        speechRec.continuous = true;
+
+        const ta = document.getElementById("noteTextarea");
+        const cur = ta.value;
+        baseTextBeforeSpeech = cur && !/\s$/.test(cur) ? cur + " " : cur;
+
+        speechRec.onstart = () => setMicUI(true, "Đang ghi nhận giọng nói (tiếng Việt)...", true);
+        speechRec.onresult = (event) => {
+          let spoken = "";
+          for (let i = 0; i < event.results.length; i++) {
+            spoken += event.results[i][0].transcript;
+          }
+          ta.value = baseTextBeforeSpeech + spoken;
+        };
+        speechRec.onerror = (event) => {
+          if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+            setMicUI(false, "Chưa cấp quyền Micro cho trình duyệt. Vui lòng cấp quyền hoặc dùng phím Micro trên bàn phím.");
+          } else {
+            setMicUI(false, "Không nhận diện được giọng nói. Vui lòng thử lại.");
+          }
+        };
+        speechRec.onend = () => {
+          if (isListening) setMicUI(false, "Đã hoàn tất nhận diện giọng nói.");
+        };
+        speechRec.start();
+      } catch (e) {
+        setMicUI(false, "Không mở được Micro trực tiếp. Có thể sử dụng phím Micro trên bàn phím điện thoại.");
+      }
+    });
+
+    // =========================================================================
+    // INIT
+    // =========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      loadDriveFolder(false);
+    });
+  </script>
+</body>
+</html>

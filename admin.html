@@ -3957,13 +3957,16 @@ div.pswp__img--placeholder,
     </script>
   <script>
         (function() {
-          const VO_API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+          const VO_API_URL = "https://script.google.com/macros/s/AKfycbwkG7OTXrAx5kMIP7c7YWt5KwO24WfW0rn1rERo0MHm8hVR0oBhwGPzzydkZRylC_mdUA/exec";
           window.LEO_VO_THUMB_CACHE = window.LEO_VO_THUMB_CACHE || {};
 
+          let ADMIN_TOKEN = "";
+          try { ADMIN_TOKEN = localStorage.getItem("lf_admin_token") || ""; } catch(e) {}
+
           window.LEO_FETCH_DRIVE_PREVIEW = async function(driveId) {
-            if (!driveId) return "";
+            if (!driveId || !ADMIN_TOKEN) return "";
             try {
-              const res = await fetch(VO_API_URL + "?action=preview&id=" + encodeURIComponent(driveId));
+              const res = await fetch(VO_API_URL + "?action=preview&token=" + encodeURIComponent(ADMIN_TOKEN) + "&id=" + encodeURIComponent(driveId));
               const data = await res.json();
               if (data && data.ok && data.dataUrl) {
                 window.LEO_VO_THUMB_CACHE[driveId] = data.dataUrl;
@@ -4039,9 +4042,9 @@ div.pswp__img--placeholder,
 
             window.LEO_UPSERT_LIVE_ITEMS(buildLiveItems());
 
-            if (needThumbIds.length > 0) {
+            if (needThumbIds.length > 0 && ADMIN_TOKEN) {
               try {
-                const res = await fetch(VO_API_URL + "?action=thumbs&ids=" + encodeURIComponent(needThumbIds.join(",")));
+                const res = await fetch(VO_API_URL + "?action=thumbs&token=" + encodeURIComponent(ADMIN_TOKEN) + "&ids=" + encodeURIComponent(needThumbIds.join(",")));
                 const tData = await res.json();
                 if (tData && tData.ok && tData.thumbs) {
                   Object.keys(tData.thumbs).forEach(function(fid) {
@@ -4052,20 +4055,23 @@ div.pswp__img--placeholder,
               } catch (e) {}
             }
           };
-
-          if (window.ARCHIVE_READ_ONLY) {
-            fetch(VO_API_URL + "?action=list&_t=" + Date.now())
-              .then(function(r) { return r.json(); })
-              .then(function(d) {
-                if (d && d.ok) window.LEO_SYNC_APPROVED_FROM_VO(d);
-              })
-              .catch(function() {});
-          }
         })();
         </script>
   <script>
             (function() {
-              const VO_API_URL = "https://script.google.com/macros/s/AKfycbxm8uwOp57EOMLceq7lwEP-gMnex5pZ6X50GXvHax_ROBGgL_mfFB-A7n0nvIPWxabXtQ/exec";
+              const VO_API_URL = "https://script.google.com/macros/s/AKfycbwkG7OTXrAx5kMIP7c7YWt5KwO24WfW0rn1rERo0MHm8hVR0oBhwGPzzydkZRylC_mdUA/exec";
+              let ADMIN_TOKEN = "";
+              (function initAdminToken() {
+                const m = location.hash.match(/k=([^&]+)/);
+                if (m) {
+                  ADMIN_TOKEN = decodeURIComponent(m[1]);
+                  try { localStorage.setItem("lf_admin_token", ADMIN_TOKEN); } catch(e) {}
+                  history.replaceState(null, "", location.pathname + location.search);
+                } else {
+                  try { ADMIN_TOKEN = localStorage.getItem("lf_admin_token") || ""; } catch(e) {}
+                }
+              })();
+
               const btnWife = document.getElementById('btn-admin-wife-inbox');
               const wifeModal = document.getElementById('wife-inbox-modal');
               const wifeClose = document.getElementById('wife-inbox-close');
@@ -4121,9 +4127,17 @@ div.pswp__img--placeholder,
 
               async function checkWifeInbox() {
                 if (!btnWife) return;
+                if (!ADMIN_TOKEN) {
+                  btnWife.textContent = "⚠️ Hộp thư Vợ (Chưa mở khóa)";
+                  return;
+                }
                 try {
-                  const res = await fetch(VO_API_URL + "?action=list&_t=" + Date.now());
+                  const res = await fetch(VO_API_URL + "?action=list&token=" + encodeURIComponent(ADMIN_TOKEN) + "&_t=" + Date.now());
                   const data = await res.json();
+                  if (data && data.error === "unauthorized") {
+                    btnWife.textContent = "🔒 Khóa ADMIN chưa đúng";
+                    return;
+                  }
                   if (data && data.ok) {
                     latestVoData = data;
                     updateAdminTopButton();
@@ -4157,7 +4171,7 @@ div.pswp__img--placeholder,
                   lines.push("Ghi chú: " + (n.text || ""));
                 });
                 const jsonObj = {
-                  version: "4.0",
+                  version: "5.0",
                   total_stories: allNotes.length,
                   stories: allNotes.map(function(n, idx) {
                     return {
@@ -4178,25 +4192,38 @@ div.pswp__img--placeholder,
               }
 
               async function persistVoNotes(allNotes) {
+                if (!ADMIN_TOKEN) {
+                  alert("⚠️ Chưa có khóa xác thực ADMIN. Vui lòng mở lại trang bằng liên kết admin.html#k=*** để phê duyệt bài.");
+                  return false;
+                }
                 const built = buildNotesSavePayload(allNotes);
-                const res = await fetch(VO_API_URL, {
-                  method: "POST",
-                  headers: { "Content-Type": "text/plain;charset=utf-8" },
-                  body: JSON.stringify({
-                    action: "save_notes",
-                    notify: false,
-                    text: built.text,
-                    json: built.json
-                  })
-                });
-                const data = await res.json();
-                return Boolean(data && data.ok);
+                try {
+                  const res = await fetch(VO_API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                      action: "save_notes",
+                      token: ADMIN_TOKEN,
+                      notify: false,
+                      text: built.text,
+                      json: built.json
+                    })
+                  });
+                  const data = await res.json();
+                  if (data && data.error === "unauthorized") {
+                    alert("⚠️ Khóa ADMIN không đúng hoặc đã hết hạn.");
+                    return false;
+                  }
+                  return Boolean(data && data.ok);
+                } catch (e) {
+                  return false;
+                }
               }
 
               async function loadModalThumbs(fileIds) {
-                if (!fileIds || !fileIds.length) return;
+                if (!fileIds || !fileIds.length || !ADMIN_TOKEN) return;
                 try {
-                  const res = await fetch(VO_API_URL + "?action=thumbs&ids=" + encodeURIComponent(fileIds.join(",")));
+                  const res = await fetch(VO_API_URL + "?action=thumbs&token=" + encodeURIComponent(ADMIN_TOKEN) + "&ids=" + encodeURIComponent(fileIds.join(",")));
                   const data = await res.json();
                   if (data && data.ok && data.thumbs) {
                     Object.keys(data.thumbs).forEach(function(fid) {
