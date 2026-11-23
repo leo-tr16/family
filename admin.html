@@ -2054,9 +2054,16 @@ div.pswp__img--placeholder,
                 <span class="admin-bar-desc">Duyệt bài từ Vợ và biên tập lời kể trực tiếp trên trình duyệt.</span>
               </div>
               <div class="admin-bar-right">
-                <a href="./them-bai.html" class="admin-bar-btn" id="btn-admin-add-post" style="background:#f4a950;color:#161b21;border-color:#f4a950;font-weight:700;">＋ Thêm bài</a>
+                <button type="button" class="admin-bar-btn" id="btn-admin-publish" style="background:#f4a950;color:#161b21;border-color:#f4a950;font-weight:700;">🚀 Đăng lên album</button>
+                <a href="./them-bai.html" class="admin-bar-btn" id="btn-admin-add-post" style="border-color:#38bdf8;color:#38bdf8;">＋ Thêm bài</a>
                 <button type="button" class="admin-bar-btn" id="btn-admin-wife-inbox" style="border-color:#f59e0b;color:#fde68a;">📥 Hộp thư Vợ (Đang kiểm tra...)</button>
                 <button type="button" class="admin-bar-btn admin-bar-btn-primary" id="btn-admin-open-notes">📋 Mở danh sách nháp</button>
+              </div>
+            </div>
+            <div id="admin-status-bar" style="display:none;background:#1e293b;color:#f8fafc;padding:9px 20px;font-size:0.88rem;border-bottom:1px solid #334155;font-family:'Be Vietnam Pro',-apple-system,sans-serif;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                <div id="admin-status-text" style="display:flex;align-items:center;gap:8px;"></div>
+                <div id="admin-status-action"></div>
               </div>
             </div>
             <div id="wife-inbox-modal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.68);z-index:100000;align-items:center;justify-content:center;padding:14px;font-family:'Be Vietnam Pro',-apple-system,sans-serif;">
@@ -4665,9 +4672,256 @@ div.pswp__img--placeholder,
                 if (ok) {
                   latestVoData.notes = allNotes;
                   updateAdminTopButton();
+                  updatePublishButton();
                 }
                 return ok;
               };
+
+              // =========================================================
+              // TỰ ĐỘNG ĐĂNG & STATUS BANNER
+              // =========================================================
+              const btnPublish = document.getElementById('btn-admin-publish');
+              let latestPublishStatus = null;
+              let isPublishing = false;
+
+              function getLocalEditsCount() {
+                try {
+                  const cardNotes = JSON.parse(localStorage.getItem('leo_notes_cards') || localStorage.getItem('lf_card_notes') || '{}');
+                  const covers = JSON.parse(localStorage.getItem('leo_notes_covers') || localStorage.getItem('lf_cover_picks') || '{}');
+                  const deleted = JSON.parse(localStorage.getItem('leo_notes_deleted') || localStorage.getItem('lf_deleted_photos') || '[]');
+                  const cCount = Object.keys(cardNotes).length;
+                  const covCount = Object.keys(covers).length;
+                  const delCount = Array.isArray(deleted) ? deleted.length : 0;
+                  return cCount + covCount + delCount;
+                } catch(e) { return 0; }
+              }
+
+              function updatePublishButton() {
+                if (!btnPublish) return;
+                const approvedCount = getApprovedNotes().length;
+                const localEdits = getLocalEditsCount();
+                const totalPending = approvedCount + localEdits;
+                if (totalPending > 0) {
+                  btnPublish.textContent = "🚀 Đăng lên album (" + totalPending + ")";
+                  btnPublish.style.opacity = "1";
+                  btnPublish.style.pointerEvents = "auto";
+                  btnPublish.title = "Đăng " + approvedCount + " bài mới và " + localEdits + " chỉnh sửa";
+                } else {
+                  btnPublish.textContent = "🚀 Đăng lên album";
+                  btnPublish.style.opacity = "0.7";
+                  btnPublish.title = "Chưa có thay đổi mới nào chờ đăng";
+                }
+              }
+
+              function renderStatusBanner(tt, nt) {
+                const bar = document.getElementById('admin-status-bar');
+                const textEl = document.getElementById('admin-status-text');
+                const actEl = document.getElementById('admin-status-action');
+                if (!bar || !textEl || !actEl) return;
+
+                if (!tt && !nt) {
+                  bar.style.display = 'none';
+                  return;
+                }
+
+                let isOnline = false;
+                if (nt && nt['lan-cuoi']) {
+                  try {
+                    const lastBeat = new Date(nt['lan-cuoi'].replace(' ', 'T') + '+07:00');
+                    const diffMs = Date.now() - lastBeat.getTime();
+                    isOnline = (diffMs < 10 * 60 * 1000);
+                  } catch(e) {}
+                }
+
+                const st = tt ? (tt['trang-thai'] || '') : '';
+                const buoc = tt ? (tt['buoc'] || '') : '';
+                const time = tt ? (tt['thoi-gian'] || '') : '';
+                const lyDo = tt ? (tt['ly-do'] || '') : '';
+
+                if (isPublishing && isOnline && st !== 'dang-dang' && st !== 'da-dang' && st !== 'loi') {
+                  bar.style.display = 'block';
+                  bar.style.background = '#1e293b';
+                  textEl.innerHTML = '🚀 <b>Đã gửi. Máy tính đang đăng…</b>';
+                  actEl.innerHTML = '';
+                  return;
+                }
+
+                if (!isOnline && (st === 'cho-may' || isPublishing)) {
+                  bar.style.display = 'block';
+                  bar.style.background = '#334155';
+                  textEl.innerHTML = '💤 <b>Máy tính đang tắt.</b> Bài sẽ lên album khi máy bật.';
+                  actEl.innerHTML = '';
+                  return;
+                }
+
+                if (st === 'cho-dong-bo') {
+                  bar.style.display = 'block';
+                  bar.style.background = '#1e293b';
+                  textEl.innerHTML = '⏳ <b>Máy tính đang tải ảnh về…</b> ' + (lyDo ? '<span style="color:#94a3b8">(' + esc(lyDo) + ')</span>' : '');
+                  actEl.innerHTML = '';
+                } else if (st === 'dang-dang') {
+                  bar.style.display = 'block';
+                  bar.style.background = '#0f766e';
+                  textEl.innerHTML = '⚡ <b>Đang đăng…</b> ' + (buoc ? '<span style="color:#ccfbf1">(' + esc(buoc) + ')</span>' : '');
+                  actEl.innerHTML = '';
+                } else if (st === 'da-dang') {
+                  isPublishing = false;
+                  bar.style.display = 'block';
+                  bar.style.background = '#065f46';
+                  textEl.innerHTML = '✅ <b>Đã lên album lúc ' + (time || 'vừa xong') + '.</b> Có thể cần vài phút để GitHub Pages cập nhật.';
+                  actEl.innerHTML = '<a href="./index.html" style="color:#6ee7b7;font-weight:700;text-decoration:underline;">Xem album →</a>';
+                } else if (st === 'loi') {
+                  isPublishing = false;
+                  bar.style.display = 'block';
+                  bar.style.background = '#991b1b';
+                  textEl.innerHTML = '❌ <b>Chưa đăng được:</b> ' + esc(lyDo || 'Đã có lỗi xảy ra.');
+                  actEl.innerHTML = '<button type="button" id="btn-status-retry" style="background:#fee2e2;color:#991b1b;border:none;padding:5px 12px;border-radius:6px;font-weight:700;cursor:pointer;">Thử lại</button>';
+                  const btnRetry = document.getElementById('btn-status-retry');
+                  if (btnRetry) btnRetry.onclick = function() { triggerPublish(); };
+                } else {
+                  bar.style.display = 'none';
+                }
+              }
+
+              async function pollPublishStatus() {
+                if (!syncAdminToken()) return;
+                try {
+                  const res = await fetch(VO_API_URL + "?action=publish_status&token=" + encodeURIComponent(ADMIN_TOKEN) + "&_t=" + Date.now());
+                  const data = await res.json();
+                  if (data && data.ok) {
+                    latestPublishStatus = data;
+                    renderStatusBanner(data.trang_thai, data.nhip_tim);
+                  }
+                } catch(e) {}
+              }
+
+              async function triggerPublish() {
+                if (!syncAdminToken()) {
+                  handleAdminUnauthorized();
+                  return;
+                }
+                isPublishing = true;
+                if (btnPublish) {
+                  btnPublish.disabled = true;
+                  btnPublish.textContent = "⏳ Đang gửi...";
+                }
+                renderStatusBanner(null, latestPublishStatus ? latestPublishStatus.nhip_tim : null);
+
+                await saveLocalEditsToCloud();
+
+                try {
+                  const res = await fetch(VO_API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                      action: "publish_request",
+                      token: ADMIN_TOKEN,
+                      so_bai_moi: getApprovedNotes().length,
+                      so_chinh_sua: getLocalEditsCount()
+                    })
+                  });
+                  const d = await res.json();
+                  if (d && d.ok) {
+                    if (typeof window.showToast === "function") window.showToast("Đã gửi yêu cầu đăng lên máy tính!");
+                    pollPublishStatus();
+                  } else {
+                    if (typeof window.showToast === "function") window.showToast("Lỗi gửi yêu cầu đăng");
+                  }
+                } catch(e) {
+                  if (typeof window.showToast === "function") window.showToast("Lỗi mạng: " + e.message);
+                } finally {
+                  if (btnPublish) {
+                    btnPublish.disabled = false;
+                    updatePublishButton();
+                  }
+                }
+              }
+
+              async function saveLocalEditsToCloud() {
+                if (!syncAdminToken()) return false;
+                try {
+                  const cardNotes = JSON.parse(localStorage.getItem('leo_notes_cards') || localStorage.getItem('lf_card_notes') || '{}');
+                  const covers = JSON.parse(localStorage.getItem('leo_notes_covers') || localStorage.getItem('lf_cover_picks') || '{}');
+                  const deleted = JSON.parse(localStorage.getItem('leo_notes_deleted') || localStorage.getItem('lf_deleted_photos') || '[]');
+                  if (!Object.keys(cardNotes).length && !Object.keys(covers).length && !deleted.length) return true;
+
+                  const res = await fetch(VO_API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                      action: "notes_save",
+                      token: ADMIN_TOKEN,
+                      notes: {
+                        cards: cardNotes,
+                        covers: covers,
+                        deleted: deleted
+                      }
+                    })
+                  });
+                  const d = await res.json();
+                  return Boolean(d && d.ok);
+                } catch(e) { return false; }
+              }
+
+              if (btnPublish) {
+                btnPublish.addEventListener('click', function() { triggerPublish(); });
+              }
+
+              function hookFabNotesModal() {
+                const btnDownload = document.getElementById('btn-download-notes');
+                if (btnDownload && !btnDownload.dataset.hooked) {
+                  btnDownload.dataset.hooked = '1';
+                  btnDownload.innerHTML = '💾 Lưu thay đổi';
+                  btnDownload.title = 'Lưu chỉnh sửa lên hệ thống để máy tính tự đồng bộ';
+                  btnDownload.onclick = async function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    btnDownload.disabled = true;
+                    btnDownload.textContent = '⏳ Đang lưu...';
+                    const ok = await saveLocalEditsToCloud();
+                    btnDownload.disabled = false;
+                    btnDownload.innerHTML = '💾 Lưu thay đổi';
+                    if (ok) {
+                      if (typeof window.showToast === "function") window.showToast("Đã lưu chỉnh sửa lên đám mây!");
+                      updatePublishButton();
+                    } else {
+                      if (typeof window.showToast === "function") window.showToast("Chưa lưu được, vui lòng thử lại.");
+                    }
+                  };
+
+                  if (!document.getElementById('link-backup-download')) {
+                    const backupLink = document.createElement('a');
+                    backupLink.id = 'link-backup-download';
+                    backupLink.href = '#';
+                    backupLink.style.cssText = 'display:block;margin-top:10px;font-size:0.82rem;color:#94a3b8;text-decoration:underline;text-align:center;cursor:pointer;';
+                    backupLink.textContent = '📥 Tải file dự phòng (leo-notes.json)';
+                    backupLink.onclick = function(ev) {
+                      ev.preventDefault();
+                      const cardNotes = JSON.parse(localStorage.getItem('leo_notes_cards') || localStorage.getItem('lf_card_notes') || '{}');
+                      const covers = JSON.parse(localStorage.getItem('leo_notes_covers') || localStorage.getItem('lf_cover_picks') || '{}');
+                      const deleted = JSON.parse(localStorage.getItem('leo_notes_deleted') || localStorage.getItem('lf_deleted_photos') || '[]');
+                      const payload = { cards: cardNotes, covers: covers, deleted: deleted, exported_at: new Date().toISOString() };
+                      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+                      const a = document.createElement("a");
+                      a.href = URL.createObjectURL(blob);
+                      a.download = "leo-notes.json";
+                      a.click();
+                    };
+                    btnDownload.parentNode.appendChild(backupLink);
+                  }
+                }
+              }
+
+              document.addEventListener('click', function(e) {
+                if (e.target && (e.target.closest('#fab-notes') || e.target.closest('#btn-admin-open-notes'))) {
+                  setTimeout(hookFabNotesModal, 200);
+                }
+              });
+
+              setInterval(pollPublishStatus, 30000);
+              setInterval(updatePublishButton, 5000);
+              setTimeout(pollPublishStatus, 1000);
+              setTimeout(updatePublishButton, 1500);
 
               if (btnWife) btnWife.addEventListener('click', function() { renderWifeModal(); });
               if (wifeClose) wifeClose.addEventListener('click', function() { wifeModal.style.display = 'none'; });

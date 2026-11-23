@@ -595,6 +595,7 @@ async function submitDraft(draft){
     const used = new Set(fileIds); inbox = inbox.filter(f=>!used.has(f.id));
     render(); loadThumbs(fileIds);
     toast(draft.isEdit?"Đã cập nhật":"Đã đăng ✓");
+    showSavedModal(saved);
   }catch(e){
     clearInterval(tick);
     localPending.set(draft.id,{state:"error"}); render();
@@ -604,6 +605,32 @@ function retryPost(id){
   const d = pendingDrafts.get(id); if(!d) return;
   d.items.filter(i=>i.state==="err").forEach(i=>startUpload(i));
   submitDraft(d);
+}
+
+function showSavedModal(saved){
+  const bg=document.createElement("div"); bg.className="dlg-bg";
+  bg.innerHTML=`
+    <div class="dlg" style="text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">🎉</div>
+      <h3 style="margin:0 0 8px;font-size:1.2rem;color:var(--ink);">Đã lưu bài viết thành công!</h3>
+      <p style="margin:0 0 20px;font-size:15px;color:var(--ink-2);">Bạn có thể đăng ngay lên Album hoặc tiếp tục thêm bài khác.</p>
+      <button class="b1" id="btn-dlg-publish" style="background:#F4A950;color:#161B21;border:none;min-height:52px;font-size:16px;cursor:pointer;">🚀 Đăng lên album ngay</button>
+      <button class="b2" id="btn-dlg-new" style="border:none;min-height:52px;font-size:15px;cursor:pointer;">＋ Thêm bài khác</button>
+    </div>
+  `;
+  document.body.appendChild(bg);
+  bg.querySelector("#btn-dlg-publish").onclick=async()=>{
+    const btn=bg.querySelector("#btn-dlg-publish"); btn.disabled=true; btn.textContent="Đang gửi yêu cầu đăng…";
+    try{
+      await api("publish_request",{so_bai_moi:1},true);
+      toast("Đã gửi yêu cầu đăng lên máy tính!");
+      setTimeout(()=>{ window.location.href="./admin.html"; }, 800);
+    }catch(e){
+      toast("Chưa gửi được: "+e.message);
+      btn.disabled=false; btn.textContent="Thử lại: Đăng lên album ngay";
+    }
+  };
+  bg.querySelector("#btn-dlg-new").onclick=()=>{ bg.remove(); openComposer(); };
 }
 window.addEventListener("beforeunload",e=>{
   if (localPending.size || (C && C.items.some(i=>i.state==="up"))){ e.preventDefault(); e.returnValue=""; }
