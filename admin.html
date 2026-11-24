@@ -21,7 +21,7 @@
 /* ==========================================================================
    Leo Family Story — Viewer & Admin Stylesheet v2.3 (2026-11-24)
    Bản cập nhật v2.3:
-   1. Admin tối giản: chỉ còn Thêm · Sửa · Đăng (bỏ Hộp thư Vợ, nháp nội bộ, biên tập mode).
+   1. Admin tối giản: chỉ còn Thêm · Sửa · Đăng (bỏ các chức năng cũ không dùng).
    2. Bảng Sửa bài: Mobile = slide-up bottom sheet, Desktop = drawer 460px từ phải.
    3. Album Desktop ≥ 1024px: thẻ 2 cột (ảnh vuông trái 400px, chữ phải max 7 dòng + Xem thêm #8A5A12).
    4. Thẻ không ảnh: 1 cột max 3 dòng.
@@ -137,8 +137,9 @@ a { color: inherit; }
   position: relative;
 }
 .chip {
-  height: 40px;
-  padding: 0 14px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: #fff;
@@ -205,7 +206,8 @@ a { color: inherit; }
 .d-filters .search {
   margin-left: auto;
   width: 260px;
-  height: 40px;
+  height: 44px;
+  min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
@@ -221,6 +223,8 @@ a { color: inherit; }
   border: none;
   outline: none;
   width: 100%;
+  height: 100%;
+  min-height: 44px;
   font-size: 14px;
   font-family: inherit;
   color: var(--navy);
@@ -740,7 +744,7 @@ a { color: inherit; }
 }
 .fld > label {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
   margin-bottom: 8px;
@@ -802,7 +806,7 @@ a { color: inherit; }
   cursor: not-allowed !important;
 }
 .owner-helper-text {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 6px;
   font-style: italic;
@@ -1528,6 +1532,7 @@ div.pswp__img--placeholder,
             </div>
             <div class="status" id="admin-status-bar" style="display:none;"><i class="dot"></i><span id="admin-status-text">Máy tính đang bật</span></div>
             <div class="menu" id="admin-menu" style="display:none;">
+              <a href="./them-bai.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>＋ Thêm bài mới</a>
               <a href="./index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Xem album</a>
               <a href="#" id="btn-admin-logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Đăng xuất</a>
             </div>
@@ -1654,7 +1659,7 @@ div.pswp__img--placeholder,
   const GALLERY_MAX = 4;
   const IS_READ_ONLY = (typeof window !== 'undefined' && Boolean(window.ARCHIVE_READ_ONLY));
   const IS_ADMIN = (typeof window !== 'undefined' && Boolean(window.ARCHIVE_IS_ADMIN));
-  const API_URL = (typeof window !== 'undefined' && window.ARCHIVE_API_URL) || "https://script.google.com/macros/s/AKfycbwkG7OTXrAx5kMIP7c7YWt5KwO24WfW0rn1rERo0MHm8hVR0oBhwGPzzydkZRylC_mdUA/exec";
+  const API_URL = (typeof window !== 'undefined' && window.ARCHIVE_API_URL) || "";
 
   const TYPE_META = {
     '':        { label: 'Ngày có ảnh', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>' },
