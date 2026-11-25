@@ -2008,7 +2008,10 @@ div.pswp__img--placeholder,
   }
 
   function activePhotosOf(item) {
-    return (item.photos || []).slice();
+    const list = (item.photos || []).slice();
+    const cv = item.cover || '';
+    const idx = cv ? list.findIndex(p => p.filename === cv) : -1;
+    return idx > 0 ? [list[idx], ...list.slice(0, idx), ...list.slice(idx + 1)] : list;
   }
 
   function getFolderOwner(item) {
@@ -2450,9 +2453,10 @@ div.pswp__img--placeholder,
       }
     }
 
-    // 5. Photos list
-    const coverFn = item.cover || ((item.photos && item.photos[0]) ? item.photos[0].filename : '');
-    editPhotosState = (item.photos || []).map(p => ({
+    // 5. Photos list (đưa ảnh bìa hiện tại lên đầu danh sách để hiện ngay trong 3 dòng đầu)
+    const orderedPhotos = activePhotosOf(item);
+    const coverFn = item.cover || (orderedPhotos[0] ? orderedPhotos[0].filename : '');
+    editPhotosState = orderedPhotos.map(p => ({
       filename: p.filename,
       caption: p.caption || '',
       isCover: (p.filename === coverFn),
